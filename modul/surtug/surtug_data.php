@@ -1,6 +1,6 @@
 <?php			
 	if(isset($_POST['btnHapus'])){
-		$txtID 		= $_POST['txtID'];
+		$txtID		= $_POST['txtID'];
 		foreach ($txtID as $id_key) {
 				
 			$hapus=mysqli_query($koneksidb, "DELETE FROM ms_surtug WHERE id_surtug='$id_key'") 
@@ -11,18 +11,24 @@
 				echo '<script>window.location="?page=datasurtug"</script>';
 			}	
 		}
-	}			
+	}
+	
 	if(isset($_POST['btnKirim'])){
-		$txtID 		= $_POST['txtID'];
-		foreach ($txtID as $id_key) {
-				
-			$kirim=mysqli_query($koneksidb, "DELETE FROM ms_surtug WHERE id_surtug='$id_key'") 
-				or die ("Gagal kosongkan tmp".mysqli_error());
-				
-			if($kirim){
-				$_SESSION['pesan'] = 'Data Surat Tugas berhasil dikirim ke kasubsie.';
-				echo '<script>window.location="?page=datasurtug"</script>';
-			}	
+		
+		$createdBy 		= $_SESSION["id_user"];
+		$txtID			= $_POST['txtID'];
+		
+		foreach ($txtID as $id_key){		
+			$sqlSave="INSERT INTO trx_surtug SET id_surtug='$id_key', 
+											 id_pegawai='14',
+											 createdBy = '$createdBy',
+											 createdTime='".date('Y-m-d')."'";
+			$qrySave=mysqli_query($koneksidb, $sqlSave) or die ("Gagal query".mysqli_error());
+			if($qrySave){
+				$_SESSION['pesan'] = "Surat Tugas telah dikirim.";
+			echo '<script>window.location="?page=datasurtug"</script>';
+
+			}
 		}
 	}
 ?>
