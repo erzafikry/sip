@@ -288,11 +288,11 @@ CREATE TABLE `ms_surtug` (
   `updatedBy` varchar(250) DEFAULT NULL,
   `updatedTime` date DEFAULT NULL,
   PRIMARY KEY (`id_surtug`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `ms_surtug` */
 
-insert  into `ms_surtug`(`id_surtug`,`no_surtug`,`tgl_mulai_surtug`,`tgl_terbit_surtug`,`keterangan_surtug`,`id_berkas`,`id_pegawai`,`createdBy`,`createdTime`,`updatedBy`,`updatedTime`) values (6,'2176/St-10.15/X/2020','2020-10-27','2020-10-27','tes',2,33,'1','2020-10-27',NULL,NULL),(10,'1','2020-11-01','2020-11-01','tes',7,27,'1','2020-11-01',NULL,NULL),(11,'2','2020-11-01','2020-11-01','testes',5,17,'1','2020-11-01',NULL,NULL);
+insert  into `ms_surtug`(`id_surtug`,`no_surtug`,`tgl_mulai_surtug`,`tgl_terbit_surtug`,`keterangan_surtug`,`id_berkas`,`id_pegawai`,`createdBy`,`createdTime`,`updatedBy`,`updatedTime`) values (6,'2176/St-10.15/X/2020','2020-10-27','2020-10-27','tes',2,33,'1','2020-10-27',NULL,NULL),(10,'1','2020-11-01','2020-11-01','tes',7,27,'1','2020-11-01',NULL,NULL),(11,'2','2020-11-01','2020-11-01','testes',5,17,'1','2020-11-01',NULL,NULL),(12,'12/XI/2020','2020-11-01','2020-11-01','tes',2,33,'1','2020-11-01',NULL,NULL);
 
 /*Table structure for table `ms_user` */
 
@@ -386,6 +386,25 @@ CREATE TABLE `sys_submenu` (
 /*Data for the table `sys_submenu` */
 
 insert  into `sys_submenu`(`submenu_id`,`submenu_nama`,`submenu_menu`,`submenu_link`,`submenu_urutan`,`submenu_dibuat`,`submenu_diubah`) values (2,'Data User',1,'?page=datauser',3,'2017-11-26 00:00:00','2020-10-22 00:00:00'),(3,'Data Menu & Modul',1,'?page=datamodul',4,'2017-11-26 00:00:00','2020-03-12 00:00:00'),(4,'Level Group Akses',1,'?page=datagroup',2,'2017-11-26 00:00:00','2020-10-22 00:00:00'),(5,'Data Pegawai',2,'?page=datapegawai',3,'2017-11-26 00:00:00','2020-10-20 00:00:00'),(6,'Data Pemohon',2,'?page=datapemohon',4,'2017-11-26 00:00:00','2020-10-20 00:00:00'),(7,'Data Kecamatan',3,'?page=datakec',3,'2017-11-26 00:00:00','2020-10-20 00:00:00'),(8,'Data Kelurahan',3,'?page=datakel',4,'2017-12-24 00:00:00','2020-10-20 00:00:00'),(11,'Daftar Berkas',4,'?page=databerkas',1,'2017-12-24 00:00:00','2020-10-22 00:00:00'),(13,'Pengaturan Seksi',1,'?page=confseksi',1,'2017-12-24 00:00:00','0000-00-00 00:00:00'),(14,'Berkas Masuk',6,'?page=lapberkas',1,'2017-12-29 00:00:00','2020-10-20 00:00:00'),(15,'Daftar Pemohon',6,'?page=lappemohon',2,'2017-12-29 00:00:00','2020-10-21 00:00:00'),(28,'Surat Tugas',5,'?page=datasurtug',1,'0000-00-00 00:00:00','2020-10-22 00:00:00'),(29,'Data Jabatan',2,'?page=datajab',2,'2020-10-19 00:00:00','2020-10-20 00:00:00'),(30,'Data Satker',2,'?page=datasatker',1,'2020-10-19 00:00:00','2020-10-20 00:00:00'),(31,'Data Provinsi',3,'?page=dataprov',1,'2020-10-20 00:00:00','2020-10-20 00:00:00'),(32,'Data Kota',3,'?page=datakot',2,'2020-10-20 00:00:00','0000-00-00 00:00:00'),(33,'Data Layanan',2,'?page=datalay',5,'2020-10-21 00:00:00','0000-00-00 00:00:00');
+
+/*Table structure for table `trx_surtug` */
+
+DROP TABLE IF EXISTS `trx_surtug`;
+
+CREATE TABLE `trx_surtug` (
+  `id_trx_surtug` int(11) NOT NULL AUTO_INCREMENT,
+  `id_surtug` int(11) DEFAULT NULL,
+  `id_pegawai` int(1) DEFAULT NULL,
+  `createdBy` varchar(250) DEFAULT NULL,
+  `createdTime` date DEFAULT NULL,
+  `updatedBy` varchar(250) DEFAULT NULL,
+  `updatedTime` date DEFAULT NULL,
+  PRIMARY KEY (`id_trx_surtug`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
+
+/*Data for the table `trx_surtug` */
+
+insert  into `trx_surtug`(`id_trx_surtug`,`id_surtug`,`id_pegawai`,`createdBy`,`createdTime`,`updatedBy`,`updatedTime`) values (1,0,0,'1','2020-11-01',NULL,NULL),(2,0,14,'1','2020-11-01',NULL,NULL),(3,0,14,'1','2020-11-01',NULL,NULL),(4,0,14,'1','2020-11-01',NULL,NULL),(5,0,14,'1','2020-11-01',NULL,NULL),(6,10,14,'1','2020-11-01',NULL,NULL),(7,10,14,'1','2020-11-01',NULL,NULL),(8,6,14,'1','2020-11-01',NULL,NULL),(9,11,14,'1','2020-11-01',NULL,NULL),(10,6,14,'1','2020-11-01',NULL,NULL),(11,6,14,'1','2020-11-01',NULL,NULL),(12,6,14,'1','2020-11-01',NULL,NULL),(13,10,14,'1','2020-11-01',NULL,NULL),(14,11,14,'1','2020-11-01',NULL,NULL),(15,6,14,'1','2020-11-01',NULL,NULL),(16,10,14,'1','2020-11-01',NULL,NULL),(17,11,14,'1','2020-11-01',NULL,NULL),(18,12,14,'1','2020-11-01',NULL,NULL),(19,6,14,'1','2020-11-01',NULL,NULL),(20,10,14,'1','2020-11-01',NULL,NULL),(21,11,14,'1','2020-11-01',NULL,NULL),(22,12,14,'1','2020-11-01',NULL,NULL);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
