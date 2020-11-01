@@ -1,0 +1,29 @@
+@font-face {
+    font-family: 'Abel';
+    src: url('../fonts/TheSansMonoCondensedRegular.ttf');
+}
+body {
+  color: #333333;
+  font-family: 'Abel';
+  padding: 0px !important;
+  margin: 0px !important;
+  direction: "ltr";
+  font-size: 11px; 
+}
+.table-list {
+  clear: both;
+  text-align: left;
+  border-collapse: collapse;
+  margin: 0px 0px 10px 0px;
+  background:#fff;  
+}
+.table-list th {
+  color: #333;
+  font-size:14px;
+  border-color: #fff;
+  border-collapse: collapse;
+  vertical-align: center;
+  padding: 3px 5px;
+  border-top:1px #333333 solid;
+  border-bottom:1px #333333 solid;
+}
