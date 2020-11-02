@@ -13,24 +13,50 @@
 		}
 	}
 	
+	//Kirim ST ke kasubsie
+	
 	if(isset($_POST['btnKirim'])){
+		$message = array();
+		if (trim($_POST['txtTglKirim'])=="") {
+			$message[] = "<b>Tgl Kirim</b> tidak boleh kosong.";		
+		}
+		if (trim($_POST['txtCatatan'])=="") {
+			$message[] = "<b>Catatan</b> tidak boleh kosong.";		
+		}
 		
-		$createdBy 		= $_SESSION["id_user"];
-		$txtID			= $_POST['txtID'];
+		$txtTglKirim		= $_POST['txtTglKirim'];
+		$txtCatatan			= $_POST['txtCatatan'];
+		$createdBy 			= $_SESSION["id_user"];
+		$txtID				= $_POST['txtID'];
 		
-		foreach ($txtID as $id_key){		
+		if(count($message)==0){		
 			$sqlSave="INSERT INTO trx_surtug SET id_surtug='$id_key', 
 											 id_pegawai='14',
+											 tgl_kirim='".InggrisTgl($txtTglKirim)."',
+											 catatan='$txtCatatan',
 											 createdBy = '$createdBy',
 											 createdTime='".date('Y-m-d')."'";
-			$qrySave=mysqli_query($koneksidb, $sqlSave) or die ("Gagal query".mysqli_error());
+			$qrySave = mysqli_query($koneksidb, $sqlSave)or die ("Gagal query".mysqli_error());
 			if($qrySave){
-				$_SESSION['pesan'] = "Surat Tugas telah dikirim.";
-			echo '<script>window.location="?page=datasurtug"</script>';
-
+				$_SESSION['pesan'] = 'Surat Tugas berhasil dikirim.';
+				echo '<script>window.location="?page=datasurtug"</script>';
 			}
+			exit;
+		}
+		
+		if (! count($message)==0 ){
+			echo "<div class='alert alert-danger alert-dismissable'>
+                      <button type='button' class='close' data-dismiss='alert' aria-hidden='true'></button>";
+				$Num=0;
+				foreach ($message as $indeks=>$pesan_tampil) { 
+				$Num++;
+					echo "&nbsp;&nbsp;$Num. $pesan_tampil<br>";	
+				} 
+			echo "</div>"; 
 		}
 	}
+	
+	$dataTglKirim	= isset($_POST['txtTglKirim']) ? $_POST['txtTglKirim'] : date('d-m-Y');
 ?>
 <form action="<?php $_SERVER['PHP_SELF']; ?>" method="POST">
 	<div class="portlet box grey-cascade">
@@ -40,7 +66,7 @@
 			</div>
 			<div class="actions">
 				<a href="?page=tambahsurtug" class="btn blue"><i class="icon-plus"></i> Tambah Data</a>	
-				<button class="btn btn-xs green" name="btnKirim" type="submit" onclick="return confirm('Kirim ST yang dipilih ke Kasubsie?')"><i class="icon-check"></i> Kirim</button>
+				<a data-toggle="modal" data-target="#formKirim" class="btn btn-sm green" onclick="return confirm('Kirim ST yang dipilih ke Kasubsie?')"><i class="icon-check"></i> Kirim</a>
 				<button class="btn red" name="btnHapus" type="submit" onclick="return confirm('Anda yakin ingin menghapus data ini?')"><i class="icon-trash"></i> Hapus Data</button>
 			</div>
 		</div>
@@ -115,6 +141,42 @@
                     <?php } ?>
 				</tbody>
             </table>
+		</div>
+	</div>
+</form>
+<SCRIPT language="JavaScript">
+	function submitform() {
+		document.form1.submit();
+	}
+</SCRIPT>
+<form action="<?php $_SERVER['PHP_SELF']; ?>" method="post" name="form1" class="portlet-body form">
+	<input class="form-control" type="hidden" value="<?php echo $dataKode; ?>" name="txtKode" readonly/>
+	<div class="modal fade bs-modal" id="formKirim" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+					<h4 class="modal-title">Kirim Surat Tugas Ke Kasubsie</h4>
+				</div>
+				<div class="modal-body"> 
+					<div class="form-group">
+						<div class="input-icon left">
+							<label class="control-label">Tgl. Kirim :</label>
+							<i class="icon-calendar"></i>
+							<input class="form-control date-picker" data-date-format="dd-mm-yyyy" type="hidden" value="<?php echo $dataTglKirim; ?>" name="txtTglKirim" />
+							<input class="form-control date-picker" data-date-format="dd-mm-yyyy" type="text" value="<?php echo $dataTglKirim; ?>" name="txtTglKirim" disabled/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label">Catatan :</label>
+						<textarea class="form-control" name="txtCatatan" type="text" /></textarea>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn blue" name="btnKirim">Simpan</button>
+					<button type="button" class="btn default" data-dismiss="modal">Batal</button>
+				</div>
+			</div>
 		</div>
 	</div>
 </form>
