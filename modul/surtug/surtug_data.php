@@ -13,8 +13,6 @@
 		}
 	}
 	
-	//Kirim ST ke kasubsie
-	
 	if(isset($_POST['btnKirim'])){
 		$message = array();
 		if (trim($_POST['txtTglKirim'])=="") {
@@ -30,7 +28,7 @@
 		$txtID				= $_POST['txtID'];
 		
 		if(count($message)==0){		
-			$sqlSave="INSERT INTO trx_surtug SET id_surtug='$id_key', 
+			$sqlSave="INSERT INTO trx_surtug SET id_surtug='$txtID', 
 											 id_pegawai='14',
 											 tgl_kirim='".InggrisTgl($txtTglKirim)."',
 											 catatan='$txtCatatan',
@@ -46,7 +44,7 @@
 		
 		if (! count($message)==0 ){
 			echo "<div class='alert alert-danger alert-dismissable'>
-                      <button type='button' class='close' data-dismiss='alert' aria-hidden='true'></button>";
+					  <button type='button' class='close' data-dismiss='alert' aria-hidden='true'></button>";
 				$Num=0;
 				foreach ($message as $indeks=>$pesan_tampil) { 
 				$Num++;
@@ -125,15 +123,9 @@
 							<div class="box-tools pull-center" align="center">
 								<div class="btn-group">
 									<a href="?page=ubahsurtug&amp;id=<?php echo $kode; ?>" class="btn btn-xs blue" onclick="return confirm('Yakin untuk ubah data ST ini?')"><i class="fa fa-edit"></i></a>
-									<!--<button id="kirim" class='btn btn-xs green' name='btnKirim' type='button' onclick="return confirm('Kirim ST ke Kasubsie?')"><i class='icon-check' id='ok'></i></button>-->
-									<?php
-										// if ((isset($_POST['btnKirim'])=="1")) {
-											// echo "<button class='btn btn-xs yellow' name='btnKirim' type='submit'><i class='fa fa-check'> Kirim</i></button>";
-										// } else {
-											// echo "<button class='btn btn-xs green' name='btnKirim' type='submit'>OK</button>";
-										// }
-									?>
-									
+									<!--
+									<a href="?page=kirimst&amp;id=<?php echo $kode; ?>" class="btn btn-xs green" onclick="return confirm('Kirim ST ini ke Kasubsie?')"><i class="icon-check"></i></a>
+									-->									
 								</div>
 							</div>
 						</td>
