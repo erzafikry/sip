@@ -134,9 +134,11 @@ $userRow = mysqli_fetch_array($userQry);
 				<i class="fa fa-angle-down"></i>
 			</a>
 			<ul class="dropdown-menu">
-				<!-- <li><a href="?page=confprofile"><i class="fa fa-pencil-square"></i> Ubah Profil </a></li> -->
+				<!--
+				<li><a href="?page=confprofile"><i class="fa fa-pencil-square"></i> Ubah Profil </a></li>
 				<li><a href="#"><i class="fa fa-folder"></i> Berkas Masuk <span class="badge badge-danger">3</span></a></li>
 				<li class="divider"></li>
+				-->
 				<li><a href="?page=confpassword"><i class="fa fa-lock"></i> Ubah Password </a></li>
 				<li class="divider"></li>
 				<li><a href="keluar.php"><i class="fa fa-sign-out"></i> Logout </a></li>

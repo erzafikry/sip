@@ -63,9 +63,26 @@
 				<span class="caption-subject uppercase bold">Data Surat Tugas</span>
 			</div>
 			<div class="actions">
-				<a href="?page=tambahsurtug" class="btn blue"><i class="icon-plus"></i> Tambah Data</a>	
-				<a data-toggle="modal" data-target="#formKirim" class="btn btn-sm green" onclick="return confirm('Kirim ST yang dipilih ke Kasubsie?')"><i class="icon-check"></i> Kirim</a>
-				<button class="btn red" name="btnHapus" type="submit" onclick="return confirm('Anda yakin ingin menghapus data ini?')"><i class="icon-trash"></i> Hapus Data</button>
+				<?php
+					if($_SESSION['id_user'] != 1){
+						echo "
+							<div class='actions'>
+								<a href='?page=tambahsurtug' class='btn blue'><i class='icon-plus'></i> Tambah Data</a>
+							</div>
+						";
+					} else {
+						echo "
+							<div class='actions'>
+								<a href='?page=tambahsurtug' class='btn blue'><i class='icon-plus'></i> Tambah Data</a>
+								<a data-toggle='modal' data-target='#formKirim' class='btn btn-sm green'><i class='icon-check'></i> Kirim</a>
+								<button class='btn red' name='btnHapus' type='submit' onclick='return confirm('Anda yakin ingin menghapus data penting ini !!')'><i class='icon-trash'></i> Hapus Data</button>
+							</div>
+						";
+					}
+				?>
+				<!--
+					<a data-toggle="modal" data-target="#formKirim" class="btn btn-sm green" onclick="return confirm('Kirim ST yang dipilih ke Kasubsie?')"><i class="icon-check"></i> Kirim</a>
+				-->
 			</div>
 		</div>
 		<div class="portlet-body">     	
