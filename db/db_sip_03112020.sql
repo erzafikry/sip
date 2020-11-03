@@ -36,11 +36,9 @@ CREATE TABLE `ms_berkas` (
   `updatedBy` varchar(250) DEFAULT NULL,
   `updatedTime` date DEFAULT NULL,
   PRIMARY KEY (`id_berkas`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `ms_berkas` */
-
-insert  into `ms_berkas`(`id_berkas`,`no_berkas`,`tahun_berkas`,`id_pemohon`,`id_layanan`,`id_kecamatan`,`id_kelurahan`,`volume`,`di_305`,`di_302`,`id_status_berkas`,`keterangan_berkas`,`createdBy`,`createdTime`,`updatedBy`,`updatedTime`) values (11,'55416',2020,8,2,1,4,119,' 2322','1122',1,'','33','2020-11-03',NULL,NULL);
 
 /*Table structure for table `ms_jabatan` */
 
@@ -286,11 +284,9 @@ CREATE TABLE `ms_surtug` (
   `updatedBy` varchar(250) DEFAULT NULL,
   `updatedTime` date DEFAULT NULL,
   PRIMARY KEY (`id_surtug`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `ms_surtug` */
-
-insert  into `ms_surtug`(`id_surtug`,`no_surtug`,`tgl_mulai_surtug`,`tgl_terbit_surtug`,`keterangan_surtug`,`id_berkas`,`id_pegawai`,`createdBy`,`createdTime`,`updatedBy`,`updatedTime`) values (6,'2176/St-10.15/X/2020','2020-10-27','2020-10-27','tes',2,33,'1','2020-10-27',NULL,NULL),(10,'1','2020-11-01','2020-11-01','tes',7,27,'1','2020-11-01',NULL,NULL),(11,'2','2020-11-01','2020-11-01','testes',5,17,'1','2020-11-01',NULL,NULL),(12,'12/XI/2020','2020-11-01','2020-11-01','tes',2,33,'1','2020-11-01',NULL,NULL),(13,'2171/St-10.15/X/2020','2020-11-02','2020-11-02','TES ST',3,33,'1','2020-11-02',NULL,NULL),(14,'333','2020-11-02','2020-11-02','tess',9,25,'1','2020-11-02',NULL,NULL),(15,'ST/009/X/2020','2020-11-03','2020-11-03','pemecahan 3 Bidang',11,25,'33','2020-11-03',NULL,NULL),(16,'10','2020-11-03','2020-11-03','-',11,25,'25','2020-11-03',NULL,NULL);
 
 /*Table structure for table `ms_user` */
 
@@ -309,11 +305,11 @@ CREATE TABLE `ms_user` (
   `updatedBy` varchar(250) DEFAULT NULL,
   `updatedTime` date DEFAULT NULL,
   PRIMARY KEY (`id_user`)
-) ENGINE=MyISAM AUTO_INCREMENT=34 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM AUTO_INCREMENT=35 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `ms_user` */
 
-insert  into `ms_user`(`id_user`,`username_user`,`password_user`,`status_user`,`user_group`,`default_user`,`id_pegawai`,`createdBy`,`createdTime`,`updatedBy`,`updatedTime`) values (1,'erzafikry','0cc175b9c0f1b6a831c399e269772661','Active',1,'N',9,NULL,NULL,'1','2020-10-20'),(23,'198612222009121002','0cc175b9c0f1b6a831c399e269772661','Active',9,'N',13,'1','2020-10-22','1','2020-10-22'),(22,'197808102003121004','0cc175b9c0f1b6a831c399e269772661','Active',10,'N',12,'1','2020-10-22','1','2020-10-22'),(24,'196402011984031002','0cc175b9c0f1b6a831c399e269772661','Active',9,'N',14,'1','2020-10-22','1','2020-10-22'),(25,'910200156','0cc175b9c0f1b6a831c399e269772661','Active',8,'N',30,'1','2020-10-22','1','2020-10-22'),(26,'196912082014081001','7fc56270e7a70fa81a5935b72eacbe29','Active',11,'N',25,'1','2020-10-22',NULL,NULL),(27,'910200130','7fc56270e7a70fa81a5935b72eacbe29','Active',12,'N',28,'1','2020-10-22',NULL,NULL),(28,'910200053','0cc175b9c0f1b6a831c399e269772661','Active',13,'N',32,'1','2020-10-22',NULL,NULL),(29,'196904301995031002','0cc175b9c0f1b6a831c399e269772661','Active',14,'N',21,'1','2020-10-22',NULL,NULL),(30,'196906111991031010','0cc175b9c0f1b6a831c399e269772661','Active',15,'N',16,'1','2020-10-22',NULL,NULL),(31,'199006272011011001','0cc175b9c0f1b6a831c399e269772661','Active',14,'N',24,'1','2020-10-22',NULL,NULL),(32,'2020914','0cc175b9c0f1b6a831c399e269772661','Active',11,'N',33,'1','2020-10-23',NULL,NULL),(33,'910200125','0cc175b9c0f1b6a831c399e269772661','Active',8,'N',34,'1','2020-11-03','1','2020-11-03');
+insert  into `ms_user`(`id_user`,`username_user`,`password_user`,`status_user`,`user_group`,`default_user`,`id_pegawai`,`createdBy`,`createdTime`,`updatedBy`,`updatedTime`) values (1,'erzafikry','0cc175b9c0f1b6a831c399e269772661','Active',1,'N',9,NULL,NULL,'1','2020-10-20'),(23,'198612222009121002','0cc175b9c0f1b6a831c399e269772661','Active',9,'N',13,'1','2020-10-22','1','2020-10-22'),(22,'197808102003121004','0cc175b9c0f1b6a831c399e269772661','Active',10,'N',12,'1','2020-10-22','1','2020-10-22'),(24,'196402011984031002','0cc175b9c0f1b6a831c399e269772661','Active',9,'N',14,'1','2020-10-22','1','2020-10-22'),(25,'910200156','0cc175b9c0f1b6a831c399e269772661','Active',8,'N',30,'1','2020-10-22','1','2020-10-22'),(26,'196912082014081001','7fc56270e7a70fa81a5935b72eacbe29','Active',11,'N',25,'1','2020-10-22',NULL,NULL),(27,'910200130','7fc56270e7a70fa81a5935b72eacbe29','Active',12,'N',28,'1','2020-10-22',NULL,NULL),(28,'910200053','0cc175b9c0f1b6a831c399e269772661','Active',13,'N',32,'1','2020-10-22',NULL,NULL),(29,'196904301995031002','0cc175b9c0f1b6a831c399e269772661','Active',14,'N',21,'1','2020-10-22',NULL,NULL),(30,'196906111991031010','0cc175b9c0f1b6a831c399e269772661','Active',15,'N',16,'1','2020-10-22',NULL,NULL),(31,'199006272011011001','0cc175b9c0f1b6a831c399e269772661','Active',14,'N',24,'1','2020-10-22',NULL,NULL),(32,'2020914','0cc175b9c0f1b6a831c399e269772661','Active',11,'N',33,'1','2020-10-23',NULL,NULL),(33,'910200125','0cc175b9c0f1b6a831c399e269772661','Active',8,'N',34,'1','2020-11-03','1','2020-11-03'),(34,'910200021','0cc175b9c0f1b6a831c399e269772661','Active',12,'N',29,'1','2020-11-03',NULL,NULL);
 
 /*Table structure for table `sys_akses` */
 
@@ -400,11 +396,9 @@ CREATE TABLE `trx_surtug` (
   `updatedBy` varchar(250) DEFAULT NULL,
   `updatedTime` date DEFAULT NULL,
   PRIMARY KEY (`id_trx_surtug`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `trx_surtug` */
-
-insert  into `trx_surtug`(`id_trx_surtug`,`id_surtug`,`id_pegawai`,`tgl_kirim`,`catatan`,`createdBy`,`createdTime`,`updatedBy`,`updatedTime`) values (1,0,0,NULL,NULL,'1','2020-11-01',NULL,NULL),(2,0,14,NULL,NULL,'1','2020-11-01',NULL,NULL),(3,0,14,NULL,NULL,'1','2020-11-01',NULL,NULL),(4,0,14,NULL,NULL,'1','2020-11-01',NULL,NULL),(5,0,14,NULL,NULL,'1','2020-11-01',NULL,NULL),(6,10,14,NULL,NULL,'1','2020-11-01',NULL,NULL),(7,10,14,NULL,NULL,'1','2020-11-01',NULL,NULL),(8,6,14,NULL,NULL,'1','2020-11-01',NULL,NULL),(9,11,14,NULL,NULL,'1','2020-11-01',NULL,NULL),(10,6,14,NULL,NULL,'1','2020-11-01',NULL,NULL),(11,6,14,NULL,NULL,'1','2020-11-01',NULL,NULL),(12,6,14,NULL,NULL,'1','2020-11-01',NULL,NULL),(13,10,14,NULL,NULL,'1','2020-11-01',NULL,NULL),(14,11,14,NULL,NULL,'1','2020-11-01',NULL,NULL),(15,6,14,NULL,NULL,'1','2020-11-01',NULL,NULL),(16,10,14,NULL,NULL,'1','2020-11-01',NULL,NULL),(17,11,14,NULL,NULL,'1','2020-11-01',NULL,NULL),(18,12,14,NULL,NULL,'1','2020-11-01',NULL,NULL),(19,6,14,NULL,NULL,'1','2020-11-01',NULL,NULL),(20,10,14,NULL,NULL,'1','2020-11-01',NULL,NULL),(21,11,14,NULL,NULL,'1','2020-11-01',NULL,NULL),(22,12,14,NULL,NULL,'1','2020-11-01',NULL,NULL),(23,12,14,NULL,NULL,'1','2020-11-02',NULL,NULL),(24,0,14,'2020-11-02','Tes kirim ST','1','2020-11-02',NULL,NULL),(25,0,14,'2020-11-02','tessssss','1','2020-11-02',NULL,NULL),(26,0,14,'2020-11-02','sadasdasdasds','1','2020-11-02',NULL,NULL),(27,0,14,'2020-11-02','asd','1','2020-11-02',NULL,NULL),(28,0,14,'2020-11-02','asdasd','1','2020-11-02',NULL,NULL),(29,0,14,'2020-11-02','asd','1','2020-11-02',NULL,NULL),(30,0,14,'2020-11-02','asdasd','1','2020-11-02',NULL,NULL),(31,0,14,'2020-11-02','asd','1','2020-11-02',NULL,NULL),(32,0,14,'2020-11-02','asd','1','2020-11-02',NULL,NULL),(33,0,14,'2020-11-02','asd','1','2020-11-02',NULL,NULL),(34,0,14,'2020-11-02','jkl','1','2020-11-02',NULL,NULL),(35,0,14,'2020-11-02','asd','1','2020-11-02',NULL,NULL),(36,0,14,'2020-11-02','gg','1','2020-11-02',NULL,NULL),(37,0,14,'2020-11-03','minta','1','2020-11-03',NULL,NULL);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
