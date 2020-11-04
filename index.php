@@ -96,11 +96,13 @@ License: You must have a valid license purchased only from themeforest(the above
                     </label>
                     -->
                 </div>
+				<!--
                 <div class="create-account">
                     <p>
                         <a href="javascript:;" id="forget-password" class="uppercase">Lupa Password?</a>
                     </p>
                 </div>
+				-->
                 
             </form>
             <!-- END LOGIN FORM -->
