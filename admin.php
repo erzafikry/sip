@@ -13,7 +13,10 @@ if(!isset($_SESSION['id_user'])){
 
 
 
-$userSql = "SELECT * FROM ms_user a INNER JOIN ms_pegawai b ON a.id_pegawai=b.id_pegawai WHERE a.id_user='".$_SESSION['id_user']."'";
+$userSql = "SELECT * FROM ms_user a 
+            INNER JOIN ms_pegawai b ON a.id_pegawai=b.id_pegawai 
+            INNER JOIN sys_group c ON a.user_group=c.group_id
+            WHERE a.id_user='".$_SESSION['id_user']."'";
 $userQry = mysqli_query($koneksidb, $userSql)  or die ("Query salah : ".mysqli_error());
 $userRow = mysqli_fetch_array($userQry);
 
@@ -128,7 +131,19 @@ $userRow = mysqli_fetch_array($userQry);
 			<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 				<i class="fa fa-bell"></i>
 				<span class="username">
-				<span class="badge badge-danger">3</span>
+          <?php 
+          $sqlSurtug  = "SELECT COUNT(*) as total FROM ms_surtug WHERE group_id='".$userRow['user_group']."'";
+          $qrySurtug  = mysqli_query($koneksidb, $sqlSurtug) or die ("Eror show notif".mysqli_error()); 
+          $showSurtug = mysqli_fetch_array($qrySurtug);
+
+          if($showSurtug['total']>=1){
+            $notif  = '<span class="badge badge-danger">'.$showSurtug['total'].'</span>';
+          }else{
+            $notif  = '';
+          }
+
+          ?>
+				  <?php echo $notif ?>
 					<?php echo $userRow['nama_pegawai']; ?>
 				</span>
 				<i class="fa fa-angle-down"></i>

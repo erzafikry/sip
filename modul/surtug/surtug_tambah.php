@@ -43,12 +43,13 @@
 											 keterangan_surtug='$txtKeterangan',
 											 id_berkas='$cmbBerkas', 
 											 id_pegawai='$cmbPegawai',
+											 group_id='".$userRow['user_group']."',
 											 createdBy = '$createdBy',
-											 createdTime='".date('Y-m-d')."'";
+											 createdTime='".date('Y-m-d H:i:s')."'";
 			$qrySave=mysqli_query($koneksidb, $sqlSave) or die ("Gagal query".mysqli_error());
 			if($qrySave){
 				$_SESSION['pesan'] = 'Data berhasil ditambahkan.';
-			echo '<script>window.location="?page=datasurtug"</script>';
+				echo '<script>window.location="?page=datasurtug"</script>';
 
 			}
 		}	

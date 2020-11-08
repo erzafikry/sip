@@ -1,75 +1,51 @@
 <?php
 	if(isset($_POST['btnSave'])){
 		$message = array();
-		if (trim($_POST['txtNama'])=="") {
-			$message[] = "Nama Service & Pelayanan tidak boleh kosong!";		
+		if (trim($_POST['cmbBerkas'])=="") {
+			$message[] = "No Berkas tidak boleh kosong!";		
 		}
-		if (trim($_POST['cmbKategori'])=="") {
-			$message[] = "Data kategori belum dipilih, silahkan pilih terlebih dahulu!";		
+		if (trim($_POST['txtThnberkas'])=="") {
+			$message[] = "Tahun Berkas tidak boleh kosong!";		
 		}
-		if (trim($_POST['cmbMerk'])=="") {
-			$message[] = "Merk barang masih kosong, silahkan diisi terlebih dahulu";		
+		if (trim($_POST['txtNoSurtug'])=="") {
+			$message[] = "No Surat Tugas tidak boleh kosong!";		
 		}
-		if (trim($_POST['txtJual'])=="" ) {
-			$message[] = "Harga jual tidak boleh kosong, silahkan isi dengan angka!";		
+		if (trim($_POST['txtTglSurtug'])=="") {
+			$message[] = "Tgl Mulai Surat Tugas tidak boleh kosong!";		
 		}
-		if (trim($_POST['cmbStatus'])=="") {
-			$message[] = "Data status belum dipilih, silahkan pilih terlebih dahulu!";		
+		if (trim($_POST['txtTglSurtug2'])=="") {
+			$message[] = "Tgl Terbit Surat Tugas tidak boleh kosong!";		
 		}
-		if (trim($_POST['txtBarcode'])=="") {
-			$message[] = "Kode Barcode masih kosong, silahkan diisi terlebih dahulu";		
+		if (trim($_POST['cmbPegawai'])=="BLANK") {
+			$message[] = "Petugas Ukur tidak boleh kosong, silahkan pilih terlebih dahulu!";		
 		}
 		
-		$txtBarcode		= $_POST['txtBarcode'];
-		$txtBarcodeLm	= $_POST['txtBarcodeLm'];
-		$txtNama		= $_POST['txtNama'];
-		$txtLama		= $_POST['txtLama'];
-		$cmbKategori	= $_POST['cmbKategori'];
-		$txtJual		= $_POST['txtJual'];
-		$txtJual		= str_replace(".","",$txtJual);
-		$txtKeterangan	= $_POST['txtKeterangan'];
-		$cmbStatus		= $_POST['cmbStatus'];
-		$txtStok		= $_POST['txtStok'];
-		$cmbMerk		= $_POST['cmbMerk'];		
-		$txtUkuran		= $_POST['txtUkuran'];
-		
-		$namafile       = $txtBarcode.'.png';
-		$tempdir 		= "photo/"; 
-        $quality        = "H"; // ini ada 4 pilihan yaitu L (Low), M(Medium), Q(Good), H(High)
-        $ukuran         = 5; // 1 adalah yang terkecil, 10 paling besar
-        $padding        = 1;
-		
-		
-		$sqlCek2	= "SELECT COUNT(*) as total FROM ms_barang WHERE kode_barcode='$txtBarcode' AND NOT(kode_barcode='$txtBarcodeLm')";
-		$qryCek2	= mysqli_query($koneksidb, $sqlCek2) or die ("Eror Query".mysqli_error()); 
-		$cek2Row	= mysqli_fetch_array($qryCek2);
-		if($cek2Row['total']>=1){
-			$message[] = "Maaf, barang dan item dengan kode barcode <b> $txtBarcode </ b> sudah ada, silahkan ganti dengan yang lain";
-		}
+		$cmbBerkas			= $_POST['cmbBerkas'];
+		$txtThnberkas		= $_POST['txtThnberkas'];
+		$txtNoSurtug		= $_POST['txtNoSurtug'];
+		$txtTglSurtug		= $_POST['txtTglSurtug'];
+		$txtTglSurtug2		= $_POST['txtTglSurtug2'];
+		$cmbPegawai			= $_POST['cmbPegawai'];
+		$txtKeterangan		= $_POST['txtKeterangan'];
+
 		
 		
 		if(count($message)==0){			
-			$qrySave=mysqli_query($koneksidb, "UPDATE ms_barang SET nama_barang='$txtNama', 
-														id_kategori='$cmbKategori', 
-														kode_barcode='$txtBarcode', 
-														stok_barang='$txtStok',
-														harga_jual='$txtJual',
-														id_merk='$cmbMerk',
-														ukuran_barang='$txtUkuran',
-														status_barang='$cmbStatus',
-														keterangan_barang='$txtKeterangan'
-													WHERE id_barang='".$_POST['txtKode']."'") or die ("Gagal query".mysqli_error());
+			$qrySave=mysqli_query($koneksidb, "UPDATE ms_surtug SET no_surtug='$txtNoSurtug', 
+																	 tgl_mulai_surtug='".InggrisTgl($txtTglSurtug)."', 
+																	 tgl_terbit_surtug='".InggrisTgl($txtTglSurtug2)."',
+																	 keterangan_surtug='$txtKeterangan',
+																	 id_berkas='$cmbBerkas', 
+																	 id_pegawai='$cmbPegawai',
+																	 updatedBy = '".$_SESSION['id_user']."',
+																	 updatedTime='".date('Y-m-d H:i:s')."'
+													WHERE id_surtug='".$_POST['txtKode']."'") or die ("Gagal query".mysqli_error());
 			if($qrySave){
 
-				if($txtBarcode!=$txtBarcodeLm){
-					unlink("photo/".$txtBarcodeLm);	
-					QRCode::png($txtBarcode, $tempdir.$namafile, $quality, $ukuran, $padding);
-				}elseif(!file_exists("photo/".$namafile)) {
-					QRCode::png($txtBarcode, $tempdir.$namafile, $quality, $ukuran, $padding);
-				}
+			
+				$_SESSION['pesan'] = 'Data berhasil diperbaharui.';
+				echo '<script>window.location="?page=datasurtug"</script>';
 
-				$_SESSION['pesan'] = 'Data barang & item berhasil diperbaharui';
-				echo '<script>window.location="?page=databarang"</script>';
 			}
 			exit;
 		}	
@@ -86,161 +62,194 @@
 		}
 	} 
 	$KodeEdit			= isset($_GET['id']) ?  $_GET['id'] : $_POST['txtKode']; 
-	$sqlShow 			= "SELECT * FROM ms_barang WHERE id_barang='$KodeEdit'";
+	$sqlShow 			= "SELECT * FROM ms_surtug a
+							INNER JOIN ms_berkas b ON a.id_berkas=b.id_berkas
+							WHERE a.id_surtug='$KodeEdit'";
 	$qryShow 			= mysqli_query($koneksidb, $sqlShow)  or die ("Query ambil data supplier salah : ".mysqli_error());
 	$dataShow 			= mysqli_fetch_array($qryShow);
 	
-	$dataKode			= $dataShow['id_barang'];
-	$dataLama			= $dataShow['nama_barang'];
-	$dataBarcodeLm		= $dataShow['kode_barcode'];
-	$dataBarcode		= isset($dataShow['kode_barcode']) ?  $dataShow['kode_barcode'] : $_POST['txtBarcode'];
-	$dataNama			= isset($dataShow['nama_barang']) ?  $dataShow['nama_barang'] : $_POST['txtNama'];
-	$dataKategori		= isset($dataShow['id_kategori']) ?  $dataShow['id_kategori'] : $_POST['cmbKategori'];
-	$dataJual			= isset($dataShow['harga_jual']) ?  format_angka($dataShow['harga_jual']) : $_POST['txtJual'];
-	$dataMerk			= isset($dataShow['id_merk']) ?  $dataShow['id_merk'] : $_POST['cmbMerk'];
-	$dataKeterangan		= isset($dataShow['keterangan_barang']) ?  $dataShow['keterangan_barang'] : $_POST['txtKeterangan'];
-	$dataStatus			= isset($dataShow['status_barang']) ?  $dataShow['status_barang'] : $_POST['cmbStatus'];
-	$dataStok			= isset($dataShow['stok_barang']) ?  format_angka($dataShow['stok_barang']) : $_POST['txtStok'];
-	$dataUkuran			= isset($dataShow['ukuran_barang']) ?  $dataShow['ukuran_barang'] : $_POST['txtUkuran'];
+	$dataKode			= $dataShow['id_surtug'];
+	$dataBerkas			= isset($dataShow['kode_barcode']) ?  $dataShow['kode_barcode'] : $_POST['txtBarcode'];
+	$dataBerkas			= isset($_POST['cmbBerkas']) ? $_POST['cmbBerkas'] : $dataShow['id_berkas'] ;
+	$dataNoBerkas		= isset($_POST['txtNoBerkas']) ? $_POST['txtNoBerkas'] : $dataShow['no_berkas'];
+	$dataTahunBerkas	= isset($_POST['txtThnberkas']) ? $_POST['txtThnberkas'] : $dataShow['tahun_berkas'];
+	$dataNosurtug		= isset($_POST['txtNoSurtug']) ? $_POST['txtNoSurtug'] : $dataShow['no_surtug'];
+	$dataTglSurtug		= isset($_POST['txtTglSurtug']) ? $_POST['txtTglSurtug'] : IndonesiaTgl($dataShow['tgl_mulai_surtug']);
+	$dataTglSurtug2		= isset($_POST['txtTglSurtug2']) ? $_POST['txtTglSurtug2'] : IndonesiaTgl($dataShow['tgl_terbit_surtug']);
+	$dataKeterangan	 	= isset($_POST['txtKeterangan']) ? $_POST['txtKeterangan'] : $dataShow['keterangan_surtug'];
+	$dataPegawai	 	= isset($_POST['cmbPegawai']) ? $_POST['cmbPegawai'] : $dataShow['id_pegawai'];
 
 ?>
-<div class="portlet box grey-cascade">
-	<div class="portlet-title">
-		<div class="caption"><span class="caption-subject uppercase bold"> Form Penambahan Barang & Item</span></div>
-		<div class="tools">
-			<a href="javascript:;" class="collapse"></a>
-			<a href="javascript:;" class="reload"></a>
-			<a href="javascript:;" class="remove"></a>
+<form action="<?php $_SERVER['PHP_SELF']; ?>" method="post" name="post" class="form-horizontal" enctype="multipart/form-data">
+	<div class="portlet box grey-cascade">
+		<div class="portlet-title">
+			<div class="caption">
+	            <span class="caption-subject uppercase bold hidden-xs">Form Perubahan Surat Tugas</span>
+	        </div>
+			<div class="tools">
+				<a href="javascript:;" class="collapse"></a>
+				<a href="javascript:;" class="reload"></a>
+				<a href="javascript:;" class="remove"></a>
+			</div>
 		</div>
-	</div>
-	<div class="portlet-body form">
-		<form action="<?php $_SERVER['PHP_SELF']; ?>" method="post" name="form1" class="form-horizontal">
+		<div class="portlet-body form">
 			<div class="form-body">
-				<input class="form-control" type="hidden" value="<?php echo $dataKode; ?>" readonly="readonly" name="txtKode"/>
-					
 				<div class="form-group">
-					<label class="col-md-2 control-label">Kode Barang :</label>
-					<div class="col-md-3">
-						<input class="form-control" type="text" value="<?php echo $dataBarcode; ?>" name="txtBarcode"/>
-						<input class="form-control" type="hidden" value="<?php echo $dataBarcodeLm; ?>" name="txtBarcodeLm"/>
+					<label class="col-lg-2 control-label">No.Berkas :</label>
+					<div class="input-group col-md-1">
+						<input type="hidden" name="cmbBerkas" id="id_berkas" value="<?php echo $dataBerkas ?>">
+						<input type="hidden" name="txtKode" value="<?php echo $dataKode ?>">
+						<input class="form-control" type="text" name="txtNoBerkas" value="<?php echo $dataNoBerkas ?>" id="no_berkas" readonly />
+						<span class="input-group-btn">
+							<a class="btn blue btn-block" data-toggle="modal" data-target="#berkas"><i class="icon-magnifier"></i></a>
+						</span>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-md-2 control-label">Nama Barang :</label>
-					<div class="col-md-7">
-						<input class="form-control" name="txtNama" value="<?php echo $dataNama; ?>" type="text"/>
+					<label class="col-lg-2 control-label">Tahun Berkas :</label>
+					<div class="input-group col-md-1">
+						<input class="form-control" id="tahun_berkas" readonly type="text" value="<?php echo $dataTahunBerkas; ?>" name="txtThnberkas"/>
+					</div>
+				</div>				
+				<div class="form-group">
+					<label class="col-lg-2 control-label">No. Surat Tugas :</label>
+					<div class="input-group col-lg-2">
+						<input class="form-control" type="text" name="txtNoSurtug" value="<?php echo $dataNosurtug; ?>"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-md-2 control-label">Kategori :</label>
-					<div class="col-md-4">
-					<select name="cmbKategori" class="form-control select2" data-placeholder="Pilih Kategori" tabindex="1">
-					  <option value=""> </option>
-					  <?php
-						  $dataSql = "SELECT * FROM ms_kategori WHERE status_kategori='Active' ORDER BY id_kategori";
-						  $dataQry = mysqli_query($koneksidb, $dataSql) or die ("Gagal Query".mysqli_error());
-						  while ($dataRow = mysqli_fetch_array($dataQry)) {
-							if ($dataKategori == $dataRow['id_kategori']) {
-								$cek = " selected";
-							} else { $cek=""; }
-							echo "<option value='$dataRow[id_kategori]' $cek>$dataRow[nama_kategori]</option>";
-						  }
-						  $sqlData ="";
-					  ?>
-				  	</select>
+					<label class="col-lg-2 control-label">Tgl. Mulai Surat Tugas :</label>
+					<div class="input-group col-lg-2">
+						<div class="input-icon left">
+							<i class="icon-calendar"></i>
+							<input class="form-control date-picker" data-date-format="dd-mm-yyyy" type="text" value="<?php echo $dataTglSurtug; ?>" name="txtTglSurtug"/>
+						</div>
+					</div>
+				</div>	
+				<div class="form-group">
+					<label class="col-lg-2 control-label">Tgl. Terbit Surat Tugas :</label>
+					<div class="input-group col-lg-2">
+						<div class="input-icon left">
+							<i class="icon-calendar"></i>
+							<input class="form-control date-picker" data-date-format="dd-mm-yyyy" type="text" value="<?php echo $dataTglSurtug2; ?>" name="txtTglSurtug2"/>
+						</div>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-md-2 control-label">Merk Barang :</label>
-					<div class="col-md-4">
-					<select name="cmbMerk" class="form-control select2" data-placeholder="Pilih Merk" tabindex="1">
-					  <option value=""> </option>
-					  <?php
-						  $dataSql = "SELECT * FROM ms_merk WHERE status_merk='Active' ORDER BY id_merk";
-						  $dataQry = mysqli_query($koneksidb, $dataSql) or die ("Gagal Query".mysqli_error());
-						  while ($dataRow = mysqli_fetch_array($dataQry)) {
-							if ($dataMerk == $dataRow['id_merk']) {
-								$cek = " selected";
-							} else { $cek=""; }
-							echo "<option value='$dataRow[id_merk]' $cek>$dataRow[nama_merk]</option>";
-						  }
-						  $sqlData ="";
-					  ?>
-				  	</select>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-md-2 control-label">Harga Jual &nbsp;Rp. :</label>
-					<div class="col-md-2">
-						<input class="form-control" name="txtJual" value="<?php echo $dataJual; ?>" type="text" id="inputku" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);"/>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-md-2 control-label">Ukuran :</label>
-					<div class="col-md-4">
-						<input class="form-control" name="txtUkuran" value="<?php echo $dataUkuran; ?>" type="text"/>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-md-2 control-label">Stok Tersedia :</label>
-					<div class="col-md-2">
-						<input class="form-control" name="txtStok" value="<?php echo $dataStok; ?>" type="text"/>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-md-2 control-label">Keterangan :</label>
-					<div class="col-md-10">
+					<label class="col-lg-2 control-label">Keterangan :</label>
+					<div class="input-group col-lg-3">
 						<textarea class="form-control" name="txtKeterangan" type="text"/><?php echo $dataKeterangan; ?></textarea>
 					</div>
 				</div>
 				<div class="form-group">
-	                <label class="col-md-2 control-label">Status :</label>
-	                <div class="col-md-10">
-	                    <div class="md-radio-list">
-	                    	<?php
-								if($dataStatus=='Active'){
-				                    echo " 	<div class='md-radio'>
-				                    			<input type='radio' id='radio53' name='cmbStatus' value='Active' class='md-radiobtn' checked>
-				                            	<label for='radio53'><span></span><span class='check'></span><span class='box'></span> Active </label>
-				                            </div>
-				                        	<div class='md-radio'>
-				                            	<input type='radio' id='radio54' name='cmbStatus' value='Non Active' class='md-radiobtn'>
-				                            	<label for='radio54'><span></span><span class='check'></span><span class='box'></span> Non Active </label>
-				                        	</div>";
-				                }elseif($dataStatus=='Non Active'){
-				                	echo "	<div class='md-radio'>
-				                            	<input type='radio' id='radio53' name='cmbStatus' value='Active' class='md-radiobtn'>
-				                            	<label for='radio53'><span></span><span class='check'></span><span class='box'></span> Active </label>
-				                        	</div>
-				                        	<div class='md-radio'>
-				                            	<input type='radio' id='radio54' name='cmbStatus' value='Non Active' class='md-radiobtn' checked>
-				                            	<label for='radio54'><span></span><span class='check'></span><span class='box'></span> Non Active </label>
-				                            </div>";
-				                }else{
-				                	echo "	<div class='md-radio'>
-				                            	<input type='radio' id='radio53' name='cmbStatus' value='Active' class='md-radiobtn'>
-				                            	<label for='radio53'><span></span><span class='check'></span><span class='box'></span> Active </label>
-				                        	</div>
-				                        	<div class='md-radio'>
-				                            	<input type='radio' id='radio54' name='cmbStatus' value='Non Active' class='md-radiobtn'>
-				                            	<label for='radio54'><span></span><span class='check'></span><span class='box'></span> Non Active </label>
-				                            </div>";
-				                }
-				            ?>
-	                    </div>
-	                </div>
-	            </div>
-			</div>
-			<div class="form-actions">
+					<label class="col-lg-2 control-label">Petugas Ukur :</label>
+					<div class="input-group col-lg-3">
+						<select name="cmbPegawai" class="select2 form-control" data-placeholder="Pilih Pegawai">
+							<option value="BLANK"> </option>
+							<?php
+							  $dataSql = "SELECT * FROM ms_pegawai a
+											INNER JOIN ms_jabatan c ON a.id_jabatan=c.id_jabatan
+											WHERE c.nama_jabatan IN ('Petugas Ukur','Surveyor Pemetaan Penyelia',
+											'Surveyor Pemetaan Pelaksana','Asisten Surveyor Kadaster Berlisensi','Pembantu Ukur')
+											ORDER BY a.nama_pegawai ASC";
+							  $dataQry = mysqli_query($koneksidb, $dataSql) or die ("Gagal Query".mysqli_error());
+							  while ($dataRow = mysqli_fetch_array($dataQry)) {
+								if ($dataPegawai == $dataRow['id_pegawai']) {
+									$cek = " selected";
+								} else { $cek=""; }
+								echo "<option value='$dataRow[id_pegawai]' $cek>$dataRow[nama_pegawai]</option>";
+							  }
+							  $sqlData ="";
+							?>
+						</select>
+					</div>
+				</div>					
+	         </div>
+			
+	         <div class="form-actions">
 			    <div class="row">
 			        <div class="form-group">
 			            <div class="col-lg-offset-2 col-lg-10">
 			                <button type="submit" name="btnSave" class="btn blue"><i class="fa fa-save"></i> Simpan Data</button>
-			                <a href="?page=databarang" class="btn yellow"><i class="fa fa-undo"></i> Batalkan</a>
+			                <a href="?page=datasurtug" class="btn yellow"><i class="fa fa-undo"></i> Batal</a>
 			            </div>
 			        </div>
 			    </div>
 			</div>
-		</form>
+		</div>
+	</div>
+</form>
+<SCRIPT language="JavaScript">
+	function submitform() {
+		document.form1.submit();
+	}
+</SCRIPT>
+<form action="<?php $_SERVER['PHP_SELF']; ?>" method="post" name="form1" class="portlet-body form">
+<div class="modal fade bs-modal-lg" id="berkas" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+				<h4 class="modal-title">Data Berkas Masuk</h4>
+			</div>
+			<div class="modal-body"> 
+				<table class="table table-hover table-bordered table-striped table-condensed" width="100%" id="sample_4">
+					<thead>
+						<tr class="active">
+							<th width="5"><div align="center">NO</div></th>
+							<th width="10">NO BERKAS</th>
+							<th width="10">TAHUN BERKAS</th>
+							<th width="30">NAMA PEMOHON</th>
+							<th width="30">KEGIATAN</th>
+							<th width="20">KECAMATAN</th>
+							<th width="20">KELURAHAN</th>
+							<th width="5">#</th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php
+						//Data mentah yang ditampilkan ke tabel    
+						$query = mysqli_query($koneksidb, "SELECT * FROM ms_berkas a
+									INNER JOIN ms_pemohon b ON a.id_pemohon=b.id_pemohon
+									INNER JOIN ms_layanan c ON a.id_layanan=c.id_layanan
+									INNER JOIN ms_kecamatan d ON a.id_kecamatan=d.id_kecamatan
+									INNER JOIN ms_kelurahan e ON a.id_kelurahan=e.id_kelurahan
+									INNER JOIN ms_status_berkas f ON a.id_status_berkas=f.id_status_berkas
+									ORDER BY id_berkas ASC");
+						$nomor = 0;
+						while ($data = mysqli_fetch_array($query)) {
+							$nomor ++;
+							?>
+							<tr class="pilihBerkas" data-dismiss="modal" aria-hidden="true" 
+							id-berkas="<?php echo $data['id_berkas']; ?>"
+							no-berkas="<?php echo $data['no_berkas']; ?>"
+							tahun-berkas="<?php echo $data['tahun_berkas']; ?>">
+								<td><div align="center"><?php echo $nomor; ?></div></td>
+								<td><?php echo $data['no_berkas']; ?></td>
+								<td><?php echo $data['tahun_berkas']; ?></td>
+								<td><?php echo $data ['nama_pemohon']; ?></td>
+								<td><?php echo $data ['nama_layanan']; ?></td>
+								<td><?php echo $data ['nama_kecamatan']; ?></td>
+								<td><?php echo $data ['nama_kelurahan']; ?></td>
+								<td><i class="btn btn-xs green fa fa-check"></i></td>
+							</tr>
+							<?php } ?>
+					</tbody>
+				</table>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn blue" data-dismiss="modal">Tutup</button>
+			</div>
+		</div>
 	</div>
 </div>
+</form>
+<script src="./assets/scripts/jquery-1.11.2.min.js"></script>
+<script type="text/javascript">
+	$(document).on('click', '.pilihBerkas', function (e) {
+			document.getElementById("id_berkas").value = $(this).attr('id-berkas');
+			document.getElementById("no_berkas").value = $(this).attr('no-berkas');
+			document.getElementById("tahun_berkas").value = $(this).attr('tahun-berkas');
+			// document.getElementById("telp_pemohon").value = $(this).attr('telp-pemohon');
+	});
+</script>
