@@ -35,7 +35,8 @@
 				
 				$qryUpdate=mysqli_query($koneksidb, "UPDATE ms_surtug SET group_id='".$userKirim."', 
 																		updatedBy = '".$_SESSION['id_user']."',
-																	 	updatedTime='".date('Y-m-d H:i:s')."'
+																	 	updatedTime='".date('Y-m-d H:i:s')."',
+																	 	id_petugas_ukur='".$_POST['cmbPegawai']."'
 															WHERE id_surtug='".$_POST['txtKode']."'") 
 				or die ("Gagal query update".mysqli_error());
 
@@ -142,20 +143,49 @@
 			<div class="form-body">
 				<input type="hidden" name="txtKode" value="<?php echo $dataKode ?>">
 				<div class="form-group">
-					<label class="col-lg-2 control-label">Keterangan :</label>
+					<label class="col-lg-2 control-label">Diproses Pada :</label>
 					<div class="input-group col-lg-3">
-						<textarea class="form-control" name="txtKeterangan" type="text"/><?php echo $dataKeterangan; ?></textarea>
+						<input type="text" disabled value="<?php echo date('d/m/Y H:i') ?>" class="form-control">
 					</div>
 				</div>
-						
-	         </div>
-			
-	         <div class="form-actions">
+				<div class="form-group">
+					<label class="col-lg-2 control-label">Keterangan :</label>
+					<div class="input-group col-lg-8">
+						<textarea class="form-control" name="txtKeterangan" type="text"/><?php echo $dataKeterangan; ?></textarea>
+					</div>
+				</div>	
+	        </div>
+			<?php if($userRow['user_group']==10){ ?>
+			<div class="form-group">
+				<label class="col-lg-2 control-label">Petugas Ukur :</label>
+				<div class="col-lg-3">
+					<select name="cmbPegawai" class="select2 form-control" data-placeholder="Pilih Pegawai">
+						<option value="BLANK"> </option>
+						<?php
+						  $dataSql = "SELECT * FROM ms_pegawai a
+						  				INNER JOIN ms_user b ON a.id_pegawai=b.id_pegawai
+						  				WHERE b.user_group='11'";
+						  $dataQry = mysqli_query($koneksidb, $dataSql) or die ("Gagal Query".mysqli_error());
+						  while ($dataRow = mysqli_fetch_array($dataQry)) {
+							if ($dataPegawai == $dataRow['id_pegawai']) {
+								$cek = " selected";
+							} else { $cek=""; }
+							echo "<option value='$dataRow[id_pegawai]' $cek>$dataRow[nama_pegawai]</option>";
+						  }
+						  $sqlData ="";
+						?>
+					</select>
+				</div>
+			</div>		
+
+			<?php } ?>
+	        <div class="form-actions">
 			    <div class="row">
 			        <div class="form-group">
 			            <div class="col-lg-offset-2 col-lg-10">
 			                <button type="submit" name="btnKirim" class="btn blue"><i class="fa fa-save"></i> Kirim Data</button>
-			                <button type="submit" name="btnBatal" class="btn blue"><i class="fa fa-save"></i> Batal Kirim</button>
+			                <button type="submit" name="btnBatal" class="btn blue"><i class="fa fa-save"></i> Dikembalikan</button>
+			                <a href="?page=datasurtug" class="btn blue"><i class="fa fa-undo"></i> Batal/Cancel</a>
 			        </div>
 			    </div>
 			</div>

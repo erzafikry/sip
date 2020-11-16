@@ -36,7 +36,7 @@
 									INNER JOIN sys_group c ON a.group_id = c.group_id
 									INNER JOIN ms_user d ON a.createdby = d.id_user
 									INNER JOIN ms_pegawai e ON d.id_pegawai = e.id_pegawai 
-								WHERE a.id_surtug='$dataKode' AND (a.group_id='".$userRow['user_group']."' OR a.createdBy='".$userRow['id_user']."')
+								WHERE a.id_surtug='$dataKode'
 								ORDER BY
 									a.id_trx_surtug ASC";
 					$dataQry = mysqli_query($koneksidb, $dataSql)  or die ("Koneksi gagal : ".mysqli_error());

@@ -147,11 +147,11 @@
 	// $pemohonQry		= mysqli_query($koneksidb, $pemohonSql);
 	// $pemohonRow		= mysqli_fetch_array($pemohonQry);
 	
-	$dataPemohon		= isset($_POST['cmbPemohon']) ? $_POST['cmbPemohon'] : $pemohonRow['id_pemohon'] ;
-	$dataNikPemohon		= isset($_POST['txtNikPemohon']) ? $_POST['txtNikPemohon'] : $pemohonRow['nik_pemohon'];
-	$dataNamaPemohon	= isset($_POST['txtNamaPemohon']) ? $_POST['txtNamaPemohon'] : $pemohonRow['nama_pemohon'];
-	$dataAlamatPemohon	= isset($_POST['txtAlamatPemohon']) ? $_POST['txtAlamat'] : $pemohonRow['alamat_pemohon'] ;
-	$dataTelpPemohon	= isset($_POST['txtTelpPemohon']) ? $_POST['txtTelpPemohon'] : $pemohonRow['telp_pemohon'] ;
+	$dataPemohon		= isset($_POST['cmbPemohon']) ? $_POST['cmbPemohon'] : '' ;
+	$dataNikPemohon		= isset($_POST['txtNikPemohon']) ? $_POST['txtNikPemohon'] : '';
+	$dataNamaPemohon	= isset($_POST['txtNamaPemohon']) ? $_POST['txtNamaPemohon'] : '';
+	$dataAlamatPemohon	= isset($_POST['txtAlamatPemohon']) ? $_POST['txtAlamat'] : '' ;
+	$dataTelpPemohon	= isset($_POST['txtTelpPemohon']) ? $_POST['txtTelpPemohon'] : '' ;
 	
 	$dataNoberkas		= isset($_POST['txtNoberkas']) ? $_POST['txtNoberkas'] : '';
 	$dataTahunberkas	= isset($_POST['txtThnberkas']) ? $_POST['txtThnberkas'] : '';
@@ -165,8 +165,12 @@
 	$dataStatus		 	= isset($_POST['cmbStatus']) ? $_POST['cmbStatus'] : '';
 	$dataKeterangan	 	= isset($_POST['txtKeterangan']) ? $_POST['txtKeterangan'] : '';
 ?>
-
-<form action="<?php $_SERVER['PHP_SELF']; ?>" method="post" name="frmadd" class="form-horizontal">	
+<SCRIPT language="JavaScript">
+function submitform() {
+    document.form1.submit();
+}
+</SCRIPT>
+<form action="<?php $_SERVER['PHP_SELF']; ?>" method="post" name="form1" class="form-horizontal">	
 	<div class="portlet box grey-cascade">
 		<div class="portlet-title">
 			<div class="caption">
@@ -220,7 +224,7 @@
 							  $dataSql = "SELECT * FROM ms_layanan ORDER BY id_layanan ASC";
 							  $dataQry = mysqli_query($koneksidb, $dataSql) or die ("Gagal Query".mysqli_error());
 							  while ($dataRow = mysqli_fetch_array($dataQry)) {
-								if ($dataLevel == $dataRow['id_layanan']) {
+								if ($dataLayanan == $dataRow['id_layanan']) {
 									$cek = " selected";
 								} else { $cek=""; }
 								echo "<option value='$dataRow[id_layanan]' $cek>$dataRow[nama_layanan]</option>";
@@ -233,13 +237,13 @@
 				<div class="form-group">
 					<label class="col-lg-2 control-label">Kecamatan :</label>
 					<div class="col-lg-3">
-						<select name="cmbKecamatan" class="select2 form-control" data-placeholder="Pilih Kecamatan">
+						<select name="cmbKecamatan" class="select2 form-control" data-placeholder="Pilih Kecamatan" onChange="javascript:submitform();">
 							<option value="BLANK"> </option>
 							<?php
 							  $dataSql = "SELECT * FROM ms_kecamatan ORDER BY nama_kecamatan ASC";
 							  $dataQry = mysqli_query($koneksidb, $dataSql) or die ("Gagal Query".mysqli_error());
 							  while ($dataRow = mysqli_fetch_array($dataQry)) {
-								if ($dataLevel == $dataRow['id_kecamatan']) {
+								if ($dataKecamatan == $dataRow['id_kecamatan']) {
 									$cek = " selected";
 								} else { $cek=""; }
 								echo "<option value='$dataRow[id_kecamatan]' $cek>$dataRow[nama_kecamatan]</option>";
@@ -255,10 +259,10 @@
 						<select name="cmbKelurahan" class="select2 form-control" data-placeholder="Pilih Kelurahan">
 							<option value="BLANK"> </option>
 							<?php
-							  $dataSql = "SELECT * FROM ms_kelurahan ORDER BY nama_kelurahan ASC";
+							  $dataSql = "SELECT * FROM ms_kelurahan WHERE id_kecamatan='$dataKecamatan' ORDER BY nama_kelurahan ASC";
 							  $dataQry = mysqli_query($koneksidb, $dataSql) or die ("Gagal Query".mysqli_error());
 							  while ($dataRow = mysqli_fetch_array($dataQry)) {
-								if ($dataLevel == $dataRow['id_kelurahan']) {
+								if ($dataKelurahan == $dataRow['id_kelurahan']) {
 									$cek = " selected";
 								} else { $cek=""; }
 								echo "<option value='$dataRow[id_kelurahan]' $cek>$dataRow[nama_kelurahan]</option>";
@@ -326,12 +330,7 @@
 		</div>
 	</div>
 </form>
-<SCRIPT language="JavaScript">
-	function submitform() {
-		document.form1.submit();
-	}
-</SCRIPT>
-<form action="<?php $_SERVER['PHP_SELF']; ?>" method="post" name="form1" class="portlet-body form">
+<form action="<?php $_SERVER['PHP_SELF']; ?>" method="post" class="portlet-body form">
 <div class="modal fade bs-modal-lg" id="pemohon" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">

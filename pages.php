@@ -2,6 +2,7 @@
 <?php
 	$pg=$_GET['page'];
 		if($pg=="home"){ include"modul/home.php"; }
+		elseif($pg=="historyberkashome"){ include"modul/history_berkas_home.php"; }
 	// DATA PENGATURAN SEKSI
 		elseif($pg=="confseksi"){ include"modul/konfigurasi/conf_seksi.php"; }
 		elseif($pg=="confprofile"){ include"modul/konfigurasi/conf_profil.php"; }
@@ -59,6 +60,10 @@
 		elseif($pg=="databerkas"){ include"modul/berkas/berkas_data.php"; }
 		elseif($pg=="tambahberkas"){ include"modul/berkas/berkas_tambah.php"; }
 		elseif($pg=="ubahberkas"){ include"modul/berkas/berkas_ubah.php"; }
+	// DATA BERKAS MASUK
+		elseif($pg=="databerkasmasuk"){ include"modul/berkas_masuk/berkas_masuk_data.php"; }
+		elseif($pg=="kirimberkasmasuk"){ include"modul/berkas_masuk/berkas_masuk_kirim.php"; }
+		elseif($pg=="historyberkasmasuk"){ include"modul/berkas_masuk/berkas_masuk_history.php"; }
 	// DATA SURTUG
 		elseif($pg=="datasurtug"){ include"modul/surtug/surtug_data.php"; }
 		elseif($pg=="tambahsurtug"){ include"modul/surtug/surtug_tambah.php"; }

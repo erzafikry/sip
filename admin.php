@@ -132,7 +132,7 @@ $userRow = mysqli_fetch_array($userQry);
 				<i class="fa fa-bell"></i>
 				<span class="username">
           <?php 
-          $sqlSurtug  = "SELECT COUNT(*) as total FROM ms_surtug WHERE group_id='".$userRow['user_group']."'";
+          $sqlSurtug  = "SELECT COUNT(*) as total FROM ms_surtug WHERE group_id='".$userRow['user_group']."' AND NOT status_surtug='Selesai'";
           $qrySurtug  = mysqli_query($koneksidb, $sqlSurtug) or die ("Eror show notif".mysqli_error()); 
           $showSurtug = mysqli_fetch_array($qrySurtug);
 

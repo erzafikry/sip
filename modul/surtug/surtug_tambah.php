@@ -48,6 +48,22 @@
 											 createdTime='".date('Y-m-d H:i:s')."'";
 			$qrySave=mysqli_query($koneksidb, $sqlSave) or die ("Gagal query".mysqli_error());
 			if($qrySave){
+				$sqlId		= "SELECT MAX(id_surtug) as id_surtug FROM ms_surtug";
+				$qryId		= mysqli_query($koneksidb, $sqlId) or die ("Eror Query".mysqli_error()); 
+				$rowId 		= mysqli_fetch_array($qryId);
+
+
+
+				$sqlSaveHis	="INSERT INTO trx_surtug SET id_surtug='".$rowId['id_surtug']."', 
+												 id_pegawai='".$userRow['id_pegawai']."',
+												 catatan='Surat tugas dibuat oleh admin',
+												 tgl_kirim='".date('Y-m-d')."',
+												 group_id='".$userRow['user_group']."',
+												 status='Dibuat',
+												 createdBy = '".$_SESSION['id_user']."',
+												 createdTime='".date('Y-m-d H:i:s')."'";
+				$qrySaveHis	=mysqli_query($koneksidb, $sqlSaveHis) or die ("Gagal query insert".mysqli_error());
+
 				$_SESSION['pesan'] = 'Data berhasil ditambahkan.';
 				echo '<script>window.location="?page=datasurtug"</script>';
 
@@ -209,6 +225,7 @@
 									INNER JOIN ms_kecamatan d ON a.id_kecamatan=d.id_kecamatan
 									INNER JOIN ms_kelurahan e ON a.id_kelurahan=e.id_kelurahan
 									INNER JOIN ms_status_berkas f ON a.id_status_berkas=f.id_status_berkas
+									WHERE NOT a.id_berkas IN (SELECT id_berkas FROM ms_surtug)
 									ORDER BY id_berkas ASC");
 						$nomor = 0;
 						while ($data = mysqli_fetch_array($query)) {
