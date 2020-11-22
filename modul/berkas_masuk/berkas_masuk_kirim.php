@@ -4,8 +4,31 @@
 		if (trim($_POST['txtKeterangan'])=="") {
 			$message[] = "Keterangan tidak boleh kosong!";		
 		}
+
+		// CEK DATA PETUGAS
+		$ptgcekSql	= "SELECT * FROM ms_surtug WHERE id_surtug='".$_POST['txtKode']."'";
+		$ptgcekQry	= mysqli_query($koneksidb, $ptgcekSql) or die ("cek petugas error".mysqli_error());
+		$ptgcekRow	= mysqli_fetch_array($ptgcekQry);
+
+		if (!empty($ptgcekRow['id_kasie']) AND trim($_POST['txtNoSuratUkur'])=="") {
+			$message[] = "No. surat ukur tidak boleh kosong!";		
+		}
+		if (!empty($ptgcekRow['id_kasie']) AND trim($_POST['cmbTahun'])=="") {
+			$message[] = "Tahun surat ukur tidak boleh kosong!";		
+		}
+		if (!empty($ptgcekRow['id_kasie']) AND trim($_POST['txtNo307'])=="") {
+			$message[] = "No DI.307 tidak boleh kosong!";		
+		}
+		if (!empty($ptgcekRow['id_kasie']) AND trim($_POST['cmbTahun307'])=="") {
+			$message[] = "Tahun DI.307 tidak boleh kosong!";		
+		}
+
 		
 		$txtKeterangan		= $_POST['txtKeterangan'];
+		$txtNoSuratUkur		= $_POST['txtNoSuratUkur'];
+		$cmbTahun 			= $_POST['cmbTahun'];
+		$txtNo307			= $_POST['txtNo307'];
+		$cmbTahun307		= $_POST['cmbTahun307'];
 
 		if(count($message)==0){			
 			$sqlSave="INSERT INTO trx_surtug SET id_surtug='".$_POST['txtKode']."', 
@@ -20,9 +43,13 @@
 			if($qrySave){
 				
 				$qryUpdate=mysqli_query($koneksidb, "UPDATE ms_surtug SET updatedBy = '".$_SESSION['id_user']."',
-																	 	updatedTime='".date('Y-m-d H:i:s')."',
-																	 	status_surtug='Selesai'
-															WHERE id_surtug='".$_POST['txtKode']."'") 
+																	 	 updatedTime='".date('Y-m-d H:i:s')."',
+																		 no_surat_ukur='$txtNoSuratUkur',
+																		 tahun_surat_ukur='$cmbTahun',
+																		 no_307='$txtNo307',
+																		 tahun_307='$cmbTahun307',
+																	 	 status_surtug='Selesai'
+																	WHERE id_surtug='".$_POST['txtKode']."'") 
 				or die ("Gagal query update".mysqli_error());
 
 
@@ -308,7 +335,55 @@
 					</select>
 				</div>
 			</div>	
-			<?php } ?>	
+			<?php }elseif($userRow['user_group']==10 AND !empty($dataShow['id_kasie'])){ ?>	
+
+			<div class="form-group">
+				<label class="col-lg-2 control-label">No. Surat Ukur :</label>
+				<div class="col-lg-3">
+					<input type="text" name="txtNoSuratUkur" value="<?php echo $dataNoSuratUkur ?>" class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-lg-2 control-label">Tahun Surat Ukur :</label>
+				<div class="col-lg-2">
+					<select data-placeholder="- Pilih Tahun -" name="cmbTahun" class="form-control select2">
+						<option value=""></option> 
+						<?php
+						$tahunKemaren = date('Y') - 5;
+							for($thn= $tahunKemaren; $thn <= date('Y'); $thn++) {
+							if ($thn == $dataTahun) {
+									$cek = " selected";
+							} else { $cek=""; }
+								echo "<option value='$thn' $cek>$thn</option>";
+							}
+						?>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-lg-2 control-label">No. DI.307 :</label>
+				<div class="col-lg-3">
+					<input type="text" name="txtNo307" value="<?php echo $dataNo307 ?>" class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-lg-2 control-label">Tahun DI.307 :</label>
+				<div class="col-lg-2">
+					<select data-placeholder="- Pilih Tahun -" name="cmbTahun307" class="form-control select2">
+						<option value=""></option> 
+						<?php
+						$tahunKemaren = date('Y') - 5;
+							for($thn= $tahunKemaren; $thn <= date('Y'); $thn++) {
+							if ($thn == $dataTahun307) {
+									$cek = " selected";
+							} else { $cek=""; }
+								echo "<option value='$thn' $cek>$thn</option>";
+							}
+						?>
+					</select>
+				</div>
+			</div>
+			<?php } ?>
 	        <div class="form-actions">
 			    <div class="row">
 			        <div class="form-group">

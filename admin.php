@@ -132,13 +132,29 @@ $userRow = mysqli_fetch_array($userQry);
 				<i class="fa fa-bell"></i>
 				<span class="username">
           <?php 
-          $sqlSurtug  = "SELECT COUNT(*) as total FROM ms_surtug WHERE group_id='".$userRow['user_group']."' AND NOT status_surtug='Selesai'";
+          $sqlSurtug  = "SELECT 
+                          COUNT(*) as total,
+                          id_petugas_ukur
+                          FROM ms_surtug 
+                          WHERE group_id='".$userRow['user_group']."' 
+                          AND NOT status_surtug='Selesai'";
           $qrySurtug  = mysqli_query($koneksidb, $sqlSurtug) or die ("Eror show notif".mysqli_error()); 
           $showSurtug = mysqli_fetch_array($qrySurtug);
 
-          if($showSurtug['total']>=1){
+          $sqlSurtug2  = "SELECT 
+                          COUNT(*) as total
+                          FROM ms_surtug 
+                          WHERE (id_petugas_ukur='".$userRow['id_pegawai']."' OR id_petugas_grafis='".$userRow['id_pegawai']."' OR id_petugas_textual='".$userRow['id_pegawai']."' OR id_kasubsie='".$userRow['id_pegawai']."' OR id_kasie='".$userRow['id_pegawai']."')
+                          AND NOT status_surtug='Selesai'";
+          $qrySurtug2  = mysqli_query($koneksidb, $sqlSurtug2) or die ("Eror show notif".mysqli_error()); 
+          $showSurtug2 = mysqli_fetch_array($qrySurtug2);
+
+          if($showSurtug['total']>=1 AND $showSurtug2['total']>=1){
+            $notif  = '<span class="badge badge-danger">'.$showSurtug2['total'].'</span>';
+          }elseif(empty($showSurtug['id_petugas_ukur']) AND $showSurtug['total']>=1){
             $notif  = '<span class="badge badge-danger">'.$showSurtug['total'].'</span>';
-          }else{
+          }
+          else{
             $notif  = '';
           }
 

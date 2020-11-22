@@ -69,21 +69,27 @@ $userRow = mysqli_fetch_array($userQry);
                             <th width="2%"><div align="center">NO </div></th>
                             <th width="8%"><div align="center">NO BERKAS</div></th>
                             <th width="6%"><div align="center">TAHUN BERKAS</div></th>
-                            <th width="24%"><div align="center">NAMA PEMOHON</div></th>
-                            <th width="24%"><div align="center">JENIS LAYANAN</div></th>
+                            <th width="20%">NAMA PEMOHON</th>
+                            <th width="20%">LAYANAN</th>
+                            <th width="24%">KETERANGAN</th>
                             <th width="10%"><div align="center">STATUS</div></th>
                             <th width="10%"><div align="center">RIWAYAT</div></th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-							$dataSql = "SELECT * FROM ms_berkas a
-										INNER JOIN ms_pemohon b ON a.id_pemohon=b.id_pemohon
-										INNER JOIN ms_layanan c ON a.id_layanan=c.id_layanan
-										INNER JOIN ms_kecamatan d ON a.id_kecamatan=d.id_kecamatan
-										INNER JOIN ms_kelurahan e ON a.id_kelurahan=e.id_kelurahan
-										INNER JOIN ms_surtug f ON a.id_berkas=f.id_berkas
-										ORDER BY a.id_berkas DESC";
+							$dataSql = "SELECT
+											*,
+											( SELECT catatan FROM trx_surtug g WHERE g.id_surtug = f.id_surtug ORDER BY g.id_trx_surtug DESC LIMIT 1) AS keterangan 
+										FROM
+											ms_berkas a
+											INNER JOIN ms_pemohon b ON a.id_pemohon = b.id_pemohon
+											INNER JOIN ms_layanan c ON a.id_layanan = c.id_layanan
+											INNER JOIN ms_kecamatan d ON a.id_kecamatan = d.id_kecamatan
+											INNER JOIN ms_kelurahan e ON a.id_kelurahan = e.id_kelurahan
+											INNER JOIN ms_surtug f ON a.id_berkas = f.id_berkas 
+										ORDER BY
+											a.id_berkas DESC";
 							$dataQry = mysqli_query($koneksidb, $dataSql)  or die ("Query salah : ".mysqli_error());
 							$nomor  = 0; 
 							while ($data = mysqli_fetch_array($dataQry)) {
@@ -101,6 +107,7 @@ $userRow = mysqli_fetch_array($userQry);
 							<td><div align="left"><?php echo $data ['tahun_berkas']; ?></div></td>
 							<td><?php echo $data ['nama_pemohon']; ?></td>
 							<td><?php echo $data ['nama_layanan']; ?></td>
+							<td><?php echo $data ['keterangan']; ?></td>
 							<td><div align="center"><?php echo $dataStatus; ?></div></td>
                             <td><div align="center"><a href="?page=historyberkashome&amp;id=<?php echo $kode; ?>" class="btn btn-xs blue"><i class="fa fa-eye"></i></a></div></td>
                         </tr>
