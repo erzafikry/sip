@@ -16,7 +16,7 @@
 	}
  ?>
 <form action="<?php $_SERVER['PHP_SELF']; ?>" method="POST">
-	<div class="portlet box grey-cascade">
+	<div class="portlet box green">
 		<div class="portlet-title">
 		<div class="caption"><span class="caption-subject uppercase bold">Data Kategori Barang</span></div>
 			<div class="actions">

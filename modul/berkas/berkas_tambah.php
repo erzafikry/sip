@@ -28,6 +28,15 @@
 		}
 		if (trim($_POST['txtDi302'])=="") {
 			$message[] = "DI.302 tidak boleh kosong!";		
+		}
+		if (trim($_POST['txtNoSurtug'])=="") {
+			$message[] = "No Surat Tugas tidak boleh kosong!";		
+		}
+		if (trim($_POST['txtTglSurtug'])=="") {
+			$message[] = "Tgl Mulai Surat Tugas tidak boleh kosong!";		
+		}
+		if (trim($_POST['txtTglSurtug2'])=="") {
+			$message[] = "Tgl Terbit Surat Tugas tidak boleh kosong!";		
 		}	
 		
 		$txtNoberkas		= $_POST['txtNoberkas'];
@@ -42,6 +51,9 @@
 		$cmbStatus			= $_POST['cmbStatus'];
 		$txtKeterangan		= $_POST['txtKeterangan'];
 		$createdBy 			= $_SESSION["id_user"];
+		$txtNoSurtug		= $_POST['txtNoSurtug'];
+		$txtTglSurtug		= $_POST['txtTglSurtug'];
+		$txtTglSurtug2		= $_POST['txtTglSurtug2'];
 
 		$sqlCek="SELECT COUNT(*) as total FROM ms_berkas WHERE no_berkas='$txtNoberkas' AND tahun_berkas='$txtThnberkas'";
 		$qryCek=mysqli_query($koneksidb, $sqlCek) or die ("Eror Query".mysqli_error()); 
@@ -60,14 +72,18 @@
 											 volume='$txtVolume',
 											 di_305='$txtDi305',
 											 di_302='$txtDi302',
-											 id_status_berkas='$cmbStatus',
+											 no_surtug='$txtNoSurtug',
+											 tgl_mulai_surtug='$txtTglSurtug',
+											 tgl_terbit_surtug='$txtTglSurtug2',
+											 posisi_berkas='Petugas Ukur',
+											 status_berkas='Dibuat',
 											 keterangan_berkas='$txtKeterangan',
 											 createdBy = '$createdBy',
 											 createdTime='".date('Y-m-d')."'";
 			$qrySave=mysqli_query($koneksidb, $sqlSave) or die ("Gagal query".mysqli_error());
 			if($qrySave){
 				$_SESSION['pesan'] = 'Data berhasil ditambahkan.';
-			echo '<script>window.location="?page=databerkas"</script>';
+				echo '<script>window.location="?page=databerkas"</script>';
 
 			}
 		}	
@@ -164,14 +180,18 @@
 	$dataDi302			= isset($_POST['txtDi302']) ? $_POST['txtDi302'] : '';
 	$dataStatus		 	= isset($_POST['cmbStatus']) ? $_POST['cmbStatus'] : '';
 	$dataKeterangan	 	= isset($_POST['txtKeterangan']) ? $_POST['txtKeterangan'] : '';
+	$dataPegawai	 	= isset($_POST['cmbPegawai']) ? $_POST['cmbPegawai'] : '';
+	$dataNosurtug		= isset($_POST['txtNoSurtug']) ? $_POST['txtNoSurtug'] : '';
+	$dataTglSurtug		= isset($_POST['txtTglSurtug']) ? $_POST['txtTglSurtug'] : date('d-m-Y');
+	$dataTglSurtug2		= isset($_POST['txtTglSurtug2']) ? $_POST['txtTglSurtug2'] : date('d-m-Y');
 ?>
 <SCRIPT language="JavaScript">
 function submitform() {
     document.form1.submit();
 }
 </SCRIPT>
-<form action="<?php $_SERVER['PHP_SELF']; ?>" method="post" name="form1" class="form-horizontal">	
-	<div class="portlet box grey-cascade">
+<form action="<?php $_SERVER['PHP_SELF']; ?>" method="post" name="form1" class="form-horizontal" autocomplete="off">	
+	<div class="portlet box green">
 		<div class="portlet-title">
 			<div class="caption">
 	            <span class="caption-subject uppercase bold hidden-xs">Form Tambah Berkas</span>
@@ -185,25 +205,25 @@ function submitform() {
 		<div class="portlet-body form">
 			<div class="form-body">
 				<div class="form-group">
-					<label class="col-lg-2 control-label">No Berkas :</label>
-					<div class="col-lg-2">
+					<label class="col-lg-3 control-label">No Berkas :</label>
+					<div class="col-lg-3">
 						<input class="form-control" type="number" name="txtNoberkas" value="<?php echo $dataNoberkas; ?>"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-lg-2 control-label">Tahun Berkas :</label>
-					<div class="col-lg-2">
+					<label class="col-lg-3 control-label">Tahun Berkas :</label>
+					<div class="col-lg-3">
 						<input class="form-control" type="number" name="txtThnberkas" value="<?php echo $dataTahunberkas; ?>"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-lg-2 control-label">NIK :</label>
-					<div class="col-lg-2">
+					<label class="col-lg-3 control-label">NIK :</label>
+					<div class="col-lg-3">
 						<input class="form-control" id="nik_pemohon" readonly type="text" value="<?php echo $dataNikPemohon; ?>" name="txtNikPemohon"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-lg-2 control-label">Nama Pemohon :</label>
+					<label class="col-lg-3 control-label">Nama Pemohon :</label>
 					<div class="col-lg-3">
 						<div class="input-group">
 							<input type="hidden" name="cmbPemohon" id="id_pemohon" value="<?php echo $dataPemohon ?>">
@@ -216,7 +236,7 @@ function submitform() {
 					<a data-toggle="modal" data-target="#formpemohon" class="btn btn-sm default"><i class="fa fa-user"></i> Pemohon Baru</a>
 				</div>
 				<div class="form-group">
-					<label class="col-lg-2 control-label">Jenis Kegiatan :</label>
+					<label class="col-lg-3 control-label">Jenis Kegiatan :</label>
 					<div class="col-lg-3">
 						<select name="cmbLayanan" class="select2 form-control" data-placeholder="Pilih Layanan">
 							<option value="BLANK"> </option>
@@ -235,7 +255,7 @@ function submitform() {
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-lg-2 control-label">Kecamatan :</label>
+					<label class="col-lg-3 control-label">Kecamatan :</label>
 					<div class="col-lg-3">
 						<select name="cmbKecamatan" class="select2 form-control" data-placeholder="Pilih Kecamatan" onChange="javascript:submitform();">
 							<option value="BLANK"> </option>
@@ -254,7 +274,7 @@ function submitform() {
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-lg-2 control-label">Kelurahan :</label>
+					<label class="col-lg-3 control-label">Kelurahan :</label>
 					<div class="col-lg-3">
 						<select name="cmbKelurahan" class="select2 form-control" data-placeholder="Pilih Kelurahan">
 							<option value="BLANK"> </option>
@@ -273,45 +293,73 @@ function submitform() {
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-lg-2 control-label">Volume (m2) :</label>
-					<div class="col-lg-1">
+					<label class="col-lg-3 control-label">Volume (m2) :</label>
+					<div class="col-lg-2">
 						<input class="form-control" type="text" name="txtVolume" value="<?php echo $dataVolume; ?> "/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-lg-2 control-label">DI.305 :</label>
-					<div class="col-lg-2">
+					<label class="col-lg-3 control-label">DI.305 :</label>
+					<div class="col-lg-3">
 						<input class="form-control" type="text" name="txtDi305" value="<?php echo $dataDi305; ?> "/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-lg-2 control-label">DI.302 :</label>
-					<div class="col-lg-2">
+					<label class="col-lg-3 control-label">DI.302 :</label>
+					<div class="col-lg-3">
 						<input class="form-control" type="text" name="txtDi302" value="<?php echo $dataDi302; ?> "/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-lg-2 control-label">Status Berkas :</label>
-					<div class="col-lg-2">
-						<select name="cmbStatus" class="select2 form-control" data-placeholder="Pilih Status">
+					<label class="col-lg-3 control-label">No. Surat Tugas :</label>
+					<div class="col-lg-3">
+						<input class="form-control" type="text" name="txtNoSurtug" value="<?php echo $dataNosurtug; ?>"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-lg-3 control-label">Tgl. Mulai Surat Tugas :</label>
+					<div class="col-lg-3">
+						<div class="input-icon left">
+							<i class="icon-calendar"></i>
+							<input class="form-control date-picker" data-date-format="dd-mm-yyyy" type="text" value="<?php echo $dataTglSurtug; ?>" name="txtTglSurtug"/>
+						</div>
+					</div>
+				</div>	
+				<div class="form-group">
+					<label class="col-lg-3 control-label">Tgl. Terbit Surat Tugas :</label>
+					<div class="col-lg-3">
+						<div class="input-icon left">
+							<i class="icon-calendar"></i>
+							<input class="form-control date-picker" data-date-format="dd-mm-yyyy" type="text" value="<?php echo $dataTglSurtug2; ?>" name="txtTglSurtug2"/>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-lg-3 control-label">Petugas Ukur :</label>
+					<div class="col-lg-3">
+						<select name="cmbPegawai" class="select2 form-control" data-placeholder="Pilih Pegawai">
 							<option value="BLANK"> </option>
 							<?php
-							  $dataSql = "SELECT * FROM ms_status_berkas ORDER BY id_status_berkas ASC";
+							  $dataSql = "SELECT * FROM ms_pegawai a
+											INNER JOIN ms_jabatan c ON a.id_jabatan=c.id_jabatan
+											WHERE c.nama_jabatan IN ('Petugas Ukur','Surveyor Pemetaan Penyelia',
+											'Surveyor Pemetaan Pelaksana','Asisten Surveyor Kadaster Berlisensi','Pembantu Ukur')
+											ORDER BY a.nama_pegawai ASC";
 							  $dataQry = mysqli_query($koneksidb, $dataSql) or die ("Gagal Query".mysqli_error());
 							  while ($dataRow = mysqli_fetch_array($dataQry)) {
-								if ($dataLevel == $dataRow['id_status_berkas']) {
+								if ($dataLevel == $dataRow['id_pegawai']) {
 									$cek = " selected";
 								} else { $cek=""; }
-								echo "<option value='$dataRow[id_status_berkas]' $cek>$dataRow[status_berkas]</option>";
+								echo "<option value='$dataRow[id_pegawai]' $cek>$dataRow[nama_pegawai]</option>";
 							  }
 							  $sqlData ="";
 							?>
 						</select>
 					</div>
-				</div>
+				</div>	
 				<div class="form-group">
-					<label class="col-lg-2 control-label">Keterangan :</label>
-					<div class="col-lg-3">
+					<label class="col-lg-3 control-label">Keterangan :</label>
+					<div class="col-lg-8">
 						<textarea class="form-control" name="txtKeterangan" type="text"/><?php echo $dataKeterangan; ?></textarea>
 					</div>
 				</div>				
@@ -320,7 +368,7 @@ function submitform() {
 	         <div class="form-actions">
 			    <div class="row">
 			        <div class="form-group">
-			            <div class="col-lg-offset-2 col-lg-10">
+			            <div class="col-lg-offset-3 col-lg-9">
 			                <button type="submit" name="btnSave" class="btn blue"><i class="fa fa-save"></i> Simpan Data</button>
 			                <a href="?page=databerkas" class="btn yellow"><i class="fa fa-undo"></i> Batal</a>
 			            </div>

@@ -44,7 +44,7 @@
 	$dataEselon		= isset($_POST['txtEselon']) ? $_POST['txtEselon'] : '';
 ?>
 		
-<div class="portlet box grey-cascade">
+<div class="portlet box green">
 	<div class="portlet-title">
 		<div class="caption"><span class="caption-subject uppercase bold">Form Tambah Jabatan</span></div>
 		<div class="tools">

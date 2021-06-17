@@ -63,7 +63,7 @@
 			
 ?>
 <form action="<?php $_SERVER['PHP_SELF']; ?>" method="post" class="form-horizontal">
-	<div class="portlet box grey-cascade">
+	<div class="portlet box green">
 		<div class="portlet-title">
 			<div class="caption"><span class="caption-subject uppercase bold">Konfigurasi Seksi</span></div>
 			<div class="tools">

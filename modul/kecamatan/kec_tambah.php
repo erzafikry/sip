@@ -54,7 +54,7 @@
 	$dataLevel		= isset($_POST['cmbLevel']) ? $_POST['cmbLevel'] : '';
 ?>
 		
-<div class="portlet box grey-cascade">
+<div class="portlet box green">
 	<div class="portlet-title">
 		<div class="caption"><span class="caption-subject uppercase bold">Form Tambah Kecamatan</span></div>
 		<div class="tools">

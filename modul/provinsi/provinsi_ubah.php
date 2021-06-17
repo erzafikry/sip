@@ -44,7 +44,7 @@
 	$dataKeterangan	= isset($dataShow['keterangan_provinsi']) ?  $dataShow['keterangan_provinsi'] : $_POST['txtKeterangan'];
 ?>
 		
-<div class="portlet box grey-cascade">
+<div class="portlet box green">
 	<div class="portlet-title">
 		<div class="caption"><span class="caption-subject uppercase bold">Form Ubah Provinsi</span></div>
 		<div class="tools">

@@ -50,7 +50,7 @@
 	
 ?>
 		
-<div class="portlet box grey-cascade">
+<div class="portlet box green">
 	<div class="portlet-title">
 		<div class="caption"><span class="caption-subject uppercase bold">Perubahan Password</span></div>
 		<div class="tools">

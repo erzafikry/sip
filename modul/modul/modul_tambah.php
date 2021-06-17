@@ -48,7 +48,7 @@
 	$dataMenu		= isset($_POST['cmbMenu']) ? $_POST['cmbMenu'] : ''; 
 	$dataUrutan		= isset($_POST['txtUrutan']) ? $_POST['txtUrutan'] : ''; 
 ?>
-<div class="portlet box grey-cascade">
+<div class="portlet box green">
 	<div class="portlet-title">
         <div class="caption">
             <span class="caption-subject uppercase bold">Form Data Menu & Modul</span>

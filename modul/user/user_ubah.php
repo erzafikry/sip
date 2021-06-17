@@ -90,7 +90,7 @@
 
 ?>
 <form action="<?php $_SERVER['PHP_SELF']; ?>" method="post" name="post" class="form-horizontal" enctype="multipart/form-data">
-	<div class="portlet box grey-cascade">
+	<div class="portlet box green">
 		<div class="portlet-title">
 			<div class="caption">
 	            <span class="caption-subject uppercase bold hidden-xs">Form Ubah User</span>

@@ -47,7 +47,7 @@
 	$dataEselon		= isset($dataShow['eselon']) ?  $dataShow['eselon'] : $_POST['txtEselon'];
 ?>
 		
-<div class="portlet box grey-cascade">
+<div class="portlet box green">
 	<div class="portlet-title">
 		<div class="caption"><span class="caption-subject uppercase bold">Form Ubah Jabatan</span></div>
 		<div class="tools">

@@ -45,7 +45,7 @@
 	$dataKeterangan	= isset($_POST['txtKeterangan']) ? $_POST['txtKeterangan'] : '';
 	$dataStatus		= isset($_POST['cmbStatus']) ? $_POST['cmbStatus'] : '';
 ?>
-<div class="portlet box grey-cascade">
+<div class="portlet box green">
 	<div class="portlet-title">
 		<div class="caption"><span class="caption-subject uppercase bold">Form Penambahan Kategori</span></div>
 		<div class="tools">

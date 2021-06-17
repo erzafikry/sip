@@ -44,7 +44,7 @@
 	$dataKeterangan	= isset($dataShow['keterangan_satker']) ?  $dataShow['keterangan_satker'] : $_POST['txtKeterangan'];
 ?>
 		
-<div class="portlet box grey-cascade">
+<div class="portlet box green">
 	<div class="portlet-title">
 		<div class="caption"><span class="caption-subject uppercase bold">Form Ubah Satker</span></div>
 		<div class="tools">

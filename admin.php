@@ -36,11 +36,11 @@ $userRow = mysqli_fetch_array($userQry);
 <link href="assets/global/plugins/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
 
-<link href="assets/global/css/components.css" rel="stylesheet" type="text/css" />
-<link href="assets/global/css/plugins.css" rel="stylesheet" type="text/css" />
+<link href="assets/global/css/components-md.css" rel="stylesheet" type="text/css" />
+<link href="assets/global/css/plugins-md.css" rel="stylesheet" type="text/css" />
 
 <link href="assets/layouts/layout/css/layout.css" rel="stylesheet" type="text/css" />
-<link href="assets/layouts/layout/css/themes/default.css" rel="stylesheet" type="text/css"/>
+<link href="assets/layouts/layout/css/themes/darkblue.css" rel="stylesheet" type="text/css"/>
 <link href="assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css" />
 
 <link href="assets/layouts/layout/css/custom.css" rel="stylesheet" type="text/css" />
@@ -72,7 +72,7 @@ $userRow = mysqli_fetch_array($userQry);
 		<img src="assets/pages/img/atrbpn.png" alt="logo" class="logo-default" style="height:45px; width:45px;"/>
 		<!-- <h4 style="color:#fff;">LOGO TOKO</h4> -->
       </a>
-	  <div align="center" style="margin-top:15px;"><h4 style="color:#fff;">Seksi IP</h4></div>
+	  <div align="center" style="margin-top:15px;"><h4 style="color:#fff; font-weight:900">Seksi IP</h4></div>
     </div>
     <!-- END LOGO -->
     <!-- BEGIN HORIZANTAL MENU -->
@@ -132,31 +132,31 @@ $userRow = mysqli_fetch_array($userQry);
 				<i class="fa fa-bell"></i>
 				<span class="username">
           <?php 
-          $sqlSurtug  = "SELECT 
-                          COUNT(*) as total,
-                          id_petugas_ukur
-                          FROM ms_surtug 
-                          WHERE group_id='".$userRow['user_group']."' 
-                          AND NOT status_surtug='Selesai'";
-          $qrySurtug  = mysqli_query($koneksidb, $sqlSurtug) or die ("Eror show notif".mysqli_error()); 
-          $showSurtug = mysqli_fetch_array($qrySurtug);
+          // $sqlSurtug  = "SELECT 
+          //                 COUNT(*) as total,
+          //                 id_petugas_ukur
+          //                 FROM ms_surtug 
+          //                 WHERE group_id='".$userRow['user_group']."' 
+          //                 AND NOT status_surtug='Selesai'";
+          // $qrySurtug  = mysqli_query($koneksidb, $sqlSurtug) or die ("Eror show notif".mysqli_error()); 
+          // $showSurtug = mysqli_fetch_array($qrySurtug);
 
-          $sqlSurtug2  = "SELECT 
-                          COUNT(*) as total
-                          FROM ms_surtug 
-                          WHERE (id_petugas_ukur='".$userRow['id_pegawai']."' OR id_petugas_grafis='".$userRow['id_pegawai']."' OR id_petugas_textual='".$userRow['id_pegawai']."' OR id_kasubsie='".$userRow['id_pegawai']."' OR id_kasie='".$userRow['id_pegawai']."')
-                          AND NOT status_surtug='Selesai'";
-          $qrySurtug2  = mysqli_query($koneksidb, $sqlSurtug2) or die ("Eror show notif".mysqli_error()); 
-          $showSurtug2 = mysqli_fetch_array($qrySurtug2);
+          // $sqlSurtug2  = "SELECT 
+          //                 COUNT(*) as total
+          //                 FROM ms_surtug 
+          //                 WHERE (id_petugas_ukur='".$userRow['id_pegawai']."' OR id_petugas_grafis='".$userRow['id_pegawai']."' OR id_petugas_textual='".$userRow['id_pegawai']."' OR id_kasubsie='".$userRow['id_pegawai']."' OR id_kasie='".$userRow['id_pegawai']."')
+          //                 AND NOT status_surtug='Selesai'";
+          // $qrySurtug2  = mysqli_query($koneksidb, $sqlSurtug2) or die ("Eror show notif".mysqli_error()); 
+          // $showSurtug2 = mysqli_fetch_array($qrySurtug2);
 
-          if($showSurtug['total']>=1 AND $showSurtug2['total']>=1){
-            $notif  = '<span class="badge badge-danger">'.$showSurtug2['total'].'</span>';
-          }elseif(empty($showSurtug['id_petugas_ukur']) AND $showSurtug['total']>=1){
-            $notif  = '<span class="badge badge-danger">'.$showSurtug['total'].'</span>';
-          }
-          else{
-            $notif  = '';
-          }
+          // if($showSurtug['total']>=1 AND $showSurtug2['total']>=1){
+          //   $notif  = '<span class="badge badge-danger">'.$showSurtug2['total'].'</span>';
+          // }elseif(empty($showSurtug['id_petugas_ukur']) AND $showSurtug['total']>=1){
+          //   $notif  = '<span class="badge badge-danger">'.$showSurtug['total'].'</span>';
+          // }
+          // else{
+          //   $notif  = '';
+          // }
 
           ?>
 				  <?php echo $notif ?>

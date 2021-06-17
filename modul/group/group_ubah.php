@@ -67,7 +67,7 @@ $dataNama			= isset($_POST['txtNama']) ? $_POST['txtNama'] : $beliRow['group_nam
 $dataKeterangan		= isset($_POST['txtKeterangan']) ? $_POST['txtKeterangan'] : $beliRow['group_keterangan'];
 $dataStatus			= isset($_POST['cmbStatus']) ? $_POST['cmbStatus'] : $beliRow['group_status'];
 ?>
-<div class="portlet box grey-cascade">
+<div class="portlet box green">
 	<div class="portlet-title">
 		<div class="caption"><span class="caption-subject uppercase bold">Form Perubahan Group</span></div>
 		<div class="tools">

@@ -65,7 +65,7 @@
 	$dataUsername	= isset($dataShow['username_user']) ?  $dataShow['username_user'] : $_POST['txtUsername'];
 	$dataUsernameLm	= $dataShow['username_user'];
 ?>
-<div class="portlet box grey-cascade">
+<div class="portlet box green">
 	<div class="portlet-title">
 		<div class="caption"><span class="caption-subject uppercase bold">Perubahan Profil</span></div>
 		<div class="tools">

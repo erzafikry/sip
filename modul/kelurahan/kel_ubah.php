@@ -51,7 +51,7 @@
 	$dataStatus 	= isset($dataShow['status_kelurahan']) ?  $dataShow['status_kelurahan'] : $_POST['cmbStatus'];
 ?>
 		
-<div class="portlet box grey-cascade">
+<div class="portlet box green">
 	<div class="portlet-title">
 		<div class="caption"><span class="caption-subject uppercase bold">Form Ubah Kelurahan</span></div>
 		<div class="tools">
