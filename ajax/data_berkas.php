@@ -61,7 +61,7 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
     $nestedData[] = $row["nama_layanan"];
     $nestedData[] = $row["nama_kecamatan"];
     $nestedData[] = $row["nama_kelurahan"];
-    $nestedData[] = '<div align="center">'.$row["posisi_berkas"].'</div>';
+    $nestedData[] = '<div align="left">'.$row["posisi_berkas"].'</div>';
     $nestedData[] = $row["keterangan_berkas"];
     $nestedData[] = '<div class="btn-group">
                         <button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Aksi

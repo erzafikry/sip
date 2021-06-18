@@ -1,5 +1,74 @@
 <?php
-	if(isset($_POST['btnSave'])){
+	if(isset($_POST['btnPetugasUkur'])){
+		if($_POST['cmbPenerimaan']=='Ya'){
+			$message = array();
+			if (trim($_POST['txtTglMulai'])=="") {
+				$message[] = "Tgl. Mulai tidak boleh kosong!";		
+			}
+			if (trim($_POST['txtTglSelesai'])=="") {
+				$message[] = "Tgl. Selesai tidak boleh kosong!";		
+			}
+			if (trim($_POST['cmbPegawai'])=="") {
+				$message[] = "Pegawai tidak boleh kosong!";		
+			}
+			if (trim($_POST['txtKeterangan'])=="") {
+				$message[] = "Catatan tidak boleh kosong!";		
+			}
+
+			if(count($message)==0){	
+				$qrySave=mysqli_query($koneksidb, "INSERT INTO trx_history SET id_berkas='".$_POST['txtKode']."', 
+																			 id_pegawai='".$_POST['cmbPegawai']."', 
+																			 tgl_mulai='".$_POST['txtTglMulai']."', 
+																			 tgl_selesai='".$_POST['txtTglSelesai']."', 
+																			 catatan='".$_POST['txtKeterangan']."', 
+																			 status='Dikirim', 
+																			 createdBy = '".$_SESSION['id_user']."',
+																			 createdTime='".date('Y-m-d H:i:s')."'") 
+				or die ("Gagal insert history".mysqli_error());
+				if($qrySave){
+					$update=mysqli_query($koneksidb, "UPDATE ms_berkas SET posisi_berkas='Petugas Textual' 
+														WHERE id_berkas='".$_POST['txtKode']."'") 
+					or die ("Gagal query update".mysqli_error());
+					$_SESSION['pesan'] = 'Data berhasil diperbahrui.';
+					echo '<script>window.location="?page=databerkas"</script>';
+				}
+				exit;
+
+			}
+
+		}
+		if($_POST['cmbPenerimaan']=='Tidak'){
+			$message = array();
+			if (trim($_POST['txtTglKembali'])=="") {
+				$message[] = "Tgl. Kembali tidak boleh kosong!";		
+			}
+			if (trim($_POST['txtKeterangan'])=="") {
+				$message[] = "Catatan tidak boleh kosong!";		
+			}
+
+			if(count($message)==0){	
+				$qrySave=mysqli_query($koneksidb, "INSERT INTO trx_history SET id_berkas='".$_POST['txtKode']."', 
+																			 tgl_kembali='".$_POST['txtTglKembali']."',  
+																			 catatan='".$_POST['txtKeterangan']."', 
+																			 status='Dikembalikan', 
+																			 createdBy = '".$_SESSION['id_user']."',
+																			 createdTime='".date('Y-m-d H:i:s')."'") 
+				or die ("Gagal insert history".mysqli_error());
+				if($qrySave){
+					$update=mysqli_query($koneksidb, "UPDATE ms_berkas SET posisi_berkas='Operator' 
+														WHERE id_berkas='".$_POST['txtKode']."'") 
+					or die ("Gagal query update".mysqli_error());
+					$_SESSION['pesan'] = 'Data berhasil diperbahrui.';
+					echo '<script>window.location="?page=databerkas"</script>';
+				}
+				exit;
+
+			}
+
+		}
+
+	}
+	if(isset($_POST['btnOperator'])){
 		$message = array();
 		if (trim($_POST['txtNoBerkas'])=="") {
 			$message[] = "No Berkas tidak boleh kosong!";		
@@ -69,12 +138,12 @@
 																	 tgl_mulai_surtug='$txtTglSurtug',
 																	 id_petugas_ukur='$cmbPegawai',
 																	 tgl_terbit_surtug='$txtTglSurtug2',
+																	 posisi_berkas='Petugas Ukur',
 																	 keterangan_berkas='$txtKeterangan',
 																	 updatedBy = '".$_SESSION['id_user']."',
 																	 updatedTime='".date('Y-m-d H:i:s')."'
 													WHERE id_berkas='".$_POST['txtKode']."'") or die ("Gagal query".mysqli_error());
 			if($qrySave){
-
 				$_SESSION['pesan'] = 'Data berhasil diperbahrui.';
 				echo '<script>window.location="?page=databerkas"</script>';
 			}
@@ -184,26 +253,38 @@
 	$dataTglSurtug2	 	= isset($_POST['txtTglSurtug2']) ? $_POST['txtTglSurtug2'] : $dataShow['tgl_terbit_surtug'];
 	$dataPegawai	 	= isset($_POST['cmbPegawai']) ? $_POST['cmbPegawai'] : $dataShow['id_petugas_ukur'];
 	$dataNoSurtug	 	= isset($_POST['txtNoSurtug']) ? $_POST['txtNoSurtug'] : $dataShow['no_surtug'];
+	$dataPenerimaan	 	= isset($_POST['cmbPenerimaan']) ? $_POST['cmbPenerimaan'] : 'Ya';
 
 
 	if($dataShow['posisi_berkas']=='Petugas Ukur'){
 		$note = 'Posisi berkas berada di <b>Petugas Ukur</b>, silahkan pilih penerimaan "Ya" apabila berkas diterima "Tidak" untuk pengembalian ke proses sebelumnya';
+		$tombol = 'btnPetugasUkur';
 	}elseif($dataShow['posisi_berkas']=='Petugas Grafis'){
 		$note = 'Posisi berkas berada di <b>Petugas Grafis</b>, silahkan pilih penerimaan "Ya" apabila berkas diterima "Tidak" untuk pengembalian ke proses sebelumnya';
-	}else{
-		$note = 'Posisi berkas berada di <b>Operator</b>, silahkan pilih penerimaan "Ya" apabila berkas diterima "Tidak" untuk pengembalian ke proses sebelumnya';
+		$tombol = 'btnPetugasBerkas';
+	}elseif($dataShow['posisi_berkas']=='Petugas Textual'){
+		$note = 'Posisi berkas berada di <b>Petugas Textual</b>, silahkan pilih penerimaan "Ya" apabila berkas diterima "Tidak" untuk pengembalian ke proses sebelumnya';
+		$tombol = 'btnPetugasBerkas';
+	}elseif($dataShow['posisi_berkas']=='Operator'){
+		$note = 'Posisi berkas berada di <b>Operator</b>';
+		$tombol = 'btnOperator';
 	}
 
 ?>
 <div class="note note-info"><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
 	<p><?php echo $note ?></p>
 </div>
-<form action="<?php $_SERVER['PHP_SELF']; ?>" method="post" name="frmadd" class="form-horizontal">	
+<SCRIPT language="JavaScript">
+function submitform() {
+	document.form1.submit();
+}
+</SCRIPT>
+<form action="<?php $_SERVER['PHP_SELF']; ?>" method="post" name="form1" class="form-horizontal">	
 	<input type="hidden" name="txtKode" value="<?php echo $dataKode ?>">
 	<div class="portlet box green">
 		<div class="portlet-title">
 			<div class="caption">
-	            <span class="caption-subject uppercase bold hidden-xs">Form Perubahan Berkas</span>
+	            <span class="caption-subject uppercase bold hidden-xs">Form Perubahan Berkas <?php echo $tombol ?></span>
 	        </div>
 			<div class="tools">
 				<a href="javascript:;" class="collapse"></a>
@@ -376,23 +457,12 @@
 				</div>				
 	         </div>
 			
-	         <div class="form-actions">
-			    <div class="row">
-			        <div class="form-group">
-			            <div class="col-lg-offset-3 col-lg-9">
-			                <button type="submit" name="btnSave" class="btn blue"><i class="fa fa-save"></i> Simpan Data</button>
-			                <a href="?page=databerkas" class="btn yellow"><i class="fa fa-undo"></i> Batal</a>
-			            </div>
-			        </div>
-			    </div>
-			</div>
 			<?php }elseif($dataShow['posisi_berkas']=='Petugas Ukur'){ ?>
 			<div class="form-body">
 				<div class="form-group">
 					<label class="col-lg-3 control-label">Penerimaan :</label>
 					<div class="col-lg-2">
-						<select data-placeholder="Pilih Penerimaan" class="form-control select2" name="cmbPenerimaan">
-							<option value=""></option> 
+						<select onChange="javascript:submitform();" class="form-control select2" name="cmbPenerimaan">
 							   <?php
 							  $pilihan	= array("Ya", "Tidak");
 							  foreach ($pilihan as $nilai) {
@@ -406,6 +476,7 @@
 					</div>
 				</div>
 				<div class="batas"></div>
+				<?php if($dataPenerimaan=='Ya'){ ?>
 				<div class="form-group">
 					<label class="col-lg-3 control-label">Tgl. Mulai :</label>
 					<div class="col-lg-3">
@@ -443,6 +514,17 @@
 						</select>
 					</div>
 				</div>	
+				<?php }else{ ?>
+				<div class="form-group">
+					<label class="col-lg-3 control-label">Tgl. Kembali :</label>
+					<div class="col-lg-3">
+						<div class="input-icon left">
+							<i class="icon-calendar"></i>
+							<input class="form-control date-picker" data-date-format="yyyy-mm-dd" type="text"  name="txtTglKembali"/>
+						</div>
+					</div>
+				</div>	
+				<?php } ?>
 				<div class="form-group">
 					<label class="col-lg-3 control-label">Keterangan :</label>
 					<div class="col-lg-8">
@@ -451,27 +533,24 @@
 				</div>				
 	         </div>
 			
-	         <div class="form-actions">
+	         
+
+			<?php } ?>
+			<div class="form-actions">
 			    <div class="row">
 			        <div class="form-group">
 			            <div class="col-lg-offset-3 col-lg-9">
-			                <button type="submit" name="btnPetugasUkur" class="btn blue"><i class="fa fa-save"></i> Simpan Data</button>
+			                <button type="submit" name="<?php echo $tombol ?>" class="btn blue"><i class="fa fa-save"></i> Simpan Data</button>
 			                <a href="?page=databerkas" class="btn yellow"><i class="fa fa-undo"></i> Batal</a>
 			            </div>
 			        </div>
 			    </div>
 			</div>
-
-			<?php } ?>
 		</div>
 	</div>
 </form>
-<SCRIPT language="JavaScript">
-	function submitform() {
-		document.form1.submit();
-	}
-</SCRIPT>
-<form action="<?php $_SERVER['PHP_SELF']; ?>" method="post" name="form1" class="portlet-body form">
+
+<form action="<?php $_SERVER['PHP_SELF']; ?>" method="post" class="portlet-body form">
 <div class="modal fade bs-modal-lg" id="pemohon" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
