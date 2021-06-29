@@ -41,7 +41,8 @@
 						<th width="15%">KECAMATAN</th>
 						<th width="15%">KELURAHAN</th>
 					  	<th width="8%">POSISI BERKAS</th>
-                        <th width="24%">KETERANGAN BERKAS</th>
+					  	<th width="8%">PETUGAS</th>
+                        <th style="width:200px">KETERANGAN BERKAS</th>
 					  	<th width="15%"><div align="center">AKSI</div></th>
                     </tr>
 				</thead>

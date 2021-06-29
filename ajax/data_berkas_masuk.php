@@ -65,11 +65,11 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
     $nestedData[] = $row["nama_kelurahan"];
     $nestedData[] = '<div align="center">'.$row["posisi_berkas"].'</div>';
     $nestedData[] = $row["keterangan_berkas"];
-    $nestedData[] = '<div class="btn-group">
+    $nestedData[] = '<div class="btn-group pull-right">
                         <button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Aksi
                             <i class="fa fa-angle-down"></i>
                         </button>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu pull-right">
                             <li><a href="?page=ubahberkas&amp;id='.($row['id_berkas']).'">Ubah</a></li>
                             <li><a href="?page=historyberkas&amp;id='.($row['id_berkas']).'">Riyawat</a></li>
                             <li><a href="?page=hapusberkas&amp;id='.($row['id_berkas']).'">Hapus</a></li>

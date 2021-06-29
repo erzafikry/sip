@@ -60,16 +60,11 @@
 		elseif($pg=="databerkas"){ include"modul/berkas/berkas_data.php"; }
 		elseif($pg=="tambahberkas"){ include"modul/berkas/berkas_tambah.php"; }
 		elseif($pg=="ubahberkas"){ include"modul/berkas/berkas_ubah.php"; }
+		elseif($pg=="historyberkas"){ include"modul/berkas/berkas_history.php"; }
 	// DATA BERKAS MASUK
 		elseif($pg=="databerkasmasuk"){ include"modul/berkas_masuk/berkas_masuk_data.php"; }
 		elseif($pg=="kirimberkasmasuk"){ include"modul/berkas_masuk/berkas_masuk_kirim.php"; }
 		elseif($pg=="historyberkasmasuk"){ include"modul/berkas_masuk/berkas_masuk_history.php"; }
-	// DATA SURTUG
-		elseif($pg=="datasurtug"){ include"modul/surtug/surtug_data.php"; }
-		elseif($pg=="tambahsurtug"){ include"modul/surtug/surtug_tambah.php"; }
-		elseif($pg=="ubahsurtug"){ include"modul/surtug/surtug_ubah.php"; }
-		elseif($pg=="kirimsurtug"){ include"modul/surtug/surtug_kirim.php"; }
-		elseif($pg=="historysurtug"){ include"modul/surtug/surtug_history.php"; }
 	
 	// LAPORAN
 		elseif($pg=="lapberkas"){ include"modul/laporan/laporan_berkas.php"; }

@@ -94,6 +94,59 @@ function no_acak(){
     $otp 	= implode(",", $otp);
     $otp 	= str_replace(',', '', $otp);
     return ($otp);
-};
+}
+function dateDiff($time1, $time2, $precision = 6) {
+    if (!is_int($time1)) {
+      $time1 = strtotime($time1);
+    }
+    if (!is_int($time2)) {
+      $time2 = strtotime($time2);
+    }
+
+    if ($time1 > $time2) {
+      $ttime = $time1;
+      $time1 = $time2;
+      $time2 = $ttime;
+    }
+
+    $intervals = array('Year','Month','Day','Hour','Minute','Second');
+    $diffs = array();
+
+    foreach ($intervals as $interval) {
+      $diffs[$interval] = 0;
+      $ttime = strtotime("+1 " . $interval, $time1);
+      while ($time2 >= $ttime) {
+$time1 = $ttime;
+$diffs[$interval]++;
+$ttime = strtotime("+1 " . $interval, $time1);
+      }
+    }
+
+    $count = 0;
+    $times = array();
+    foreach ($diffs as $interval => $value) {
+      if ($count >= $precision) {
+break;
+      }
+      if ($value > 0) {
+if ($value != 1) {
+ $interval .= "s";
+}
+$times[] = $value . " " . $interval;
+$count++;
+      }
+    }
+
+    return implode(", ", $times);
+  }
+
+function get_age($birth_date){
+date_default_timezone_set("Asia/Jakarta");
+return floor((time() - strtotime($birth_date))/31556926);
+}
+function sekianLama($format, $wkt) {
+    $sekarang = date("Y-m-d");
+    return date($format, strtotime(date("Y-m-d", strtotime($sekarang)) . " " . $wkt));
+}
 
 ?>

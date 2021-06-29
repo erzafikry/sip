@@ -1,4 +1,5 @@
 <?php
+	// AKSI PETUGAS UKUR
 	if(isset($_POST['btnPetugasUkur'])){
 		if($_POST['cmbPenerimaan']=='Ya'){
 			$message = array();
@@ -15,6 +16,8 @@
 				$message[] = "Catatan tidak boleh kosong!";		
 			}
 
+			$lama_berkas 	= dateDiff($_POST['txtTglMulai'], $_POST['txtTglSelesai']);
+
 			if(count($message)==0){	
 				$qrySave=mysqli_query($koneksidb, "INSERT INTO trx_history SET id_berkas='".$_POST['txtKode']."', 
 																			 id_pegawai='".$_POST['cmbPegawai']."', 
@@ -22,11 +25,17 @@
 																			 tgl_selesai='".$_POST['txtTglSelesai']."', 
 																			 catatan='".$_POST['txtKeterangan']."', 
 																			 status='Dikirim', 
+																			 lama_berkas='$lama_berkas',
+																			 posisi='Petugas Grafis',
 																			 createdBy = '".$_SESSION['id_user']."',
 																			 createdTime='".date('Y-m-d H:i:s')."'") 
 				or die ("Gagal insert history".mysqli_error());
 				if($qrySave){
-					$update=mysqli_query($koneksidb, "UPDATE ms_berkas SET posisi_berkas='Petugas Textual' 
+					$update=mysqli_query($koneksidb, "UPDATE ms_berkas SET posisi_berkas='Petugas Grafis', 
+																			tgl_awal='".$_POST['txtTglMulai']."', 
+																			id_pegawai='".$_POST['cmbPegawai']."',
+																			keterangan_berkas='".$_POST['txtKeterangan']."',
+																			tgl_akhir='".$_POST['txtTglSelesai']."'
 														WHERE id_berkas='".$_POST['txtKode']."'") 
 					or die ("Gagal query update".mysqli_error());
 					$_SESSION['pesan'] = 'Data berhasil diperbahrui.';
@@ -51,11 +60,14 @@
 																			 tgl_kembali='".$_POST['txtTglKembali']."',  
 																			 catatan='".$_POST['txtKeterangan']."', 
 																			 status='Dikembalikan', 
+																			 posisi='Petugas Ukur',
+																			 lama_berkas='-',
 																			 createdBy = '".$_SESSION['id_user']."',
 																			 createdTime='".date('Y-m-d H:i:s')."'") 
 				or die ("Gagal insert history".mysqli_error());
 				if($qrySave){
-					$update=mysqli_query($koneksidb, "UPDATE ms_berkas SET posisi_berkas='Operator' 
+					$update=mysqli_query($koneksidb, "UPDATE ms_berkas SET posisi_berkas='Operator', 
+																			keterangan_berkas='".$_POST['txtKeterangan']."'
 														WHERE id_berkas='".$_POST['txtKode']."'") 
 					or die ("Gagal query update".mysqli_error());
 					$_SESSION['pesan'] = 'Data berhasil diperbahrui.';
@@ -68,6 +80,253 @@
 		}
 
 	}
+	// AKHIR AKSI PETUGAS UKUR
+	// AKSI PETUGAS GRAFIS
+	if(isset($_POST['btnPetugasGrafis'])){
+		if($_POST['cmbPenerimaan']=='Ya'){
+			$message = array();
+			if (trim($_POST['txtTglMulai'])=="") {
+				$message[] = "Tgl. Mulai tidak boleh kosong!";		
+			}
+			if (trim($_POST['txtTglSelesai'])=="") {
+				$message[] = "Tgl. Selesai tidak boleh kosong!";		
+			}
+			if (trim($_POST['cmbPegawai'])=="") {
+				$message[] = "Pegawai tidak boleh kosong!";		
+			}
+			if (trim($_POST['txtKeterangan'])=="") {
+				$message[] = "Catatan tidak boleh kosong!";		
+			}
+
+			$lama_berkas 	= dateDiff($_POST['txtTglMulai'], $_POST['txtTglSelesai']);
+
+			if(count($message)==0){	
+				$qrySave=mysqli_query($koneksidb, "INSERT INTO trx_history SET id_berkas='".$_POST['txtKode']."', 
+																			 id_pegawai='".$_POST['cmbPegawai']."', 
+																			 tgl_mulai='".$_POST['txtTglMulai']."', 
+																			 tgl_selesai='".$_POST['txtTglSelesai']."', 
+																			 catatan='".$_POST['txtKeterangan']."', 
+																			 status='Dikirim', 
+																			 lama_berkas='$lama_berkas',
+																			 posisi='Petugas Grafis',
+																			 createdBy = '".$_SESSION['id_user']."',
+																			 createdTime='".date('Y-m-d H:i:s')."'") 
+				or die ("Gagal insert history".mysqli_error());
+				if($qrySave){
+					$update=mysqli_query($koneksidb, "UPDATE ms_berkas SET posisi_berkas='Petugas Textual', 
+																			tgl_awal='".$_POST['txtTglMulai']."', 
+																			id_pegawai='".$_POST['cmbPegawai']."',
+																			keterangan_berkas='".$_POST['txtKeterangan']."',
+																			tgl_akhir='".$_POST['txtTglSelesai']."'
+														WHERE id_berkas='".$_POST['txtKode']."'") 
+					or die ("Gagal query update".mysqli_error());
+					$_SESSION['pesan'] = 'Data berhasil diperbahrui.';
+					echo '<script>window.location="?page=databerkas"</script>';
+				}
+				exit;
+
+			}
+
+		}
+		if($_POST['cmbPenerimaan']=='Tidak'){
+			$message = array();
+			if (trim($_POST['txtTglKembali'])=="") {
+				$message[] = "Tgl. Kembali tidak boleh kosong!";		
+			}
+			if (trim($_POST['txtKeterangan'])=="") {
+				$message[] = "Catatan tidak boleh kosong!";		
+			}
+
+			if(count($message)==0){	
+				$qrySave=mysqli_query($koneksidb, "INSERT INTO trx_history SET id_berkas='".$_POST['txtKode']."', 
+																			 tgl_kembali='".$_POST['txtTglKembali']."',  
+																			 catatan='".$_POST['txtKeterangan']."', 
+																			 status='Dikembalikan', 
+																			 posisi='Petugas Grafis',
+																			 lama_berkas='-',
+																			 createdBy = '".$_SESSION['id_user']."',
+																			 createdTime='".date('Y-m-d H:i:s')."'") 
+				or die ("Gagal insert history".mysqli_error());
+				if($qrySave){
+					$update=mysqli_query($koneksidb, "UPDATE ms_berkas SET posisi_berkas='Petugas Ukur', 
+																			keterangan_berkas='".$_POST['txtKeterangan']."'
+														WHERE id_berkas='".$_POST['txtKode']."'") 
+					or die ("Gagal query update".mysqli_error());
+					$_SESSION['pesan'] = 'Data berhasil diperbahrui.';
+					echo '<script>window.location="?page=databerkas"</script>';
+				}
+				exit;
+
+			}
+
+		}
+
+	}
+	// AKHIR AKSI PETUGAS GRAFIS
+	// AKSI PETUGAS TEXTUAL
+	if(isset($_POST['btnPetugasTextual'])){
+		if($_POST['cmbPenerimaan']=='Ya'){
+			$message = array();
+			if (trim($_POST['txtTglMulai'])=="") {
+				$message[] = "Tgl. Mulai tidak boleh kosong!";		
+			}
+			if (trim($_POST['txtTglSelesai'])=="") {
+				$message[] = "Tgl. Selesai tidak boleh kosong!";		
+			}
+			if (trim($_POST['cmbPegawai'])=="") {
+				$message[] = "Pegawai tidak boleh kosong!";		
+			}
+			if (trim($_POST['txtKeterangan'])=="") {
+				$message[] = "Catatan tidak boleh kosong!";		
+			}
+
+			$lama_berkas 	= dateDiff($_POST['txtTglMulai'], $_POST['txtTglSelesai']);
+
+			if(count($message)==0){	
+				$qrySave=mysqli_query($koneksidb, "INSERT INTO trx_history SET id_berkas='".$_POST['txtKode']."', 
+																			 id_pegawai='".$_POST['cmbPegawai']."', 
+																			 tgl_mulai='".$_POST['txtTglMulai']."', 
+																			 tgl_selesai='".$_POST['txtTglSelesai']."', 
+																			 catatan='".$_POST['txtKeterangan']."', 
+																			 status='Dikirim', 
+																			 lama_berkas='$lama_berkas',
+																			 posisi='Petugas Textual',
+																			 createdBy = '".$_SESSION['id_user']."',
+																			 createdTime='".date('Y-m-d H:i:s')."'") 
+				or die ("Gagal insert history".mysqli_error());
+				if($qrySave){
+					$update=mysqli_query($koneksidb, "UPDATE ms_berkas SET posisi_berkas='Kordinator Pemetaan', 
+																			tgl_awal='".$_POST['txtTglMulai']."', 
+																			id_pegawai='".$_POST['cmbPegawai']."',
+																			keterangan_berkas='".$_POST['txtKeterangan']."',
+																			tgl_akhir='".$_POST['txtTglSelesai']."'
+														WHERE id_berkas='".$_POST['txtKode']."'") 
+					or die ("Gagal query update".mysqli_error());
+					$_SESSION['pesan'] = 'Data berhasil diperbahrui.';
+					echo '<script>window.location="?page=databerkas"</script>';
+				}
+				exit;
+
+			}
+
+		}
+		if($_POST['cmbPenerimaan']=='Tidak'){
+			$message = array();
+			if (trim($_POST['txtTglKembali'])=="") {
+				$message[] = "Tgl. Kembali tidak boleh kosong!";		
+			}
+			if (trim($_POST['txtKeterangan'])=="") {
+				$message[] = "Catatan tidak boleh kosong!";		
+			}
+
+			if(count($message)==0){	
+				$qrySave=mysqli_query($koneksidb, "INSERT INTO trx_history SET id_berkas='".$_POST['txtKode']."', 
+																			 tgl_kembali='".$_POST['txtTglKembali']."',  
+																			 catatan='".$_POST['txtKeterangan']."', 
+																			 status='Dikembalikan', 
+																			 posisi='Petugas Grafis',
+																			 lama_berkas='-',
+																			 createdBy = '".$_SESSION['id_user']."',
+																			 createdTime='".date('Y-m-d H:i:s')."'") 
+				or die ("Gagal insert history".mysqli_error());
+				if($qrySave){
+					$update=mysqli_query($koneksidb, "UPDATE ms_berkas SET posisi_berkas='Petugas Grafis', 
+																			keterangan_berkas='".$_POST['txtKeterangan']."'
+														WHERE id_berkas='".$_POST['txtKode']."'") 
+					or die ("Gagal query update".mysqli_error());
+					$_SESSION['pesan'] = 'Data berhasil diperbahrui.';
+					echo '<script>window.location="?page=databerkas"</script>';
+				}
+				exit;
+
+			}
+
+		}
+
+	}
+	// AKHIR AKSI PETUGAS TEXTUAL
+	// AKSI PETUGAS KORDINATOR PEMETAAN
+	if(isset($_POST['btnPetugasTextual'])){
+		if($_POST['cmbPenerimaan']=='Ya'){
+			$message = array();
+			if (trim($_POST['txtTglMulai'])=="") {
+				$message[] = "Tgl. Mulai tidak boleh kosong!";		
+			}
+			if (trim($_POST['txtTglSelesai'])=="") {
+				$message[] = "Tgl. Selesai tidak boleh kosong!";		
+			}
+			if (trim($_POST['cmbPegawai'])=="") {
+				$message[] = "Pegawai tidak boleh kosong!";		
+			}
+			if (trim($_POST['txtKeterangan'])=="") {
+				$message[] = "Catatan tidak boleh kosong!";		
+			}
+
+			$lama_berkas 	= dateDiff($_POST['txtTglMulai'], $_POST['txtTglSelesai']);
+
+			if(count($message)==0){	
+				$qrySave=mysqli_query($koneksidb, "INSERT INTO trx_history SET id_berkas='".$_POST['txtKode']."', 
+																			 id_pegawai='".$_POST['cmbPegawai']."', 
+																			 tgl_mulai='".$_POST['txtTglMulai']."', 
+																			 tgl_selesai='".$_POST['txtTglSelesai']."', 
+																			 catatan='".$_POST['txtKeterangan']."', 
+																			 status='Dikirim', 
+																			 lama_berkas='$lama_berkas',
+																			 posisi='Petugas Textual',
+																			 createdBy = '".$_SESSION['id_user']."',
+																			 createdTime='".date('Y-m-d H:i:s')."'") 
+				or die ("Gagal insert history".mysqli_error());
+				if($qrySave){
+					$update=mysqli_query($koneksidb, "UPDATE ms_berkas SET posisi_berkas='Kordinator Pemetaan', 
+																			tgl_awal='".$_POST['txtTglMulai']."', 
+																			id_pegawai='".$_POST['cmbPegawai']."',
+																			keterangan_berkas='".$_POST['txtKeterangan']."',
+																			tgl_akhir='".$_POST['txtTglSelesai']."'
+														WHERE id_berkas='".$_POST['txtKode']."'") 
+					or die ("Gagal query update".mysqli_error());
+					$_SESSION['pesan'] = 'Data berhasil diperbahrui.';
+					echo '<script>window.location="?page=databerkas"</script>';
+				}
+				exit;
+
+			}
+
+		}
+		if($_POST['cmbPenerimaan']=='Tidak'){
+			$message = array();
+			if (trim($_POST['txtTglKembali'])=="") {
+				$message[] = "Tgl. Kembali tidak boleh kosong!";		
+			}
+			if (trim($_POST['txtKeterangan'])=="") {
+				$message[] = "Catatan tidak boleh kosong!";		
+			}
+
+			if(count($message)==0){	
+				$qrySave=mysqli_query($koneksidb, "INSERT INTO trx_history SET id_berkas='".$_POST['txtKode']."', 
+																			 tgl_kembali='".$_POST['txtTglKembali']."',  
+																			 catatan='".$_POST['txtKeterangan']."', 
+																			 status='Dikembalikan', 
+																			 posisi='Petugas Grafis',
+																			 lama_berkas='-',
+																			 createdBy = '".$_SESSION['id_user']."',
+																			 createdTime='".date('Y-m-d H:i:s')."'") 
+				or die ("Gagal insert history".mysqli_error());
+				if($qrySave){
+					$update=mysqli_query($koneksidb, "UPDATE ms_berkas SET posisi_berkas='Petugas Grafis', 
+																			keterangan_berkas='".$_POST['txtKeterangan']."'
+														WHERE id_berkas='".$_POST['txtKode']."'") 
+					or die ("Gagal query update".mysqli_error());
+					$_SESSION['pesan'] = 'Data berhasil diperbahrui.';
+					echo '<script>window.location="?page=databerkas"</script>';
+				}
+				exit;
+
+			}
+
+		}
+
+	}
+	// AKHIR AKSI KORDINATOR PEMETAAN
 	if(isset($_POST['btnOperator'])){
 		$message = array();
 		if (trim($_POST['txtNoBerkas'])=="") {
@@ -136,7 +395,7 @@
 																	 di_302='$txtDi302',
 																	 no_surtug='$txtNoSurtug',
 																	 tgl_mulai_surtug='$txtTglSurtug',
-																	 id_petugas_ukur='$cmbPegawai',
+																	 id_pegawai='$cmbPegawai',
 																	 tgl_terbit_surtug='$txtTglSurtug2',
 																	 posisi_berkas='Petugas Ukur',
 																	 keterangan_berkas='$txtKeterangan',
@@ -144,6 +403,15 @@
 																	 updatedTime='".date('Y-m-d H:i:s')."'
 													WHERE id_berkas='".$_POST['txtKode']."'") or die ("Gagal query".mysqli_error());
 			if($qrySave){
+				$qrySave=mysqli_query($koneksidb, "INSERT INTO trx_history SET id_berkas='".$_POST['txtKode']."', 
+																			 id_pegawai='".$_POST['cmbPegawai']."', 
+																			 catatan='".$_POST['txtKeterangan']."', 
+																			 status='Dikirim', 
+																			 lama_berkas='-',
+																			 posisi='Operator',
+																			 createdBy = '".$_SESSION['id_user']."',
+																			 createdTime='".date('Y-m-d H:i:s')."'") 
+				or die ("Gagal insert history".mysqli_error());
 				$_SESSION['pesan'] = 'Data berhasil diperbahrui.';
 				echo '<script>window.location="?page=databerkas"</script>';
 			}
@@ -251,9 +519,10 @@
 	$dataKeterangan	 	= isset($_POST['txtKeterangan']) ? $_POST['txtKeterangan'] : $dataShow['keterangan_berkas'];
 	$dataTglSurtug	 	= isset($_POST['txtTglSurtug']) ? $_POST['txtTglSurtug'] : $dataShow['tgl_mulai_surtug'];
 	$dataTglSurtug2	 	= isset($_POST['txtTglSurtug2']) ? $_POST['txtTglSurtug2'] : $dataShow['tgl_terbit_surtug'];
-	$dataPegawai	 	= isset($_POST['cmbPegawai']) ? $_POST['cmbPegawai'] : $dataShow['id_petugas_ukur'];
+	$dataPegawai	 	= isset($_POST['cmbPegawai']) ? $_POST['cmbPegawai'] : $dataShow['id_pegawai'];
 	$dataNoSurtug	 	= isset($_POST['txtNoSurtug']) ? $_POST['txtNoSurtug'] : $dataShow['no_surtug'];
 	$dataPenerimaan	 	= isset($_POST['cmbPenerimaan']) ? $_POST['cmbPenerimaan'] : 'Ya';
+	$dataTglUpdate		= $dataShow['updatedTime'];
 
 
 	if($dataShow['posisi_berkas']=='Petugas Ukur'){
@@ -261,10 +530,16 @@
 		$tombol = 'btnPetugasUkur';
 	}elseif($dataShow['posisi_berkas']=='Petugas Grafis'){
 		$note = 'Posisi berkas berada di <b>Petugas Grafis</b>, silahkan pilih penerimaan "Ya" apabila berkas diterima "Tidak" untuk pengembalian ke proses sebelumnya';
-		$tombol = 'btnPetugasBerkas';
+		$tombol = 'btnPetugasGrafis';
 	}elseif($dataShow['posisi_berkas']=='Petugas Textual'){
 		$note = 'Posisi berkas berada di <b>Petugas Textual</b>, silahkan pilih penerimaan "Ya" apabila berkas diterima "Tidak" untuk pengembalian ke proses sebelumnya';
-		$tombol = 'btnPetugasBerkas';
+		$tombol = 'btnPetugasTextual';
+	}elseif($dataShow['posisi_berkas']=='Kordinator Pemetaan'){
+		$note = 'Posisi berkas berada di <b>Petugas Kordinator Pemetaan</b>, silahkan pilih penerimaan "Ya" apabila berkas diterima "Tidak" untuk pengembalian ke proses sebelumnya';
+		$tombol = 'btnPetugasPemetaan';
+	}elseif($dataShow['posisi_berkas']=='Kordinator Pengukuran'){
+		$note = 'Posisi berkas berada di <b>Petugas Kordinator Pengukuran</b>, silahkan pilih penerimaan "Ya" apabila berkas diterima "Tidak" untuk pengembalian ke proses sebelumnya';
+		$tombol = 'btnPetugasPengukuran';
 	}elseif($dataShow['posisi_berkas']=='Operator'){
 		$note = 'Posisi berkas berada di <b>Operator</b>';
 		$tombol = 'btnOperator';
@@ -279,7 +554,7 @@ function submitform() {
 	document.form1.submit();
 }
 </SCRIPT>
-<form action="<?php $_SERVER['PHP_SELF']; ?>" method="post" name="form1" class="form-horizontal">	
+<form action="<?php $_SERVER['PHP_SELF']; ?>" method="post" name="form1" class="form-horizontal" autocomplete="off">	
 	<input type="hidden" name="txtKode" value="<?php echo $dataKode ?>">
 	<div class="portlet box green">
 		<div class="portlet-title">
@@ -433,10 +708,7 @@ function submitform() {
 							<option value="BLANK"> </option>
 							<?php
 							  $dataSql = "SELECT * FROM ms_pegawai a
-											INNER JOIN ms_jabatan c ON a.id_jabatan=c.id_jabatan
-											WHERE c.nama_jabatan IN ('Petugas Ukur','Surveyor Pemetaan Penyelia',
-											'Surveyor Pemetaan Pelaksana','Asisten Surveyor Kadaster Berlisensi','Pembantu Ukur')
-											ORDER BY a.nama_pegawai ASC";
+											INNER JOIN ms_jabatan c ON a.id_jabatan=c.id_jabatan";
 							  $dataQry = mysqli_query($koneksidb, $dataSql) or die ("Gagal Query".mysqli_error());
 							  while ($dataRow = mysqli_fetch_array($dataQry)) {
 								if ($dataPegawai == $dataRow['id_pegawai']) {
@@ -452,12 +724,12 @@ function submitform() {
 				<div class="form-group">
 					<label class="col-lg-3 control-label">Keterangan :</label>
 					<div class="col-lg-8">
-						<textarea class="form-control" name="txtKeterangan" type="text"/><?php echo $dataKeterangan; ?></textarea>
+						<textarea class="form-control" name="txtKeterangan" type="text"/></textarea>
 					</div>
 				</div>				
 	         </div>
 			
-			<?php }elseif($dataShow['posisi_berkas']=='Petugas Ukur'){ ?>
+			<?php }elseif($dataShow['posisi_berkas']=='Petugas Ukur' OR $dataShow['posisi_berkas']=='Petugas Grafis' OR $dataShow['posisi_berkas']=='Petugas Textual' OR $dataShow['posisi_berkas']=='Kordinator Pemetaan' OR $dataShow['posisi_berkas']=='Kordinator Pengukuran'){ ?>
 			<div class="form-body">
 				<div class="form-group">
 					<label class="col-lg-3 control-label">Penerimaan :</label>

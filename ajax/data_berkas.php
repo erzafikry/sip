@@ -13,24 +13,49 @@ $columns = array(
     3 => 'b.nama_pemohon',
     4 => 'c.nama_layanan',
     5 => 'd.nama_kecamatan',
-    6 => 'e.nama_kelurahan'  
+    6 => 'e.nama_kelurahan',
+    7 => 'f.nama_pegawai' 
 );
 // getting total number records without any search
-$sql = "SELECT * FROM ms_berkas a
+$sql = "SELECT 
+        a.id_berkas,
+        a.no_berkas,
+        a.tahun_berkas,
+        b.nama_pemohon,
+        c.nama_layanan,
+        d.nama_kecamatan,
+        e.nama_kelurahan,
+        a.posisi_berkas,
+        a.keterangan_berkas,
+        f.nama_pegawai
+        FROM ms_berkas a
         INNER JOIN ms_pemohon b ON a.id_pemohon=b.id_pemohon
         INNER JOIN ms_layanan c ON a.id_layanan=c.id_layanan
         INNER JOIN ms_kecamatan d ON a.id_kecamatan=d.id_kecamatan
-        INNER JOIN ms_kelurahan e ON a.id_kelurahan=e.id_kelurahan";
+        INNER JOIN ms_kelurahan e ON a.id_kelurahan=e.id_kelurahan
+        LEFT JOIN ms_pegawai f ON a.id_pegawai=f.id_pegawai";
 $query=mysqli_query($koneksidb, $sql) or die("ajax-grid-data.php: get InventoryItems");
 $totalData = mysqli_num_rows($query);
 $totalFiltered = $totalData;  // when there is no search parameter then total number rows = total number filtered rows.
 if( !empty($requestData['search']['value']) ) {
     // if there is a search parameter
-    $sql = "SELECT * FROM ms_berkas a
+    $sql = "SELECT 
+            a.id_berkas,
+            a.no_berkas,
+            a.tahun_berkas,
+            b.nama_pemohon,
+            c.nama_layanan,
+            d.nama_kecamatan,
+            e.nama_kelurahan,
+            a.posisi_berkas,
+            a.keterangan_berkas,
+            f.nama_pegawai
+            FROM ms_berkas a
             INNER JOIN ms_pemohon b ON a.id_pemohon=b.id_pemohon
             INNER JOIN ms_layanan c ON a.id_layanan=c.id_layanan
             INNER JOIN ms_kecamatan d ON a.id_kecamatan=d.id_kecamatan
-            INNER JOIN ms_kelurahan e ON a.id_kelurahan=e.id_kelurahan";
+            INNER JOIN ms_kelurahan e ON a.id_kelurahan=e.id_kelurahan
+            LEFT JOIN ms_pegawai f ON a.id_pegawai=f.id_pegawai";
     $sql.=" WHERE a.no_berkas LIKE '".$requestData['search']['value']."%' ";    // $requestData['search']['value'] contains search parameter
     $sql.=" OR b.nama_pemohon LIKE '".$requestData['search']['value']."%' ";
     $sql.=" OR c.nama_layanan LIKE '".$requestData['search']['value']."%' ";
@@ -41,11 +66,23 @@ if( !empty($requestData['search']['value']) ) {
     $sql.=" ORDER BY ". $columns[$requestData['order'][0]['column']]."   ".$requestData['order'][0]['dir']."   LIMIT ".$requestData['start']." ,".$requestData['length']."   "; // $requestData['order'][0]['column'] contains colmun index, $requestData['order'][0]['dir'] contains order such as asc/desc , $requestData['start'] contains start row number ,$requestData['length'] contains limit length.
     $query=mysqli_query($koneksidb, $sql) or die("ajax-grid-data.php: get PO"); // again run query with limit
 } else {    
-    $sql = "SELECT * FROM ms_berkas a
+    $sql = "SELECT 
+            a.id_berkas,
+            a.no_berkas,
+            a.tahun_berkas,
+            b.nama_pemohon,
+            c.nama_layanan,
+            d.nama_kecamatan,
+            e.nama_kelurahan,
+            a.posisi_berkas,
+            a.keterangan_berkas,
+            f.nama_pegawai
+            FROM ms_berkas a
             INNER JOIN ms_pemohon b ON a.id_pemohon=b.id_pemohon
             INNER JOIN ms_layanan c ON a.id_layanan=c.id_layanan
             INNER JOIN ms_kecamatan d ON a.id_kecamatan=d.id_kecamatan
-            INNER JOIN ms_kelurahan e ON a.id_kelurahan=e.id_kelurahan";
+            INNER JOIN ms_kelurahan e ON a.id_kelurahan=e.id_kelurahan
+            LEFT JOIN ms_pegawai f ON a.id_pegawai=f.id_pegawai";
     $sql.=" ORDER BY ". $columns[$requestData['order'][0]['column']]."   ".$requestData['order'][0]['dir']."   LIMIT ".$requestData['start']." ,".$requestData['length']."   ";
     $query=mysqli_query($koneksidb, $sql) or die("ajax-grid-data.php: get PO");
 }
@@ -62,12 +99,13 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
     $nestedData[] = $row["nama_kecamatan"];
     $nestedData[] = $row["nama_kelurahan"];
     $nestedData[] = '<div align="left">'.$row["posisi_berkas"].'</div>';
+    $nestedData[] = $row["nama_pegawai"];
     $nestedData[] = $row["keterangan_berkas"];
-    $nestedData[] = '<div class="btn-group">
+    $nestedData[] = '<div class="btn-group pull-right">
                         <button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Aksi
                             <i class="fa fa-angle-down"></i>
                         </button>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu pull-right">
                             <li><a href="?page=ubahberkas&amp;id='.($row['id_berkas']).'">Ubah</a></li>
                             <li><a href="?page=historyberkas&amp;id='.($row['id_berkas']).'">Riyawat</a></li>
                             <li><a href="?page=hapusberkas&amp;id='.($row['id_berkas']).'">Hapus</a></li>

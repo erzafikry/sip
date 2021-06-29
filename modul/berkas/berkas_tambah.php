@@ -11,6 +11,9 @@
 		if (trim($_POST['cmbPemohon'])=="") {
 			$message[] = "Nama Pemohon tidak boleh kosong!";		
 		}
+		if (trim($_POST['cmbPegawai'])=="") {
+			$message[] = "Nama Pegawai tidak boleh kosong!";		
+		}
 		if (trim($_POST['cmbLayanan'])=="") {
 			$message[] = "Jenis Kegiatan tidak boleh kosong!";		
 		}
@@ -52,8 +55,9 @@
 		$txtKeterangan		= $_POST['txtKeterangan'];
 		$createdBy 			= $_SESSION["id_user"];
 		$txtNoSurtug		= $_POST['txtNoSurtug'];
-		$txtTglSurtug		= $_POST['txtTglSurtug'];
-		$txtTglSurtug2		= $_POST['txtTglSurtug2'];
+		$txtTglSurtug		= InggrisTgl($_POST['txtTglSurtug']);
+		$txtTglSurtug2		= InggrisTgl($_POST['txtTglSurtug2']);
+		$cmbPegawai			= $_POST['cmbPegawai'];
 
 		$sqlCek="SELECT COUNT(*) as total FROM ms_berkas WHERE no_berkas='$txtNoberkas' AND tahun_berkas='$txtThnberkas'";
 		$qryCek=mysqli_query($koneksidb, $sqlCek) or die ("Eror Query".mysqli_error()); 
@@ -77,11 +81,24 @@
 											 tgl_terbit_surtug='$txtTglSurtug2',
 											 posisi_berkas='Petugas Ukur',
 											 status_berkas='Dibuat',
+											 id_pegawai='$cmbPegawai',
 											 keterangan_berkas='$txtKeterangan',
 											 createdBy = '$createdBy',
+											 updatedTime='".date('Y-m-d')."',
 											 createdTime='".date('Y-m-d')."'";
 			$qrySave=mysqli_query($koneksidb, $sqlSave) or die ("Gagal query".mysqli_error());
+			$last_id = $koneksidb->insert_id;
 			if($qrySave){
+				$qrySave=mysqli_query($koneksidb, "INSERT INTO trx_history SET id_berkas='".$last_id."', 
+																			 id_pegawai='".$_POST['cmbPegawai']."', 
+																			 catatan='".$_POST['txtKeterangan']."', 
+																			 status='Dikirim', 
+																			 lama_berkas='-',
+																			 posisi='Operator',
+																			 createdBy = '".$_SESSION['id_user']."',
+																			 createdTime='".date('Y-m-d H:i:s')."'") 
+				or die ("Gagal insert history".mysqli_error());
+
 				$_SESSION['pesan'] = 'Data berhasil ditambahkan.';
 				echo '<script>window.location="?page=databerkas"</script>';
 
@@ -338,16 +355,14 @@ function submitform() {
 					<label class="col-lg-3 control-label">Petugas Ukur :</label>
 					<div class="col-lg-3">
 						<select name="cmbPegawai" class="select2 form-control" data-placeholder="Pilih Pegawai">
-							<option value="BLANK"> </option>
+							<option value=""> </option>
 							<?php
 							  $dataSql = "SELECT * FROM ms_pegawai a
 											INNER JOIN ms_jabatan c ON a.id_jabatan=c.id_jabatan
-											WHERE c.nama_jabatan IN ('Petugas Ukur','Surveyor Pemetaan Penyelia',
-											'Surveyor Pemetaan Pelaksana','Asisten Surveyor Kadaster Berlisensi','Pembantu Ukur')
 											ORDER BY a.nama_pegawai ASC";
 							  $dataQry = mysqli_query($koneksidb, $dataSql) or die ("Gagal Query".mysqli_error());
 							  while ($dataRow = mysqli_fetch_array($dataQry)) {
-								if ($dataLevel == $dataRow['id_pegawai']) {
+								if ($dataPegawai == $dataRow['id_pegawai']) {
 									$cek = " selected";
 								} else { $cek=""; }
 								echo "<option value='$dataRow[id_pegawai]' $cek>$dataRow[nama_pegawai]</option>";
