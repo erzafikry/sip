@@ -82,7 +82,7 @@
 			$last_id = $koneksidb->insert_id;
 			if($qrySave){
 				$qrySave=mysqli_query($koneksidb, "INSERT INTO trx_history SET id_berkas='".$last_id."', 
-																			 id_pegawai='".$_POST['cmbPegawai']."', 
+																			 id_pegawai='".$userRow['id_pegawai']."', 
 																			 catatan='".$_POST['txtKeterangan']."', 
 																			 status='Dikirim', 
 																			 lama_berkas='-',
@@ -334,6 +334,7 @@ function submitform() {
 							<?php
 							  $dataSql = "SELECT * FROM ms_pegawai a
 											INNER JOIN ms_jabatan c ON a.id_jabatan=c.id_jabatan
+											WHERE a.level_pegawai='Petugas Ukur'
 											ORDER BY a.nama_pegawai ASC";
 							  $dataQry = mysqli_query($koneksidb, $dataSql) or die ("Gagal Query".mysqli_error());
 							  while ($dataRow = mysqli_fetch_array($dataQry)) {

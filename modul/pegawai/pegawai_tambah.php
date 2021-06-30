@@ -41,6 +41,7 @@
 		$cmbJabatan			= $_POST['cmbJabatan'];
 		$cmbStatus			= $_POST['cmbStatus'];
 		$createdBy 			= $_SESSION["id_user"];
+		$cmbLevel			= $_POST['cmbLevel'];
 		
 		// if($cmbDefault=='Y'){
 			// $qryUpdate=mysqli_query($koneksidb, "UPDATE ms_user SET default_user='N'") 
@@ -63,6 +64,7 @@
 											 kelamin_pegawai='$cmbKelaminpegawai',
 											 id_satker='$cmbSatker',
 											 id_jabatan='$cmbJabatan',
+											 level_pegawai='$cmbLevel',
 											 status_pegawai='$cmbStatus',
 											 createdBy = '$createdBy',
 											 createdTime='".date('Y-m-d')."'";
@@ -94,6 +96,7 @@
 	$dataSatker			= isset($_POST['cmbSatker']) ? $_POST['cmbSatker'] : '';
 	$dataJabatan		= isset($_POST['cmbJabatan']) ? $_POST['cmbJabatan'] : '';
 	$dataStatus		 	= isset($_POST['cmbStatus']) ? $_POST['cmbStatus'] : '';
+	$dataLevel		 	= isset($_POST['cmbLevel']) ? $_POST['cmbLevel'] : '';
 ?>
 <form action="<?php $_SERVER['PHP_SELF']; ?>" method="post" name="post" class="form-horizontal" enctype="multipart/form-data">
 	<div class="portlet box green">
@@ -217,6 +220,30 @@
 						</select>
 					</div>
 				</div>
+				<div class="form-group">
+	                <label class="col-md-2 control-label">Level Pegawai :</label>
+	                <div class="col-md-3">
+			        	<select class="form-control select2" data-placeholder="Pilih Level" name="cmbLevel">
+		                	<option value=""></option>
+		               		<?php
+							  $pilihan	= array("Petugas Ukur", 
+							  					"Petugas Grafis",
+							  					"Petugas Textual",
+							  					"Kordinator Pemetaan",
+							  					"Kordinator Pengukuran",
+							  					"Kasubsi",
+							  					"Kasi",
+							  					"DP 307");
+							  foreach ($pilihan as $nilai) {
+								if ($dataLevel==$nilai) {
+									$cek=" selected";
+								} else { $cek = ""; }
+								echo "<option value='$nilai' $cek>$nilai</option>";
+							  }
+							?>
+		              	</select>
+			        </div>
+			    </div><!-- col-4 -->
 				<div class="form-group">
 	                <label class="col-md-2 control-label">Status Pegawai :</label>
 	                <div class="col-md-10">

@@ -1,22 +1,3 @@
-<?php
-			
-	if(isset($_POST['btnHapus'])){
-		$txtID 		= $_POST['txtID'];
-		foreach ($txtID as $id_key) {
-				
-			$hapus=mysqli_query($koneksidb, "DELETE FROM ms_berkas WHERE id_berkas='$id_key'") 
-				or die ("Gagal kosongkan tmp".mysqli_error());
-			
-			if($hapus){	
-				$_SESSION['pesan'] = 'Data Berkas berhasil dihapus';
-				echo '<script>window.location="?page=databerkas"</script>';
-			}else{
-				$_SESSION['pesan'] = 'Tidak ada data yang dihapus';
-				echo '<script>window.location="?page=databerkas"</script>';
-			}	
-		}
-	}
-?>
 
 <form action="<?php $_SERVER['PHP_SELF']; ?>" method="POST">
 	<div class="portlet box green">
@@ -41,8 +22,9 @@
 						<th width="15%">KECAMATAN</th>
 						<th width="15%">KELURAHAN</th>
 					  	<th width="8%">POSISI BERKAS</th>
-					  	<th width="8%">PETUGAS</th>
+					  	<th width="8%">PETUGAS TERAKHIR</th>
                         <th style="width:200px">KETERANGAN BERKAS</th>
+					  	<th width="15%"><div align="center">STATUS</div></th>
 					  	<th width="15%"><div align="center">AKSI</div></th>
                     </tr>
 				</thead>

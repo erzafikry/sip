@@ -99,11 +99,21 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
     if($row['status_berkas']=='Dibuat'){
         $tombol ='<li><a href="?page=prosesberkas&amp;id='.($row['id_berkas']).'">Proses</a></li>
                             <li><a href="?page=hapusberkas&amp;id='.($row['id_berkas']).'">Hapus</a></li>';
+    }elseif($row['status_berkas']=='Batal'){
+        $tombol ='<li><a>Hapus</a></li>';
     }else{
         $tombol ='<li><a href="?page=ubahberkas&amp;id='.($row['id_berkas']).'">Ubah</a></li>
                             <li><a href="?page=hapusberkas&amp;id='.($row['id_berkas']).'">Hapus</a></li>';
     }
-
+    if($row['status_berkas']=='Dibuat'){
+        $dataStatus     = '<label class="label label-info">Dibuat</label>';
+    }elseif($row['status_berkas']=='Diproses'){
+        $dataStatus     = '<label class="label label-warning">Diproses</label>';
+    }elseif($row['status_berkas']=='Selesai'){
+        $dataStatus     = '<label class="label label-success">Selesai</label>';
+    }elseif($row['status_berkas']=='Batal'){
+        $dataStatus     = '<label class="label label-danger">Dibatalkan</label>';
+    }
     $nestedData[] = '<div align="center">'.$nomor.'</div>';
     $nestedData[] = '<div align="center">'.$row["no_berkas"].'</div>';
     $nestedData[] = '<div align="center">'.$row["tahun_berkas"].'</div>';
@@ -114,6 +124,7 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
     $nestedData[] = '<div align="left">'.$row["posisi_berkas"].'</div>';
     $nestedData[] = $row["nama_pegawai"];
     $nestedData[] = $row["keterangan_berkas"];
+    $nestedData[] = '<div align="center">'.$dataStatus.'</div>';
     $nestedData[] = '<div class="btn-group pull-right">
                         <button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Aksi
                             <i class="fa fa-angle-down"></i>

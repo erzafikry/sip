@@ -3,20 +3,19 @@
 	if(isset($_POST['btnSave'])){
 		$message = array();
 		
-		if (trim($_POST['txtDi305'])=="") {
-			$message[] = "DI.305 tidak boleh kosong!";		
-		}
+		// if (trim($_POST['txtDi305'])=="") {
+		// 	$message[] = "DI.305 tidak boleh kosong!";		
+		// }
 		if (trim($_POST['txtTglSurtug'])=="") {
 			$message[] = "Tgl Mulai Surat Tugas tidak boleh kosong!";		
 		}	
 		
-		$txtDi305			= $_POST['txtDi305'];
+		// $txtDi305			= $_POST['txtDi305'];
 		$txtTglSurtug		= $_POST['txtTglSurtug'];
 		
 		
 		if(count($message)==0){			
-			$qrySave=mysqli_query($koneksidb, "UPDATE ms_berkas SET di_305='$txtDi305',
-																	 tgl_mulai_surtug='$txtTglSurtug',
+			$qrySave=mysqli_query($koneksidb, "UPDATE ms_berkas SET tgl_mulai_surtug='$txtTglSurtug',
 																	 status_berkas='Diproses'
 													WHERE id_berkas='".$_POST['txtKode']."'") or die ("Gagal query".mysqli_error());
 			if($qrySave){
@@ -64,13 +63,6 @@
 		</div>
 		<div class="portlet-body form">
 			<div class="form-body">
-				<div class="form-group">
-					<label class="col-lg-3 control-label">DI.305 :</label>
-					<div class="col-lg-3">
-						<input class="form-control" type="text" name="txtDi305"/>
-					</div>
-				</div>
-				
 				<div class="form-group">
 					<label class="col-lg-3 control-label">Tgl. Mulai Surat Tugas :</label>
 					<div class="col-lg-3">

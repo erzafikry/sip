@@ -62,6 +62,7 @@
 		elseif($pg=="ubahberkas"){ include"modul/berkas/berkas_ubah.php"; }
 		elseif($pg=="historyberkas"){ include"modul/berkas/berkas_history.php"; }
 		elseif($pg=="prosesberkas"){ include"modul/berkas/berkas_proses.php"; }
+		elseif($pg=="hapusberkas"){ include"modul/berkas/berkas_hapus.php"; }
 	// DATA BERKAS MASUK
 		elseif($pg=="databerkasmasuk"){ include"modul/berkas_masuk/berkas_masuk_data.php"; }
 		elseif($pg=="kirimberkasmasuk"){ include"modul/berkas_masuk/berkas_masuk_kirim.php"; }

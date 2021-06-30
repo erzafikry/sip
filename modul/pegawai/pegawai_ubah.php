@@ -41,6 +41,7 @@
 		$cmbJabatan			= $_POST['cmbJabatan'];
 		$cmbStatus			= $_POST['cmbStatus'];
 		$updatedBy 			= $_SESSION["id_user"];
+		$cmbLevel			= $_POST['cmbLevel'];
 		
 		if(count($message)==0){	
 			$qryUpdate=mysqli_query($koneksidb, "UPDATE ms_pegawai SET nip='$txtNip',
@@ -50,6 +51,7 @@
 							  							tgl_lahir_pegawai='".InggrisTgl($txtTgllahir)."',
 							  							kelamin_pegawai='$cmbKelaminpegawai',
 							  							status_pegawai='$cmbStatus',
+											 			level_pegawai='$cmbLevel',
 							  							id_satker='$cmbSatker',
 							  							id_jabatan='$cmbJabatan',
 														updatedBy='$updatedBy',
@@ -91,6 +93,7 @@
 	$dataSatker			= isset($dataShow['id_satker']) ?  $dataShow['id_satker'] : $_POST['cmbSatker'];
 	$dataJabatan		= isset($dataShow['id_jabatan']) ?  $dataShow['id_jabatan'] : $_POST['cmbJabatan'];
 	$dataStatus			= isset($dataShow['status_pegawai']) ?  $dataShow['status_pegawai'] : $_POST['cmbStatus'];
+	$dataLevel			= isset($dataShow['level_pegawai']) ?  $dataShow['level_pegawai'] : $_POST['cmbLevel'];
 ?>
 <form action="<?php $_SERVER['PHP_SELF']; ?>" method="post" name="post" class="form-horizontal" enctype="multipart/form-data">
 	<div class="portlet box green">
@@ -215,6 +218,30 @@
 						</select>
 					</div>
 				</div>
+				<div class="form-group">
+	                <label class="col-md-2 control-label">Level Pegawai :</label>
+	                <div class="col-md-3">
+			        	<select class="form-control select2" data-placeholder="Pilih Level" name="cmbLevel">
+		                	<option value=""></option>
+		               		<?php
+							  $pilihan	= array("Petugas Ukur", 
+							  					"Petugas Grafis",
+							  					"Petugas Textual",
+							  					"Kordinator Pemetaan",
+							  					"Kordinator Pengukuran",
+							  					"Kasubsi",
+							  					"Kasi",
+							  					"DP 307");
+							  foreach ($pilihan as $nilai) {
+								if ($dataLevel==$nilai) {
+									$cek=" selected";
+								} else { $cek = ""; }
+								echo "<option value='$nilai' $cek>$nilai</option>";
+							  }
+							?>
+		              	</select>
+			        </div>
+			    </div><!-- col-4 -->
 				<div class="form-group">
 	                <label class="col-md-2 control-label">Status Pegawai :</label>
 	                <div class="col-md-10">

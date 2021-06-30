@@ -15,10 +15,11 @@
 			<thead>
                 <tr class="active">
                   	<th width="2%"><div align="center">NO </div></th>
-                  	<th width="15%">PETUGAS & POSISI</th>
+                  	<th width="15%">PETUGAS</th>
                   	<th width="10%"><div align="center">TANGGAL DIBUAT</div></th>
                   	<th width="25%">KETERANGAN</th>
                   	<th width="10%">LAMA BERKAS</th>
+                  	<th width="15%">POSISI BERKAS</th>
                   	<th width="10%"><div align="center">STATUS</div></th>
                 </tr>
 			</thead>
@@ -49,17 +50,20 @@
 					}elseif($data['status']=='Dibuat'){
 						$dataStatus		= '<label class="label label-success">Dibuat</label>';
 					}elseif($data['status']=='Selesai'){
-						$dataStatus		= '<label class="label label-success">Selesai</label>';
+						$dataStatus		= '<label class="label label-default">Selesai</label>';
+					}elseif($data['status']=='Dibatalkan'){
+						$dataStatus		= '<label class="label label-danger">Dibatalkan</label>';
 					}else{
 						$dataStatus		= '<label class="label label-danger">Tidak Terdeteksi</label>';
 					}
 				?>
                 <tr class="odd gradeX">
 					<td><div align="center"><?php echo $nomor ?></div></td>
-					<td><div align="left"><?php echo $data ['nama_pegawai']; ?> <?php echo $data ['posisi']; ?></div></td>
+					<td><div align="left"><?php echo $data ['nama_pegawai']; ?></div></td>
 					<td><div align="center"><?php echo date("d/m/Y H:i", strtotime($data ['createdTime'])); ?></div></td>
 					<td><?php echo $data ['catatan']; ?></td>
 					<td><?php echo $data ['lama_berkas']; ?></td>
+					<td><div align="left"><?php echo $data ['posisi']; ?></div></td>
 					<td><div align="center"><?php echo $dataStatus; ?></div></td>
                 </tr>
                 <?php } ?>

@@ -74,6 +74,7 @@ $userRow = mysqli_fetch_array($userQry);
                             <th width="24%">KETERANGAN</th>
                             <th width="20%">POSISI</th>
                             <th width="10%"><div align="left">PETUGAS</div></th>
+					  		<th width="15%"><div align="center">STATUS</div></th>
                             <th width="10%"><div align="center">RIWAYAT</div></th>
                         </tr>
                     </thead>
@@ -96,12 +97,22 @@ $userRow = mysqli_fetch_array($userQry);
 					            INNER JOIN ms_layanan c ON a.id_layanan=c.id_layanan
 					            INNER JOIN ms_kecamatan d ON a.id_kecamatan=d.id_kecamatan
 					            INNER JOIN ms_kelurahan e ON a.id_kelurahan=e.id_kelurahan
-					            LEFT JOIN ms_pegawai f ON a.id_pegawai=f.id_pegawai";
+					            LEFT JOIN ms_pegawai f ON a.id_pegawai=f.id_pegawai
+					            ORDER BY a.id_berkas DESC";
 					    $query=mysqli_query($koneksidb, $sql) or die("ajax-grid-data.php: get PO");
 					    $nomor =0;
 					    while( $data=mysqli_fetch_array($query) ) {
 					    	$kode = $data['id_berkas'];
 					    	$nomor ++;
+					    	if($data['status_berkas']=='Dibuat'){
+						        $dataStatus     = '<label class="label label-info">Dibuat</label>';
+						    }elseif($data['status_berkas']=='Diproses'){
+						        $dataStatus     = '<label class="label label-warning">Diproses</label>';
+						    }elseif($data['status_berkas']=='Selesai'){
+						        $dataStatus     = '<label class="label label-success">Selesai</label>';
+						    }elseif($data['status_berkas']=='Batal'){
+						        $dataStatus     = '<label class="label label-danger">Dibatalkan</label>';
+						    }
                        	?>
                         <tr class="odd gradeX">
                             <td><div align="center"><?php echo $nomor ?></div></td>
@@ -112,6 +123,7 @@ $userRow = mysqli_fetch_array($userQry);
 							<td><?php echo $data ['keterangan_berkas']; ?></td>
 							<td><?php echo $data ['posisi_berkas']; ?></td>
 							<td><div align="left"><?php echo $data['nama_pegawai']; ?></div></td>
+							<td><div align="center"><?php echo $dataStatus; ?></div></td>
                             <td><div align="center"><a href="?page=historyberkas&amp;id=<?php echo $kode; ?>" class="btn btn-xs blue"><i class="fa fa-eye"></i></a></div></td>
                         </tr>
                         <?php } ?>

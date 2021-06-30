@@ -11,7 +11,7 @@
  Target Server Version : 100136
  File Encoding         : 65001
 
- Date: 30/06/2021 13:13:55
+ Date: 30/06/2021 20:33:54
 */
 
 SET NAMES utf8mb4;
@@ -46,14 +46,17 @@ CREATE TABLE `ms_berkas`  (
   `id_pegawai` int(6) NULL DEFAULT NULL,
   `tgl_awal` date NULL DEFAULT NULL,
   `tgl_akhir` date NULL DEFAULT NULL,
+  `no_su` date NULL DEFAULT NULL,
+  `thn_su` varchar(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id_berkas`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of ms_berkas
 -- ----------------------------
-INSERT INTO `ms_berkas` VALUES (1, '1212', 2021, 6, 3, 1, 3, 3131, '3434', '  3434 ', 'Diproses', 'dsfdsf', '1', '2021-06-28', '1', '2021-06-28', '345343', '2021-06-30', '2021-06-23', NULL, 'Kordinator Pemetaan', 22, '2021-06-29', '2021-06-30');
-INSERT INTO `ms_berkas` VALUES (2, '45345', 2020, 8, 2, 20, 106, 343, '454', '  546', 'Diproses', 'sdsas', '1', '2021-06-30', NULL, '2021-06-30', '3453534', '2021-06-30', '2021-06-30', NULL, 'Petugas Grafis', 29, '2021-06-30', '2021-06-29');
+INSERT INTO `ms_berkas` VALUES (1, '001.0621', 2020, 6, 4, 1, 1, 120, '  ', '  110  ', 'Batal', 'Dikirim ke kordinator pemetaan', '1', '2021-06-30', '1', '2021-06-30', '001/ST/2021', '2021-06-02', '2021-06-01', NULL, 'Kordinator Pemetaan', 17, '2021-06-05', '2021-06-08', NULL, NULL);
+INSERT INTO `ms_berkas` VALUES (2, '002.0621', 2021, 8, 2, 6, 32, 221, ' ', '  456 ', 'Selesai', 'Selesai', '1', '2021-06-30', '1', '2021-06-30', '456712', '2021-06-07', '2021-06-06', NULL, 'DP 307', 30, '2021-06-22', '2021-06-25', '0000-00-00', '2021');
+INSERT INTO `ms_berkas` VALUES (3, '003.0621', 2011, 6, 5, 21, 110, 312, '', '  323', 'Selesai', 'Selesai', '1', '2021-06-30', NULL, '2021-06-30', '122342', '2021-06-02', '2021-06-01', NULL, 'DP 307', 19, '2021-06-23', '2021-06-25', '0000-00-00', '2020');
 
 -- ----------------------------
 -- Table structure for ms_jabatan
@@ -385,36 +388,37 @@ CREATE TABLE `ms_pegawai`  (
   `createdTime` date NULL DEFAULT NULL,
   `updatedBy` varchar(250) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `updatedTime` date NULL DEFAULT NULL,
+  `level_pegawai` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id_pegawai`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 35 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of ms_pegawai
 -- ----------------------------
-INSERT INTO `ms_pegawai` VALUES (9, '910200107', 'Erza Fikry', 'Jl. Saturnus Utara II - Margahayu Raya', 'Jakarta', '1989-01-02', 'Laki-laki', 'Active', 3, 57, NULL, NULL, '1', '2020-10-23');
-INSERT INTO `ms_pegawai` VALUES (12, '197808102003121004', 'Popie Hagy Gusmartin, S.T.', '-', 'Surabaya', '1978-08-10', 'Laki-laki', 'Active', 3, 19, '1', '2020-10-22', '1', '2020-10-23');
-INSERT INTO `ms_pegawai` VALUES (13, '198612222009121002', 'Muhammad Luthfi, S.T., M.Sc.', 'Antapani', 'Bandung', '1986-12-22', 'Laki-laki', 'Active', 3, 20, '1', '2020-10-22', '1', '2020-10-23');
-INSERT INTO `ms_pegawai` VALUES (14, '196402011984031002', 'Dani Syamsul Purnama, A.Ptnh., M.H.', 'Jalan jurang', 'Bandung', '1964-02-01', 'Laki-laki', 'Active', 3, 21, '1', '2020-10-22', NULL, NULL);
-INSERT INTO `ms_pegawai` VALUES (15, '196801031994031006', 'Tommi Rahmadi', 'Komp. Griya Asri', 'Garut', '1968-01-03', 'Laki-laki', 'Active', 3, 50, '1', '2020-10-22', NULL, NULL);
-INSERT INTO `ms_pegawai` VALUES (16, '196906111991031010', 'Asep Tatang', 'Margahayu Raya', 'Sumedang', '1969-06-11', 'Laki-laki', 'Active', 3, 50, '1', '2020-10-22', NULL, NULL);
-INSERT INTO `ms_pegawai` VALUES (17, '196401201989031007', 'Undang Dedi Mulyadi', 'Jl. Riung Saluyu', 'Bandung', '1964-01-20', 'Laki-laki', 'Active', 3, 50, '1', '2020-10-22', NULL, NULL);
-INSERT INTO `ms_pegawai` VALUES (18, '196407111989031016', 'Windarsah', 'Jl. Cilacap', 'Bandung', '1964-07-11', 'Laki-laki', 'Active', 3, 50, '1', '2020-10-22', NULL, NULL);
-INSERT INTO `ms_pegawai` VALUES (19, '196409231989031004', 'Nenden Adi Harsana', 'Komplek Setra Dago Timur', 'Majalengka', '1964-09-23', 'Laki-laki', 'Active', 3, 51, '1', '2020-10-22', NULL, NULL);
-INSERT INTO `ms_pegawai` VALUES (20, '197107251995031001', 'Elan', 'Jl. Permai 23', 'Ciamis', '1971-07-25', 'Laki-laki', 'Active', 3, 51, '1', '2020-10-22', NULL, NULL);
-INSERT INTO `ms_pegawai` VALUES (21, '196904301995031002', 'Isa Alamsyah Undayat', 'Jl. Aria Timur', 'Bandung', '1969-04-03', 'Laki-laki', 'Active', 3, 51, '1', '2020-10-22', NULL, NULL);
-INSERT INTO `ms_pegawai` VALUES (22, '196503131993031003', 'Aceng Margakusumah', 'Jl. Pager Betis', 'Sumedang', '1965-03-13', 'Laki-laki', 'Active', 3, 51, '1', '2020-10-22', NULL, NULL);
-INSERT INTO `ms_pegawai` VALUES (23, '196409091989102001', 'Siti Balilah', 'Jl Podang', 'Bandung', '1964-09-09', 'Perempuan', 'Active', 3, 51, '1', '2020-10-22', NULL, NULL);
-INSERT INTO `ms_pegawai` VALUES (24, '199006272011011001', 'Hanggas Wirapradeksa S.Tr.', 'Margahayu Raya ', 'Purbalingga', '1990-06-27', 'Laki-laki', 'Active', 3, 52, '1', '2020-10-22', NULL, NULL);
-INSERT INTO `ms_pegawai` VALUES (25, '196912082014081001', 'Asep Muljana', 'Cilisung', 'Bandung', '1969-12-18', 'Laki-laki', 'Active', 3, 53, '1', '2020-10-22', NULL, NULL);
-INSERT INTO `ms_pegawai` VALUES (26, '196811012014081001', 'Dadang Suherman', 'JL. Lengkong Tengah I', 'Bandung', '1968-11-01', 'Laki-laki', 'Active', 3, 51, '1', '2020-10-22', NULL, NULL);
-INSERT INTO `ms_pegawai` VALUES (27, '197001152014081001', 'Deni Suryana', 'Jl. Nyengseret', 'Bandung', '1970-01-15', 'Laki-laki', 'Active', 3, 53, '1', '2020-10-22', NULL, NULL);
-INSERT INTO `ms_pegawai` VALUES (28, '910200130', 'Asep Abdul Kohar', 'Bandung', 'Bandung', '2020-10-22', 'Laki-laki', 'Active', 3, 56, '1', '2020-10-22', NULL, NULL);
-INSERT INTO `ms_pegawai` VALUES (29, '910200021', 'Arief HIdayat Sumpena', 'Bandung', 'Bandung', '2020-10-22', 'Laki-laki', 'Active', 3, 56, '1', '2020-10-22', NULL, NULL);
-INSERT INTO `ms_pegawai` VALUES (30, '910200156', 'Aprialdi Dwi Putra', 'Bandung', 'Bandung', '2020-10-22', 'Laki-laki', 'Active', 3, 56, '1', '2020-10-22', NULL, NULL);
-INSERT INTO `ms_pegawai` VALUES (31, '910200018', 'Ade Achmad Saputra', 'Bandung', 'Bandung', '2020-10-22', 'Laki-laki', 'Active', 3, 56, '1', '2020-10-22', NULL, NULL);
-INSERT INTO `ms_pegawai` VALUES (32, '910200053', 'Rivan Halen Satriani', 'Bandung', 'Bandung', '2020-10-22', 'Laki-laki', 'Active', 3, 56, '1', '2020-10-22', NULL, NULL);
-INSERT INTO `ms_pegawai` VALUES (33, '2020914', 'Asep Rudi Ruhimat', '-', 'Bandung', '2020-10-23', 'Laki-laki', 'Active', 3, 54, '1', '2020-10-23', NULL, NULL);
-INSERT INTO `ms_pegawai` VALUES (34, '910200125', 'Arif Rahman Hakim', '-', 'Bandung', '2020-11-03', 'Laki-laki', 'Active', 3, 56, '1', '2020-11-03', '1', '2020-11-03');
+INSERT INTO `ms_pegawai` VALUES (9, '910200107', 'Erza Fikry', 'Jl. Saturnus Utara II - Margahayu Raya', 'Jakarta', '1989-01-02', 'Laki-laki', 'Active', 3, 57, NULL, NULL, '1', '2021-06-30', 'Petugas Ukur');
+INSERT INTO `ms_pegawai` VALUES (12, '197808102003121004', 'Popie Hagy Gusmartin, S.T.', '-', 'Surabaya', '1978-08-10', 'Laki-laki', 'Active', 3, 19, '1', '2020-10-22', '1', '2021-06-30', 'Kasi');
+INSERT INTO `ms_pegawai` VALUES (13, '198612222009121002', 'Muhammad Luthfi, S.T., M.Sc.', 'Antapani', 'Bandung', '1986-12-22', 'Laki-laki', 'Active', 3, 20, '1', '2020-10-22', '1', '2021-06-30', 'Kasubsi');
+INSERT INTO `ms_pegawai` VALUES (14, '196402011984031002', 'Dani Syamsul Purnama, A.Ptnh., M.H.', 'Jalan jurang', 'Bandung', '1964-02-01', 'Laki-laki', 'Active', 3, 21, '1', '2020-10-22', '1', '2021-06-30', 'Kasubsi');
+INSERT INTO `ms_pegawai` VALUES (15, '196801031994031006', 'Tommi Rahmadi', 'Komp. Griya Asri', 'Garut', '1968-01-03', 'Laki-laki', 'Active', 3, 50, '1', '2020-10-22', '1', '2021-06-30', 'Kordinator Pemetaan');
+INSERT INTO `ms_pegawai` VALUES (16, '196906111991031010', 'Asep Tatang', 'Margahayu Raya', 'Sumedang', '1969-06-11', 'Laki-laki', 'Active', 3, 50, '1', '2020-10-22', '1', '2021-06-30', 'Kordinator Pemetaan');
+INSERT INTO `ms_pegawai` VALUES (17, '196401201989031007', 'Undang Dedi Mulyadi', 'Jl. Riung Saluyu', 'Bandung', '1964-01-20', 'Laki-laki', 'Active', 3, 50, '1', '2020-10-22', '1', '2021-06-30', 'Kordinator Pemetaan');
+INSERT INTO `ms_pegawai` VALUES (18, '196407111989031016', 'Windarsah', 'Jl. Cilacap', 'Bandung', '1964-07-11', 'Laki-laki', 'Active', 3, 50, '1', '2020-10-22', '1', '2021-06-30', 'Kordinator Pemetaan');
+INSERT INTO `ms_pegawai` VALUES (19, '196409231989031004', 'Nenden Adi Harsana', 'Komplek Setra Dago Timur', 'Majalengka', '1964-09-23', 'Laki-laki', 'Active', 3, 51, '1', '2020-10-22', '1', '2021-06-30', 'DP 307');
+INSERT INTO `ms_pegawai` VALUES (20, '197107251995031001', 'Elan', 'Jl. Permai 23', 'Ciamis', '1971-07-25', 'Laki-laki', 'Active', 3, 51, '1', '2020-10-22', '1', '2021-06-30', 'Petugas Textual');
+INSERT INTO `ms_pegawai` VALUES (21, '196904301995031002', 'Isa Alamsyah Undayat', 'Jl. Aria Timur', 'Bandung', '1969-04-03', 'Laki-laki', 'Active', 3, 51, '1', '2020-10-22', NULL, NULL, NULL);
+INSERT INTO `ms_pegawai` VALUES (22, '196503131993031003', 'Aceng Margakusumah', 'Jl. Pager Betis', 'Sumedang', '1965-03-13', 'Laki-laki', 'Active', 3, 51, '1', '2020-10-22', '1', '2021-06-30', 'Petugas Ukur');
+INSERT INTO `ms_pegawai` VALUES (23, '196409091989102001', 'Siti Balilah', 'Jl Podang', 'Bandung', '1964-09-09', 'Perempuan', 'Active', 3, 51, '1', '2020-10-22', '1', '2021-06-30', 'Petugas Ukur');
+INSERT INTO `ms_pegawai` VALUES (24, '199006272011011001', 'Hanggas Wirapradeksa S.Tr.', 'Margahayu Raya ', 'Purbalingga', '1990-06-27', 'Laki-laki', 'Active', 3, 52, '1', '2020-10-22', '1', '2021-06-30', 'Kordinator Pengukuran');
+INSERT INTO `ms_pegawai` VALUES (25, '196912082014081001', 'Asep Muljana', 'Cilisung', 'Bandung', '1969-12-18', 'Laki-laki', 'Active', 3, 53, '1', '2020-10-22', '1', '2021-06-30', 'Kordinator Pemetaan');
+INSERT INTO `ms_pegawai` VALUES (26, '196811012014081001', 'Dadang Suherman', 'JL. Lengkong Tengah I', 'Bandung', '1968-11-01', 'Laki-laki', 'Active', 3, 51, '1', '2020-10-22', '1', '2021-06-30', 'Petugas Grafis');
+INSERT INTO `ms_pegawai` VALUES (27, '197001152014081001', 'Deni Suryana', 'Jl. Nyengseret', 'Bandung', '1970-01-15', 'Laki-laki', 'Active', 3, 53, '1', '2020-10-22', NULL, NULL, NULL);
+INSERT INTO `ms_pegawai` VALUES (28, '910200130', 'Asep Abdul Kohar', 'Bandung', 'Bandung', '2020-10-22', 'Laki-laki', 'Active', 3, 56, '1', '2020-10-22', NULL, NULL, NULL);
+INSERT INTO `ms_pegawai` VALUES (29, '910200021', 'Arief HIdayat Sumpena', 'Bandung', 'Bandung', '2020-10-22', 'Laki-laki', 'Active', 3, 56, '1', '2020-10-22', '1', '2021-06-30', 'Petugas Textual');
+INSERT INTO `ms_pegawai` VALUES (30, '910200156', 'Aprialdi Dwi Putra', 'Bandung', 'Bandung', '2020-10-22', 'Laki-laki', 'Active', 3, 56, '1', '2020-10-22', NULL, NULL, NULL);
+INSERT INTO `ms_pegawai` VALUES (31, '910200018', 'Ade Achmad Saputra', 'Bandung', 'Bandung', '2020-10-22', 'Laki-laki', 'Active', 3, 56, '1', '2020-10-22', NULL, NULL, NULL);
+INSERT INTO `ms_pegawai` VALUES (32, '910200053', 'Rivan Halen Satriani', 'Bandung', 'Bandung', '2020-10-22', 'Laki-laki', 'Active', 3, 56, '1', '2020-10-22', '1', '2021-06-30', 'Petugas Ukur');
+INSERT INTO `ms_pegawai` VALUES (33, '2020914', 'Asep Rudi Ruhimat', '-', 'Bandung', '2020-10-23', 'Laki-laki', 'Active', 3, 54, '1', '2020-10-23', '1', '2021-06-30', 'Kordinator Pengukuran');
+INSERT INTO `ms_pegawai` VALUES (34, '910200125', 'Arif Rahman Hakim', '-', 'Bandung', '2020-11-03', 'Laki-laki', 'Active', 3, 56, '1', '2020-11-03', '1', '2020-11-03', NULL);
 
 -- ----------------------------
 -- Table structure for ms_pemohon
@@ -705,7 +709,7 @@ CREATE TABLE `sys_submenu`  (
 -- ----------------------------
 INSERT INTO `sys_submenu` VALUES (2, 'Data User', 1, '?page=datauser', 3, '2017-11-26 00:00:00', '2020-10-22 00:00:00');
 INSERT INTO `sys_submenu` VALUES (3, 'Data Menu & Modul', 1, '?page=datamodul', 4, '2017-11-26 00:00:00', '2020-03-12 00:00:00');
-INSERT INTO `sys_submenu` VALUES (4, 'Level Group Akses', 1, '?page=datagroup', 2, '2017-11-26 00:00:00', '2020-10-22 00:00:00');
+INSERT INTO `sys_submenu` VALUES (4, 'Group Akses', 1, '?page=datagroup', 2, '2017-11-26 00:00:00', '2021-06-30 00:00:00');
 INSERT INTO `sys_submenu` VALUES (5, 'Data Pegawai', 2, '?page=datapegawai', 3, '2017-11-26 00:00:00', '2020-10-20 00:00:00');
 INSERT INTO `sys_submenu` VALUES (6, 'Data Pemohon', 2, '?page=datapemohon', 4, '2017-11-26 00:00:00', '2020-10-20 00:00:00');
 INSERT INTO `sys_submenu` VALUES (7, 'Data Kecamatan', 3, '?page=datakec', 3, '2017-11-26 00:00:00', '2020-10-20 00:00:00');
@@ -737,25 +741,44 @@ CREATE TABLE `trx_history`  (
   `posisi` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `tgl_kembali` date NULL DEFAULT NULL,
   PRIMARY KEY (`id_history`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 35 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of trx_history
 -- ----------------------------
-INSERT INTO `trx_history` VALUES (1, 1, 22, 'Kirim kepetugas ukur', '1', '2021-06-28 10:55:49', 'Dikirim', '-', NULL, NULL, 'Operator', NULL);
-INSERT INTO `trx_history` VALUES (2, 1, NULL, 'Dikembalikan ke oprator', '1', '2021-06-28 10:56:40', 'Dikembalikan', '-', NULL, NULL, 'Petugas Ukur', '2021-06-27');
-INSERT INTO `trx_history` VALUES (3, 1, 22, 'Dikirim kembali ke petugas ukur', '1', '2021-06-28 10:57:20', 'Dikirim', '-', NULL, NULL, 'Operator', NULL);
-INSERT INTO `trx_history` VALUES (4, 1, 34, 'diterima petugas ukur dan akan dikirim ke petugas grafis', '1', '2021-06-28 10:58:11', 'Dikirim', '3 Days', '2021-06-25', '2021-06-28', 'Petugas Grafis', NULL);
-INSERT INTO `trx_history` VALUES (6, 1, NULL, 'dikembalikan ke petugas ukur', '1', '2021-06-28 11:01:44', 'Dikembalikan', '-', NULL, NULL, 'Petugas Grafis', '2021-06-28');
-INSERT INTO `trx_history` VALUES (7, 1, 12, 'diterima petugas grafis dan dikirim ke petugas textual', '1', '2021-06-28 11:04:32', 'Dikirim', '1 Day', '2021-06-28', '2021-06-29', 'Petugas Grafis', NULL);
-INSERT INTO `trx_history` VALUES (8, 1, NULL, 'dikembalikan ke petugas ukur', '1', '2021-06-28 11:08:41', 'Dikembalikan', '-', NULL, NULL, 'Petugas Grafis', '2021-06-23');
-INSERT INTO `trx_history` VALUES (9, 1, 31, 'dikirim ke petugas grafis', '1', '2021-06-28 11:09:12', 'Dikirim', '', '2021-06-23', '2021-06-23', 'Petugas Grafis', NULL);
-INSERT INTO `trx_history` VALUES (10, 1, 20, 'dikirim petugas textual', '1', '2021-06-28 11:10:03', 'Dikirim', '3 Days', '2021-06-23', '2021-06-26', 'Petugas Grafis', NULL);
-INSERT INTO `trx_history` VALUES (11, 1, NULL, 'dikembalikan ke petugas grafis', '1', '2021-06-28 11:15:29', 'Dikembalikan', '-', NULL, NULL, 'Petugas Grafis', '2021-06-23');
-INSERT INTO `trx_history` VALUES (12, 1, 17, 'kirim ke petugas tektual', '1', '2021-06-28 11:16:07', 'Dikirim', '6 Days', '2021-06-23', '2021-06-29', 'Petugas Grafis', NULL);
-INSERT INTO `trx_history` VALUES (13, 1, 14, 'kirim ke kordinator pemetaan', '1', '2021-06-28 11:16:30', 'Dikirim', '2 Days', '2021-06-28', '2021-06-30', 'Petugas Textual', NULL);
-INSERT INTO `trx_history` VALUES (14, 1, 22, 'dsfdsf', '1', '2021-06-30 13:01:38', 'Dikirim', '1 Day', '2021-06-29', '2021-06-30', 'Kordinator Pemetaan', NULL);
-INSERT INTO `trx_history` VALUES (15, 2, 29, 'test', '1', '2021-06-30 13:06:10', 'Dikirim', '-', NULL, NULL, 'Operator', NULL);
-INSERT INTO `trx_history` VALUES (16, 2, 29, 'sdsas', '1', '2021-06-30 13:13:24', 'Dikirim', '1 Day', '2021-06-30', '2021-06-29', 'Petugas Grafis', NULL);
+INSERT INTO `trx_history` VALUES (1, 1, 9, 'Kirim kepetugas ukur', '1', '2021-06-30 17:29:22', 'Dikirim', '-', NULL, NULL, 'Operator', NULL);
+INSERT INTO `trx_history` VALUES (2, 1, 22, 'Belum lengkap dikembalikan ke operator', '1', '2021-06-30 17:29:57', 'Dikembalikan', '-', NULL, NULL, 'Petugas Ukur', '2021-06-02');
+INSERT INTO `trx_history` VALUES (3, 1, 9, 'Kirim ulang ke petugas ukur', '1', '2021-06-30 17:33:04', 'Dikirim', '-', NULL, NULL, 'Operator', NULL);
+INSERT INTO `trx_history` VALUES (4, 1, 22, 'Diterima dari operator dan dikirim ke petugas grafis', '1', '2021-06-30 17:34:06', 'Dikirim', '1 Day', '2021-06-02', '2021-06-03', 'Petugas Grafis', NULL);
+INSERT INTO `trx_history` VALUES (5, 1, 22, 'dikembalikan ke petugas grafis', '1', '2021-06-30 17:34:47', 'Dikembalikan', '-', NULL, NULL, 'Petugas Grafis', '2021-06-03');
+INSERT INTO `trx_history` VALUES (6, 1, 22, 'Dikirim ulang ke petugas grafis', '1', '2021-06-30 17:35:18', 'Dikirim', '2 Days', '2021-06-02', '2021-06-04', 'Petugas Grafis', NULL);
+INSERT INTO `trx_history` VALUES (7, 1, 26, 'Dikirim ke petugas textual', '1', '2021-06-30 18:05:34', 'Dikirim', '1 Day', '2021-06-04', '2021-06-05', 'Petugas Grafis', NULL);
+INSERT INTO `trx_history` VALUES (8, 1, 17, 'Dikirim ke kordinator pemetaan', '1', '2021-06-30 18:07:28', 'Dikirim', '3 Days', '2021-06-05', '2021-06-08', 'Petugas Textual', NULL);
+INSERT INTO `trx_history` VALUES (9, 1, 9, 'Berkas Dibatalkan', '1', '2021-06-30 18:07:41', 'Dibatalkan', '-', NULL, NULL, 'Operator', NULL);
+INSERT INTO `trx_history` VALUES (10, 2, 9, 'kirim ke petugas ukur', '1', '2021-06-30 19:11:54', 'Dikirim', '-', NULL, NULL, 'Operator', NULL);
+INSERT INTO `trx_history` VALUES (11, 2, 28, 'kembali ke operator', '1', '2021-06-30 19:12:22', 'Dikembalikan', '-', NULL, NULL, 'Petugas Ukur', '2021-06-07');
+INSERT INTO `trx_history` VALUES (12, 2, 9, 'kirim ulang ke petugas ukur', '1', '2021-06-30 19:13:19', 'Dikirim', '-', NULL, NULL, 'Operator', NULL);
+INSERT INTO `trx_history` VALUES (13, 2, 28, 'kirim ke petugas grafis', '1', '2021-06-30 19:13:52', 'Dikirim', '1 Day', '2021-06-07', '2021-06-08', 'Petugas Grafis', NULL);
+INSERT INTO `trx_history` VALUES (14, 2, 28, 'kembali ke petugas ukur', '1', '2021-06-30 19:14:32', 'Dikembalikan', '-', NULL, NULL, 'Petugas Ukur', '2021-06-08');
+INSERT INTO `trx_history` VALUES (15, 2, 28, 'kirim kembli petugas grafis', '1', '2021-06-30 19:15:24', 'Dikirim', '1 Day', '2021-06-07', '2021-06-08', 'Petugas Grafis', NULL);
+INSERT INTO `trx_history` VALUES (16, 2, 22, 'kirim ke petugas textual', '1', '2021-06-30 19:15:55', 'Dikirim', '2 Days', '2021-06-08', '2021-06-10', 'Petugas Grafis', NULL);
+INSERT INTO `trx_history` VALUES (17, 2, 19, 'kirim ke petugas pemetaan', '1', '2021-06-30 19:16:27', 'Dikirim', '1 Day', '2021-06-10', '2021-06-11', 'Petugas Textual', NULL);
+INSERT INTO `trx_history` VALUES (18, 2, 17, 'kirim ke petugas kordinator pengukuran', '1', '2021-06-30 19:17:18', 'Dikirim', '3 Days', '2021-06-13', '2021-06-16', 'Kordinator Pemetaan', NULL);
+INSERT INTO `trx_history` VALUES (19, 2, 12, 'kirim ke kasubsi', '1', '2021-06-30 19:17:47', 'Dikirim', '3 Days', '2021-06-15', '2021-06-18', 'Kordinator Pengukuran', NULL);
+INSERT INTO `trx_history` VALUES (20, 2, 18, 'kirim ke kasi', '1', '2021-06-30 19:18:14', 'Dikirim', '2 Days', '2021-06-17', '2021-06-19', 'Kasubsi', NULL);
+INSERT INTO `trx_history` VALUES (21, 2, 18, 'dikembalikan ke kasubsi', '1', '2021-06-30 19:18:43', 'Dikembalikan', '-', NULL, NULL, 'Kasubsi', '2021-06-19');
+INSERT INTO `trx_history` VALUES (22, 2, 18, 'kirim ulang ke kasi', '1', '2021-06-30 19:20:30', 'Dikirim', '1 Day', '2021-06-20', '2021-06-21', 'Kasubsi', NULL);
+INSERT INTO `trx_history` VALUES (23, 2, 15, 'dikirim ke DP 307', '1', '2021-06-30 19:21:18', 'Dikirim', '2 Days', '2021-06-22', '2021-06-24', 'Kasi', NULL);
+INSERT INTO `trx_history` VALUES (24, 2, 18, 'kirim ke DP 307', '1', '2021-06-30 19:22:56', 'Dikirim', '2 Days', '2021-06-22', '2021-06-24', 'Kasi', NULL);
+INSERT INTO `trx_history` VALUES (25, 2, 30, 'Selesai', '1', '2021-06-30 19:27:52', 'Selesai', '3 Days', '2021-06-22', '2021-06-25', 'DP 307', NULL);
+INSERT INTO `trx_history` VALUES (26, 3, 9, 'Kirim ke petugas ukur', '1', '2021-06-30 20:20:54', 'Dikirim', '-', NULL, NULL, 'Operator', NULL);
+INSERT INTO `trx_history` VALUES (27, 3, 9, 'Kirim ke petugas grafik', '1', '2021-06-30 20:21:29', 'Dikirim', '1 Day', '2021-06-02', '2021-06-03', 'Petugas Grafis', NULL);
+INSERT INTO `trx_history` VALUES (28, 3, 26, 'Kirim ke petugas textual', '1', '2021-06-30 20:23:16', 'Dikirim', '1 Day', '2021-06-04', '2021-06-05', 'Petugas Grafis', NULL);
+INSERT INTO `trx_history` VALUES (29, 3, 29, 'Kirim ke operator pemetaan', '1', '2021-06-30 20:24:07', 'Dikirim', '2 Days', '2021-06-13', '2021-06-15', 'Petugas Textual', NULL);
+INSERT INTO `trx_history` VALUES (30, 3, 17, 'kirim ke kordinator pengukuran', '1', '2021-06-30 20:24:34', 'Dikirim', '3 Days', '2021-06-15', '2021-06-18', 'Kordinator Pemetaan', NULL);
+INSERT INTO `trx_history` VALUES (31, 3, 17, 'Kirim ke kasubsi', '1', '2021-06-30 20:24:54', 'Dikirim', '1 Day', '2021-06-18', '2021-06-19', 'Kordinator Pengukuran', NULL);
+INSERT INTO `trx_history` VALUES (32, 3, 14, 'kirim ke kasi', '1', '2021-06-30 20:25:11', 'Dikirim', '2 Days', '2021-06-20', '2021-06-22', 'Kasubsi', NULL);
+INSERT INTO `trx_history` VALUES (33, 3, 12, 'kirim ke DP 307', '1', '2021-06-30 20:25:40', 'Dikirim', '1 Day', '2021-06-22', '2021-06-23', 'Kasi', NULL);
+INSERT INTO `trx_history` VALUES (34, 3, 19, 'Selesai', '1', '2021-06-30 20:25:53', 'Selesai', '2 Days', '2021-06-23', '2021-06-25', 'DP 307', NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
