@@ -73,24 +73,48 @@ $userRow = mysqli_fetch_array($userQry);
                             <th width="20%">LAYANAN</th>
                             <th width="24%">KETERANGAN</th>
                             <th width="20%">POSISI</th>
-                            <th width="10%"><div align="center">STATUS</div></th>
+                            <th width="10%"><div align="left">PETUGAS</div></th>
                             <th width="10%"><div align="center">RIWAYAT</div></th>
                         </tr>
                     </thead>
                     <tbody>
-                        
+                        <?php 
+                        $sql = "SELECT 
+					            a.id_berkas,
+					            a.no_berkas,
+					            a.tahun_berkas,
+					            b.nama_pemohon,
+					            c.nama_layanan,
+					            d.nama_kecamatan,
+					            e.nama_kelurahan,
+					            a.posisi_berkas,
+					            a.keterangan_berkas,
+					            f.nama_pegawai,
+					            a.status_berkas
+					            FROM ms_berkas a
+					            INNER JOIN ms_pemohon b ON a.id_pemohon=b.id_pemohon
+					            INNER JOIN ms_layanan c ON a.id_layanan=c.id_layanan
+					            INNER JOIN ms_kecamatan d ON a.id_kecamatan=d.id_kecamatan
+					            INNER JOIN ms_kelurahan e ON a.id_kelurahan=e.id_kelurahan
+					            LEFT JOIN ms_pegawai f ON a.id_pegawai=f.id_pegawai";
+					    $query=mysqli_query($koneksidb, $sql) or die("ajax-grid-data.php: get PO");
+					    $nomor =0;
+					    while( $data=mysqli_fetch_array($query) ) {
+					    	$kode = $data['id_berkas'];
+					    	$nomor ++;
+                       	?>
                         <tr class="odd gradeX">
                             <td><div align="center"><?php echo $nomor ?></div></td>
 							<td><div align="left"><?php echo $data ['no_berkas']; ?></div></td>
 							<td><div align="left"><?php echo $data ['tahun_berkas']; ?></div></td>
 							<td><?php echo $data ['nama_pemohon']; ?></td>
 							<td><?php echo $data ['nama_layanan']; ?></td>
-							<td><?php echo $data ['keterangan']; ?></td>
-							<td><?php echo $data ['last_posisi']; ?></td>
-							<td><div align="center"><?php echo $dataStatus; ?></div></td>
-                            <td><div align="center"><a href="?page=historyberkashome&amp;id=<?php echo $kode; ?>" class="btn btn-xs blue"><i class="fa fa-eye"></i></a></div></td>
+							<td><?php echo $data ['keterangan_berkas']; ?></td>
+							<td><?php echo $data ['posisi_berkas']; ?></td>
+							<td><div align="left"><?php echo $data['nama_pegawai']; ?></div></td>
+                            <td><div align="center"><a href="?page=historyberkas&amp;id=<?php echo $kode; ?>" class="btn btn-xs blue"><i class="fa fa-eye"></i></a></div></td>
                         </tr>
-                        
+                        <?php } ?>
                     </tbody>
                 </table>
 			</div>

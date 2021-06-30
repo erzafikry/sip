@@ -14,7 +14,8 @@ $columns = array(
     4 => 'c.nama_layanan',
     5 => 'd.nama_kecamatan',
     6 => 'e.nama_kelurahan',
-    7 => 'f.nama_pegawai' 
+    7 => 'f.nama_pegawai',
+    8 => 'a.status_berkas',
 );
 // getting total number records without any search
 $sql = "SELECT 
@@ -27,7 +28,8 @@ $sql = "SELECT
         e.nama_kelurahan,
         a.posisi_berkas,
         a.keterangan_berkas,
-        f.nama_pegawai
+        f.nama_pegawai,
+        a.status_berkas
         FROM ms_berkas a
         INNER JOIN ms_pemohon b ON a.id_pemohon=b.id_pemohon
         INNER JOIN ms_layanan c ON a.id_layanan=c.id_layanan
@@ -49,7 +51,8 @@ if( !empty($requestData['search']['value']) ) {
             e.nama_kelurahan,
             a.posisi_berkas,
             a.keterangan_berkas,
-            f.nama_pegawai
+            f.nama_pegawai,
+            a.status_berkas
             FROM ms_berkas a
             INNER JOIN ms_pemohon b ON a.id_pemohon=b.id_pemohon
             INNER JOIN ms_layanan c ON a.id_layanan=c.id_layanan
@@ -76,7 +79,8 @@ if( !empty($requestData['search']['value']) ) {
             e.nama_kelurahan,
             a.posisi_berkas,
             a.keterangan_berkas,
-            f.nama_pegawai
+            f.nama_pegawai,
+            a.status_berkas
             FROM ms_berkas a
             INNER JOIN ms_pemohon b ON a.id_pemohon=b.id_pemohon
             INNER JOIN ms_layanan c ON a.id_layanan=c.id_layanan
@@ -91,6 +95,15 @@ $nomor =0;
 while( $row=mysqli_fetch_array($query) ) {  // preparing an array
     $nestedData=array(); 
     $nomor++;
+
+    if($row['status_berkas']=='Dibuat'){
+        $tombol ='<li><a href="?page=prosesberkas&amp;id='.($row['id_berkas']).'">Proses</a></li>
+                            <li><a href="?page=hapusberkas&amp;id='.($row['id_berkas']).'">Hapus</a></li>';
+    }else{
+        $tombol ='<li><a href="?page=ubahberkas&amp;id='.($row['id_berkas']).'">Ubah</a></li>
+                            <li><a href="?page=hapusberkas&amp;id='.($row['id_berkas']).'">Hapus</a></li>';
+    }
+
     $nestedData[] = '<div align="center">'.$nomor.'</div>';
     $nestedData[] = '<div align="center">'.$row["no_berkas"].'</div>';
     $nestedData[] = '<div align="center">'.$row["tahun_berkas"].'</div>';
@@ -106,9 +119,7 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
                             <i class="fa fa-angle-down"></i>
                         </button>
                         <ul class="dropdown-menu pull-right">
-                            <li><a href="?page=ubahberkas&amp;id='.($row['id_berkas']).'">Ubah</a></li>
-                            <li><a href="?page=historyberkas&amp;id='.($row['id_berkas']).'">Riyawat</a></li>
-                            <li><a href="?page=hapusberkas&amp;id='.($row['id_berkas']).'">Hapus</a></li>
+                            '.$tombol.'
                         </ul>
                     </div>';        
     $data[] = $nestedData;

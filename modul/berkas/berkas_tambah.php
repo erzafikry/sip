@@ -26,17 +26,11 @@
 		if (trim($_POST['txtVolume'])=="") {
 			$message[] = "Volume tidak boleh kosong!";		
 		}
-		if (trim($_POST['txtDi305'])=="") {
-			$message[] = "DI.305 tidak boleh kosong!";		
-		}
 		if (trim($_POST['txtDi302'])=="") {
 			$message[] = "DI.302 tidak boleh kosong!";		
 		}
 		if (trim($_POST['txtNoSurtug'])=="") {
 			$message[] = "No Surat Tugas tidak boleh kosong!";		
-		}
-		if (trim($_POST['txtTglSurtug'])=="") {
-			$message[] = "Tgl Mulai Surat Tugas tidak boleh kosong!";		
 		}
 		if (trim($_POST['txtTglSurtug2'])=="") {
 			$message[] = "Tgl Terbit Surat Tugas tidak boleh kosong!";		
@@ -74,10 +68,8 @@
 											 id_kecamatan='$cmbKecamatan', 
 											 id_kelurahan='$cmbKelurahan', 
 											 volume='$txtVolume',
-											 di_305='$txtDi305',
 											 di_302='$txtDi302',
 											 no_surtug='$txtNoSurtug',
-											 tgl_mulai_surtug='$txtTglSurtug',
 											 tgl_terbit_surtug='$txtTglSurtug2',
 											 posisi_berkas='Petugas Ukur',
 											 status_berkas='Dibuat',
@@ -193,13 +185,11 @@
 	$dataKecamatan		= isset($_POST['cmbKecamatan']) ? $_POST['cmbKecamatan'] : '';
 	$dataKelurahan		= isset($_POST['cmbKelurahan']) ? $_POST['cmbKelurahan'] : '';
 	$dataVolume			= isset($_POST['txtVolume']) ? $_POST['txtVolume'] : '';
-	$dataDi305			= isset($_POST['txtDi305']) ? $_POST['txtDi305'] : '';
 	$dataDi302			= isset($_POST['txtDi302']) ? $_POST['txtDi302'] : '';
 	$dataStatus		 	= isset($_POST['cmbStatus']) ? $_POST['cmbStatus'] : '';
 	$dataKeterangan	 	= isset($_POST['txtKeterangan']) ? $_POST['txtKeterangan'] : '';
 	$dataPegawai	 	= isset($_POST['cmbPegawai']) ? $_POST['cmbPegawai'] : '';
 	$dataNosurtug		= isset($_POST['txtNoSurtug']) ? $_POST['txtNoSurtug'] : '';
-	$dataTglSurtug		= isset($_POST['txtTglSurtug']) ? $_POST['txtTglSurtug'] : date('d-m-Y');
 	$dataTglSurtug2		= isset($_POST['txtTglSurtug2']) ? $_POST['txtTglSurtug2'] : date('d-m-Y');
 ?>
 <SCRIPT language="JavaScript">
@@ -316,12 +306,6 @@ function submitform() {
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-lg-3 control-label">DI.305 :</label>
-					<div class="col-lg-3">
-						<input class="form-control" type="text" name="txtDi305" value="<?php echo $dataDi305; ?> "/>
-					</div>
-				</div>
-				<div class="form-group">
 					<label class="col-lg-3 control-label">DI.302 :</label>
 					<div class="col-lg-3">
 						<input class="form-control" type="text" name="txtDi302" value="<?php echo $dataDi302; ?> "/>
@@ -333,15 +317,6 @@ function submitform() {
 						<input class="form-control" type="text" name="txtNoSurtug" value="<?php echo $dataNosurtug; ?>"/>
 					</div>
 				</div>
-				<div class="form-group">
-					<label class="col-lg-3 control-label">Tgl. Mulai Surat Tugas :</label>
-					<div class="col-lg-3">
-						<div class="input-icon left">
-							<i class="icon-calendar"></i>
-							<input class="form-control date-picker" data-date-format="dd-mm-yyyy" type="text" value="<?php echo $dataTglSurtug; ?>" name="txtTglSurtug"/>
-						</div>
-					</div>
-				</div>	
 				<div class="form-group">
 					<label class="col-lg-3 control-label">Tgl. Terbit Surat Tugas :</label>
 					<div class="col-lg-3">
