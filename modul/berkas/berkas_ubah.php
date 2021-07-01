@@ -16,7 +16,7 @@
 				$message[] = "Catatan tidak boleh kosong!";		
 			}
 
-			$lama_berkas 	= dateDiff($_POST['txtTglMulai'], $_POST['txtTglSelesai']);
+			$lama_berkas 	= hitungHari($_POST['txtTglMulai'], $_POST['txtTglSelesai']).' Hari';
 
 			if(count($message)==0){	
 				$qrySave=mysqli_query($koneksidb, "INSERT INTO trx_history SET id_berkas='".$_POST['txtKode']."', 
@@ -35,6 +35,7 @@
 																			tgl_awal='".$_POST['txtTglMulai']."', 
 																			id_pegawai='".$_POST['cmbPegawai']."',
 																			keterangan_berkas='".$_POST['txtKeterangan']."',
+																			updatedTime='".date('Y-m-d')."',
 																			tgl_akhir='".$_POST['txtTglSelesai']."'
 														WHERE id_berkas='".$_POST['txtKode']."'") 
 					or die ("Gagal query update".mysqli_error());
@@ -68,6 +69,7 @@
 				or die ("Gagal insert history".mysqli_error());
 				if($qrySave){
 					$update=mysqli_query($koneksidb, "UPDATE ms_berkas SET posisi_berkas='Operator', 
+																			updatedTime='".date('Y-m-d')."',
 																			keterangan_berkas='".$_POST['txtKeterangan']."'
 														WHERE id_berkas='".$_POST['txtKode']."'") 
 					or die ("Gagal query update".mysqli_error());
@@ -99,7 +101,7 @@
 				$message[] = "Catatan tidak boleh kosong!";		
 			}
 
-			$lama_berkas 	= dateDiff($_POST['txtTglMulai'], $_POST['txtTglSelesai']);
+			$lama_berkas 	= hitungHari($_POST['txtTglMulai'], $_POST['txtTglSelesai']).' Hari';
 
 			if(count($message)==0){	
 				$qrySave=mysqli_query($koneksidb, "INSERT INTO trx_history SET id_berkas='".$_POST['txtKode']."', 
@@ -117,6 +119,7 @@
 					$update=mysqli_query($koneksidb, "UPDATE ms_berkas SET posisi_berkas='Petugas Textual', 
 																			tgl_awal='".$_POST['txtTglMulai']."', 
 																			id_pegawai='".$_POST['cmbPegawai']."',
+																			updatedTime='".date('Y-m-d')."',
 																			keterangan_berkas='".$_POST['txtKeterangan']."',
 																			tgl_akhir='".$_POST['txtTglSelesai']."'
 														WHERE id_berkas='".$_POST['txtKode']."'") 
@@ -151,6 +154,7 @@
 				or die ("Gagal insert history".mysqli_error());
 				if($qrySave){
 					$update=mysqli_query($koneksidb, "UPDATE ms_berkas SET posisi_berkas='Petugas Ukur', 
+																			updatedTime='".date('Y-m-d')."',
 																			keterangan_berkas='".$_POST['txtKeterangan']."'
 														WHERE id_berkas='".$_POST['txtKode']."'") 
 					or die ("Gagal query update".mysqli_error());
@@ -182,7 +186,7 @@
 				$message[] = "Catatan tidak boleh kosong!";		
 			}
 
-			$lama_berkas 	= dateDiff($_POST['txtTglMulai'], $_POST['txtTglSelesai']);
+			$lama_berkas 	= hitungHari($_POST['txtTglMulai'], $_POST['txtTglSelesai']).' Hari';
 
 			if(count($message)==0){	
 				$qrySave=mysqli_query($koneksidb, "INSERT INTO trx_history SET id_berkas='".$_POST['txtKode']."', 
@@ -201,6 +205,7 @@
 																			tgl_awal='".$_POST['txtTglMulai']."', 
 																			id_pegawai='".$_POST['cmbPegawai']."',
 																			keterangan_berkas='".$_POST['txtKeterangan']."',
+																			updatedTime='".date('Y-m-d')."',
 																			tgl_akhir='".$_POST['txtTglSelesai']."'
 														WHERE id_berkas='".$_POST['txtKode']."'") 
 					or die ("Gagal query update".mysqli_error());
@@ -234,6 +239,7 @@
 				or die ("Gagal insert history".mysqli_error());
 				if($qrySave){
 					$update=mysqli_query($koneksidb, "UPDATE ms_berkas SET posisi_berkas='Petugas Grafis', 
+																			updatedTime='".date('Y-m-d')."',
 																			keterangan_berkas='".$_POST['txtKeterangan']."'
 														WHERE id_berkas='".$_POST['txtKode']."'") 
 					or die ("Gagal query update".mysqli_error());
@@ -265,7 +271,7 @@
 				$message[] = "Catatan tidak boleh kosong!";		
 			}
 
-			$lama_berkas 	= dateDiff($_POST['txtTglMulai'], $_POST['txtTglSelesai']);
+			$lama_berkas 	= hitungHari($_POST['txtTglMulai'], $_POST['txtTglSelesai']). ' Hari';
 
 			if(count($message)==0){	
 				$qrySave=mysqli_query($koneksidb, "INSERT INTO trx_history SET id_berkas='".$_POST['txtKode']."', 
@@ -283,6 +289,7 @@
 					$update=mysqli_query($koneksidb, "UPDATE ms_berkas SET posisi_berkas='Kordinator Pengukuran', 
 																			tgl_awal='".$_POST['txtTglMulai']."', 
 																			id_pegawai='".$_POST['cmbPegawai']."',
+																			updatedTime='".date('Y-m-d')."',
 																			keterangan_berkas='".$_POST['txtKeterangan']."',
 																			tgl_akhir='".$_POST['txtTglSelesai']."'
 														WHERE id_berkas='".$_POST['txtKode']."'") 
@@ -317,6 +324,7 @@
 				or die ("Gagal insert history".mysqli_error());
 				if($qrySave){
 					$update=mysqli_query($koneksidb, "UPDATE ms_berkas SET posisi_berkas='Petugas Grafis', 
+																			updatedTime='".date('Y-m-d')."',
 																			keterangan_berkas='".$_POST['txtKeterangan']."'
 														WHERE id_berkas='".$_POST['txtKode']."'") 
 					or die ("Gagal query update".mysqli_error());
@@ -348,7 +356,7 @@
 				$message[] = "Catatan tidak boleh kosong!";		
 			}
 
-			$lama_berkas 	= dateDiff($_POST['txtTglMulai'], $_POST['txtTglSelesai']);
+			$lama_berkas 	= hitungHari($_POST['txtTglMulai'], $_POST['txtTglSelesai']).' Hari';
 
 			if(count($message)==0){	
 				$qrySave=mysqli_query($koneksidb, "INSERT INTO trx_history SET id_berkas='".$_POST['txtKode']."', 
@@ -367,6 +375,7 @@
 																			tgl_awal='".$_POST['txtTglMulai']."', 
 																			id_pegawai='".$_POST['cmbPegawai']."',
 																			keterangan_berkas='".$_POST['txtKeterangan']."',
+																			updatedTime='".date('Y-m-d')."',
 																			tgl_akhir='".$_POST['txtTglSelesai']."'
 														WHERE id_berkas='".$_POST['txtKode']."'") 
 					or die ("Gagal query update".mysqli_error());
@@ -400,6 +409,7 @@
 				or die ("Gagal insert history".mysqli_error());
 				if($qrySave){
 					$update=mysqli_query($koneksidb, "UPDATE ms_berkas SET posisi_berkas='Kordinator Pemetaan', 
+																			updatedTime='".date('Y-m-d')."',
 																			keterangan_berkas='".$_POST['txtKeterangan']."'
 														WHERE id_berkas='".$_POST['txtKode']."'") 
 					or die ("Gagal query update".mysqli_error());
@@ -431,7 +441,7 @@
 				$message[] = "Catatan tidak boleh kosong!";		
 			}
 
-			$lama_berkas 	= dateDiff($_POST['txtTglMulai'], $_POST['txtTglSelesai']);
+			$lama_berkas 	= hitungHari($_POST['txtTglMulai'], $_POST['txtTglSelesai']).' Hari';
 
 			if(count($message)==0){	
 				$qrySave=mysqli_query($koneksidb, "INSERT INTO trx_history SET id_berkas='".$_POST['txtKode']."', 
@@ -449,6 +459,7 @@
 					$update=mysqli_query($koneksidb, "UPDATE ms_berkas SET posisi_berkas='Kasi', 
 																			tgl_awal='".$_POST['txtTglMulai']."', 
 																			id_pegawai='".$_POST['cmbPegawai']."',
+																			updatedTime='".date('Y-m-d')."',
 																			keterangan_berkas='".$_POST['txtKeterangan']."',
 																			tgl_akhir='".$_POST['txtTglSelesai']."'
 														WHERE id_berkas='".$_POST['txtKode']."'") 
@@ -483,6 +494,7 @@
 				or die ("Gagal insert history".mysqli_error());
 				if($qrySave){
 					$update=mysqli_query($koneksidb, "UPDATE ms_berkas SET posisi_berkas='Kordinator Pengukuran', 
+																			updatedTime='".date('Y-m-d')."',
 																			keterangan_berkas='".$_POST['txtKeterangan']."'
 														WHERE id_berkas='".$_POST['txtKode']."'") 
 					or die ("Gagal query update".mysqli_error());
@@ -520,7 +532,7 @@
 				$message[] = "Catatan tidak boleh kosong!";		
 			}
 
-			$lama_berkas 	= dateDiff($_POST['txtTglMulai'], $_POST['txtTglSelesai']);
+			$lama_berkas 	= hitungHari($_POST['txtTglMulai'], $_POST['txtTglSelesai']).' Hari';
 
 			if(count($message)==0){	
 				$qrySave=mysqli_query($koneksidb, "INSERT INTO trx_history SET id_berkas='".$_POST['txtKode']."', 
@@ -539,7 +551,10 @@
 																			tgl_awal='".$_POST['txtTglMulai']."', 
 																			no_su='".$_POST['txtNoSU']."',
 																			thn_su='".$_POST['txtThnSU']."',
+																			no_di_307='".$_POST['txtNoDI307']."',
+																			thn_di_307='".$_POST['txtThnDI307']."',
 																			id_pegawai='".$_POST['cmbPegawai']."',
+																			updatedTime='".date('Y-m-d')."',
 																			keterangan_berkas='".$_POST['txtKeterangan']."',
 																			tgl_akhir='".$_POST['txtTglSelesai']."'
 														WHERE id_berkas='".$_POST['txtKode']."'") 
@@ -574,6 +589,7 @@
 				or die ("Gagal insert history".mysqli_error());
 				if($qrySave){
 					$update=mysqli_query($koneksidb, "UPDATE ms_berkas SET posisi_berkas='Kasubsi', 
+																			updatedTime='".date('Y-m-d')."',
 																			keterangan_berkas='".$_POST['txtKeterangan']."'
 														WHERE id_berkas='".$_POST['txtKode']."'") 
 					or die ("Gagal query update".mysqli_error());
@@ -605,7 +621,7 @@
 				$message[] = "Catatan tidak boleh kosong!";		
 			}
 
-			$lama_berkas 	= dateDiff($_POST['txtTglMulai'], $_POST['txtTglSelesai']);
+			$lama_berkas 	= hitungHari($_POST['txtTglMulai'], $_POST['txtTglSelesai']).' Hari';
 
 			if(count($message)==0){	
 				$qrySave=mysqli_query($koneksidb, "INSERT INTO trx_history SET id_berkas='".$_POST['txtKode']."', 
@@ -624,6 +640,7 @@
 																			tgl_awal='".$_POST['txtTglMulai']."', 
 																			status_berkas='Selesai',
 																			id_pegawai='".$_POST['cmbPegawai']."',
+																			updatedTime='".date('Y-m-d')."',
 																			keterangan_berkas='".$_POST['txtKeterangan']."',
 																			tgl_akhir='".$_POST['txtTglSelesai']."'
 														WHERE id_berkas='".$_POST['txtKode']."'") 
@@ -658,6 +675,7 @@
 				or die ("Gagal insert history".mysqli_error());
 				if($qrySave){
 					$update=mysqli_query($koneksidb, "UPDATE ms_berkas SET posisi_berkas='Kasi', 
+																			updatedTime='".date('Y-m-d')."',
 																			keterangan_berkas='".$_POST['txtKeterangan']."'
 														WHERE id_berkas='".$_POST['txtKode']."'") 
 					or die ("Gagal query update".mysqli_error());
@@ -840,10 +858,12 @@
 	
 
 	$KodeEdit			= isset($_GET['id']) ?  $_GET['id'] : $_POST['txtKode']; 
-	$sqlShow 			= "SELECT * FROM ms_berkas a
+	$sqlShow 			= "SELECT *,
+							( SELECT tgl_selesai FROM trx_history WHERE id_berkas = '4' AND NOT tgl_selesai IS NULL ORDER BY id_history DESC LIMIT 1) AS tgl_akhir_his
+							FROM ms_berkas a
 							INNER JOIN ms_pemohon b on a.id_pemohon=b.id_pemohon
 							WHERE a.id_berkas='$KodeEdit'";
-	$qryShow 			= mysqli_query($koneksidb, $sqlShow)  or die ("Query ambil data supplier salah : ".mysqli_error());
+	$qryShow 			= mysqli_query($koneksidb, $sqlShow)  or die ("Query ambil data berkas salah : ".mysqli_error());
 	$dataShow 			= mysqli_fetch_array($qryShow);
 	
 	$dataKode			= $dataShow['id_berkas'];
@@ -872,7 +892,7 @@
 		$value = 'value="'.$dataShow['tgl_mulai_surtug'].'" readonly';
 		$dataPegawai	 	= isset($_POST['cmbPegawai']) ? $_POST['cmbPegawai'] : $dataShow['id_pegawai'];
 	}else{
-		$value = '';
+		$value = 'value="'.$dataShow['tgl_akhir_his'].'" ';
 		$dataPegawai ='';
 	}
 
@@ -1152,6 +1172,18 @@ function submitform() {
 					<label class="col-lg-3 control-label">Tahun SU :</label>
 					<div class="col-lg-3">
 						<input class="form-control"  type="text" name="txtThnSU"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-lg-3 control-label">No. DI.307 :</label>
+					<div class="col-lg-3">
+						<input class="form-control"  type="text" name="txtNoDI307"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-lg-3 control-label">Tahun DI.307 :</label>
+					<div class="col-lg-3">
+						<input class="form-control"  type="text" name="txtThnDI307"/>
 					</div>
 				</div>
 				<?php } ?>

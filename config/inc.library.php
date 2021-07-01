@@ -148,5 +148,16 @@ function sekianLama($format, $wkt) {
     $sekarang = date("Y-m-d");
     return date($format, strtotime(date("Y-m-d", strtotime($sekarang)) . " " . $wkt));
 }
+function hitungHari($awal,$akhir){
+
+	$tglAwal = strtotime($awal);
+
+	$tglAkhir = strtotime($akhir);
+
+	$jeda = abs($tglAkhir - $tglAwal);
+
+	return floor($jeda/(60*60*24));
+
+}
 
 ?>

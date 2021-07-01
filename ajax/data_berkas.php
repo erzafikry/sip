@@ -29,7 +29,11 @@ $sql = "SELECT
         a.posisi_berkas,
         a.keterangan_berkas,
         f.nama_pegawai,
-        a.status_berkas
+        a.status_berkas,
+        a.no_su,
+        a.thn_su,
+        a.no_di_307,
+        a.thn_di_307
         FROM ms_berkas a
         INNER JOIN ms_pemohon b ON a.id_pemohon=b.id_pemohon
         INNER JOIN ms_layanan c ON a.id_layanan=c.id_layanan
@@ -52,7 +56,11 @@ if( !empty($requestData['search']['value']) ) {
             a.posisi_berkas,
             a.keterangan_berkas,
             f.nama_pegawai,
-            a.status_berkas
+            a.status_berkas,
+            a.no_su,
+            a.thn_su,
+            a.no_di_307,
+            a.thn_di_307
             FROM ms_berkas a
             INNER JOIN ms_pemohon b ON a.id_pemohon=b.id_pemohon
             INNER JOIN ms_layanan c ON a.id_layanan=c.id_layanan
@@ -80,7 +88,11 @@ if( !empty($requestData['search']['value']) ) {
             a.posisi_berkas,
             a.keterangan_berkas,
             f.nama_pegawai,
-            a.status_berkas
+            a.status_berkas,
+            a.no_su,
+            a.thn_su,
+            a.no_di_307,
+            a.thn_di_307
             FROM ms_berkas a
             INNER JOIN ms_pemohon b ON a.id_pemohon=b.id_pemohon
             INNER JOIN ms_layanan c ON a.id_layanan=c.id_layanan
@@ -97,13 +109,14 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
     $nomor++;
 
     if($row['status_berkas']=='Dibuat'){
-        $tombol ='<li><a href="?page=prosesberkas&amp;id='.($row['id_berkas']).'">Proses</a></li>
-                            <li><a href="?page=hapusberkas&amp;id='.($row['id_berkas']).'">Hapus</a></li>';
-    }elseif($row['status_berkas']=='Batal'){
-        $tombol ='<li><a>Hapus</a></li>';
+        $tombol ='<a class="btn btn btn-xs green" href="?page=prosesberkas&amp;id='.($row['id_berkas']).'"><i class="fa fa-check"></i></a>
+                    <a class="btn btn btn-xs red" href="?page=hapusberkas&amp;id='.($row['id_berkas']).'"><i class="fa fa-trash"></i></a></li>';
+    }elseif($row['status_berkas']=='Batal' OR $row['status_berkas']=='Selesai'){
+        $tombol ='<a class="btn btn btn-xs yellow"><i class="fa fa-edit"></i></a>
+                    <a class="btn btn btn-xs red"><i class="fa fa-trash"></i></a></li>';
     }else{
-        $tombol ='<li><a href="?page=ubahberkas&amp;id='.($row['id_berkas']).'">Ubah</a></li>
-                            <li><a href="?page=hapusberkas&amp;id='.($row['id_berkas']).'">Hapus</a></li>';
+        $tombol ='<a class="btn btn btn-xs yellow" href="?page=ubahberkas&amp;id='.($row['id_berkas']).'"><i class="fa fa-edit"></i></a>
+                            <a class="btn btn btn-xs red" href="?page=hapusberkas&amp;id='.($row['id_berkas']).'"><i class="fa fa-trash"></i></a>';
     }
     if($row['status_berkas']=='Dibuat'){
         $dataStatus     = '<label class="label label-info">Dibuat</label>';
@@ -114,24 +127,24 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
     }elseif($row['status_berkas']=='Batal'){
         $dataStatus     = '<label class="label label-danger">Dibatalkan</label>';
     }
+
+    if($row['status_berkas']=='Selesai'){
+        $infoSU         = '<b>NO. SU :</b> '.$row['no_su'].' <b>THN. SU :</b> '.$row['thn_su'].'</br>'.'<b>NO. DI.307 : </b>'.$row['no_di_307'].' <b>THN. DI.307 :</b> '.$row['thn_di_307'];
+    }else{
+        $infoSU         = '-';
+    }
     $nestedData[] = '<div align="center">'.$nomor.'</div>';
-    $nestedData[] = '<div align="center">'.$row["no_berkas"].'</div>';
-    $nestedData[] = '<div align="center">'.$row["tahun_berkas"].'</div>';
+    $nestedData[] = '<b>NOMOR : </b>'.$row["no_berkas"].'<br> <b>TAHUN : </b>'.$row["tahun_berkas"];
     $nestedData[] = $row["nama_pemohon"];
     $nestedData[] = $row["nama_layanan"];
-    $nestedData[] = $row["nama_kecamatan"];
-    $nestedData[] = $row["nama_kelurahan"];
+    $nestedData[] = '<b>Kecamatan :</b>'.$row["nama_kecamatan"].'</br> <b>Kelurahan :</b>'.$row["nama_kelurahan"];
     $nestedData[] = '<div align="left">'.$row["posisi_berkas"].'</div>';
     $nestedData[] = $row["nama_pegawai"];
     $nestedData[] = $row["keterangan_berkas"];
+    $nestedData[] = $infoSU;
     $nestedData[] = '<div align="center">'.$dataStatus.'</div>';
-    $nestedData[] = '<div class="btn-group pull-right">
-                        <button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Aksi
-                            <i class="fa fa-angle-down"></i>
-                        </button>
-                        <ul class="dropdown-menu pull-right">
+    $nestedData[] = '<div align="center">
                             '.$tombol.'
-                        </ul>
                     </div>';        
     $data[] = $nestedData;
 }

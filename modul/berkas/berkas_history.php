@@ -1,16 +1,106 @@
+<?php 
+$KodeEdit			= isset($_GET['id']) ?  $_GET['id'] : $_POST['txtKode']; 
+$sqlShow 			= "SELECT 
+						a.no_berkas,
+						a.tahun_berkas,
+						c.nama_layanan,
+						b.nama_pemohon,
+						d.nama_pegawai,
+						a.createdTime,
+						a.updatedTime,
+						a.posisi_berkas,
+						a.status_berkas,
+						a.tgl_mulai_surtug,
+						a.tgl_akhir
+						FROM ms_berkas a
+						INNER JOIN ms_pemohon b on a.id_pemohon=b.id_pemohon
+						INNER JOIN ms_layanan c ON a.id_layanan=c.id_layanan
+						LEFT JOIN ms_pegawai d ON a.id_pegawai=d.id_pegawai
+						WHERE a.id_berkas='$KodeEdit'";
+$qryShow 			= mysqli_query($koneksidb, $sqlShow)  or die ("Query ambil data supplier salah : ".mysqli_error());
+$dataShow 			= mysqli_fetch_array($qryShow);
+
+$dataNoberkas		= $dataShow['no_berkas'];
+$dataThnBerkas 		= $dataShow['tahun_berkas'];
+$dataKegiatan 		= $dataShow['nama_layanan'];
+$dataPemohon 		= $dataShow['nama_pemohon'];
+$dataPosisi 		= $dataShow['posisi_berkas'];
+$dataKegiatan 		= $dataShow['nama_layanan'];
+$dataPetugas 		= $dataShow['nama_pegawai'];
+$dataLamaBerkas 	= hitungHari($dataShow['tgl_mulai_surtug'], $dataShow['tgl_akhir']).' Hari';
+$dataStatus 		= $dataShow['status_berkas'];
+?>
 <div class="portlet box green">
 	<div class="portlet-title">
 		<div class="caption">
             <span class="caption-subject uppercase bold hidden-xs">Form Riwayat Berkas</span>
         </div>
-		<div class="tools">
-			<a href="javascript:;" class="collapse"></a>
-			<a href="javascript:;" class="reload"></a>
-			<a href="javascript:;" class="remove"></a>
+		<div class="actions">
+			<button onclick=self.history.back() class="btn blue" ><i class="fa fa-undo"></i> Kembali</button>
 		</div>
 	</div>
 	<div class="portlet-body">
-		<button onclick=self.history.back() class="btn blue" style="margin-bottom:15px"><i class="fa fa-undo"></i> Kembali</button>
+		
+		<form action="<?php $_SERVER['PHP_SELF']; ?>" method="post" name="form1" class="form-horizontal" autocomplete="off">	
+			<div class="form-body">
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="form-group">
+							<label class="col-lg-4 control-label" style="text-align: left;">No Berkas :</label>
+							<div class="col-lg-8">
+								<input class="form-control" value="<?php echo $dataNoberkas; ?>" disabled/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-4 control-label" style="text-align: left;">Thn Berkas :</label>
+							<div class="col-lg-8">
+								<input class="form-control" value="<?php echo $dataThnBerkas; ?>" disabled/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-4 control-label" style="text-align: left;">Jenis Kegiatan :</label>
+							<div class="col-lg-8">
+								<input class="form-control" value="<?php echo $dataKegiatan; ?>" disabled/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-4 control-label" style="text-align: left;">Nama Pemohon :</label>
+							<div class="col-lg-8">
+								<input class="form-control" value="<?php echo $dataPemohon; ?>" disabled/>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="form-group">
+							<label class="col-lg-4 control-label" style="text-align: left;">Posisi Berkas Sekarang :</label>
+							<div class="col-lg-8">
+								<input class="form-control" value="<?php echo $dataPosisi; ?>" disabled/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-4 control-label" style="text-align: left;">Petugas Terakhir :</label>
+							<div class="col-lg-8">
+								<input class="form-control" value="<?php echo $dataPetugas; ?>" disabled/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-4 control-label" style="text-align: left;">Lama Hari :</label>
+							<div class="col-lg-8">
+								<input class="form-control" value="<?php echo $dataLamaBerkas; ?>" disabled/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-4 control-label" style="text-align: left;">Status Berkas :</label>
+							<div class="col-lg-8">
+								<input class="form-control" value="<?php echo $dataStatus; ?>" disabled/>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</form>
+		<div class="batas2"></div>
 		<table class="table table-striped table-bordered table-hover" id="sample_2">
 			<thead>
                 <tr class="active">

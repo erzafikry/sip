@@ -11,21 +11,20 @@
 		</div>
 		<div class="portlet-body"> 
 			<a href="?page=tambahberkas" class="btn blue" style="margin-bottom:15px"><i class="icon-plus"></i> Tambah Berkas</a>	
-            <table class="table table-striped table-bordered table-hover table-advanced" id="list_berkas">
+            <table class="table table-striped table-bordered" id="list_berkas">
 				<thead>
                     <tr class="active">
                       	<th width="2%"><div align="center">NO </div></th>
-                      	<th width="5%"><div align="center">NO BERKAS </div></th>
-                      	<th width="5%"><div align="center">TAHUN</div></th>
+                      	<th style="min-width:200px">INFORMASI BERKAS</th>
 						<th width="15%">NAMA PEMOHON</th>
 						<th width="25%">JENIS KEGIATAN</th>
-						<th width="15%">KECAMATAN</th>
-						<th width="15%">KELURAHAN</th>
+						<th style="min-width:300px">WILAYAH</th>
 					  	<th width="8%">POSISI BERKAS</th>
 					  	<th width="8%">PETUGAS TERAKHIR</th>
-                        <th style="width:200px">KETERANGAN BERKAS</th>
+                        <th style="min-width:300px">KETERANGAN BERKAS</th>
+                        <th style="min-width:250px">INFORMASI SU & DI.307</th>
 					  	<th width="15%"><div align="center">STATUS</div></th>
-					  	<th width="15%"><div align="center">AKSI</div></th>
+					  	<th style="min-width:80px"><div align="center">AKSI</div></th>
                     </tr>
 				</thead>
 				
